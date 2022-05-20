@@ -1,0 +1,17 @@
+{
+  "type": "enum",
+  "title": {
+    "en": "Mode",
+    "nl": "Mode"
+  },
+  "uiComponent": "picker",
+  "getable": true,
+  "setable": true,
+  "icon": "/assets/icon.svg",
+  "values":[{"id":"Auto", "title": {"en":"Auto"}},
+            {"id":"Cool", "title": {"en":"Cool"}},
+            {"id":"Heat", "title": {"en":"Heat"}},
+            {"id":"Dry", "title": {"en":"Dry"}},
+            {"id":"Fan", "title": {"en":"Fan"}}
+          ]
+}

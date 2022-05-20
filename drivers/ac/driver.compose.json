@@ -1,0 +1,92 @@
+{
+    "name": {
+        "en": "Airconditioners",
+        "nl":"Airconditioners"
+    },
+    "class": "other",
+    "capabilities": [
+        "onoff",
+        "target_ac_mode",
+        "measure_temperature.inside",
+        "target_temperature.inside",
+        "measure_temperature_outside",
+        "measured_ac_mode",
+        "measured_fan_mode",
+        "measured_swing_mode",
+        "measured_power_selection",
+       "target_fan_mode"
+    ],
+    "platforms": [
+        "local"
+    ],
+    "connectivity": [
+        "cloud"
+    ],
+    "pair": [
+        {
+            "id": "login_credentials",
+            "template": "login_credentials",
+            "options": {
+                "logo": "logo.png",
+                "usernameLabel": {
+                    "en": "Username",
+                    "nl":"Gebruikersnaam"
+                },
+                "usernamePlaceholder": {
+                    "en": "JohnDoe",
+                    "nl": "JanJansen"
+                },
+                "passwordLabel": {
+                    "en": "Password",
+                    "nl":"Wachtwoord"
+                },
+                "passwordPlaceholder": {
+                    "en": "Password",
+                    "nl":"Wachtwoord"
+                }
+            }
+        },
+        {
+            "id": "list_my_devices",
+            "template": "list_devices",
+            "navigation": {
+                "next": "add_my_devices",
+                "prev": "login_credentials"
+            }
+        },
+        {
+            "id": "add_my_devices",
+            "template": "add_devices"
+        }
+    ],
+    "repair": [
+        {
+            "id": "login_credentials",
+            "template": "login_credentials",
+            "options": {
+                "logo": "logo.png",
+                "usernameLabel": {
+                    "en": "Username",
+                    "nl":"Gebruikersnaam"
+                },
+                "usernamePlaceholder": {
+                    "en": "JohnDoe",
+                    "nl": "JanJansen"
+                },
+                "passwordLabel": {
+                    "en": "Password",
+                    "nl":"Wachtwoord"
+                },
+                "passwordPlaceholder": {
+                    "en": "Password",
+                    "nl":"Wachtwoord"
+                }
+            }
+        }
+    ],
+    "icon": "{{driverAssetsPath}}/icon.svg",
+    "images": {
+        "large": "{{driverAssetsPath}}/images/large.png",
+        "small": "{{driverAssetsPath}}/images/small.png"
+    }
+}

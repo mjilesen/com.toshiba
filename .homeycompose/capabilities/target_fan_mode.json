@@ -1,0 +1,19 @@
+{
+  "type": "enum",
+  "title": {
+    "en": "Fab mode",
+    "nl": "Ventilator mode"
+  },
+  "uiComponent": "picker",
+  "getable": true,
+  "setable": true,
+  "icon": "/assets/icon.svg",
+  "values":[{"id":"Auto", "title": {"en":"Auto"}},
+            {"id":"Quiet", "title": {"en":"Quiet"}},
+            {"id":"Low", "title": {"en":"Low"}},
+            {"id":"MediumLow", "title": {"en":"MediumLow"}},
+            {"id":"Medium", "title": {"en":"Medium"}},
+            {"id":"MediumHigh", "title": {"en":"MediumHigh"}},
+            {"id":"High", "title": {"en":"High"}}
+          ]
+}

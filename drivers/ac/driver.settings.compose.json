@@ -1,0 +1,16 @@
+[
+  {
+    "id": "username",
+    "type": "text",
+    "label": { "en": "Username", "nl":"Gebruikersnaam" },
+    "value": "John Doe",
+    "hint": { "en": "The name of the user.", "nl":"De naam van de gebruiker" }
+  },
+  {
+    "id": "password",
+    "type": "password",
+    "label": { "en": "Password", "nl":"Wachtwoord" },
+    "value": "Secret",
+    "hint": { "en": "The password of the user.", "nl":"Het wachtwoord van de gebruiker" }
+  }
+]

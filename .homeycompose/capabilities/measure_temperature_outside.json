@@ -1,0 +1,9 @@
+{
+  "type": "number",
+  "title": { "en": "Current temperature outside", "nl": "Huidige temperatuur buiten" },
+  "units": { "en": "°C", "nl": "°C" },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "icon": "/assets/icon.svg"
+}

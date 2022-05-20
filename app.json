@@ -1,0 +1,344 @@
+{
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
+  "id": "com.toshiba",
+  "version": "1.0.0",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "Toshiba"
+  },
+  "description": {
+    "en": "Adds support for Toshiba AC units"
+  },
+  "category": [
+    "climate"
+  ],
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Monique Jilesen",
+    "email": "monique.jilesen@gmail.com"
+  },
+  "drivers": [
+    {
+      "name": {
+        "en": "Airconditioners",
+        "nl": "Airconditioners"
+      },
+      "class": "other",
+      "capabilities": [
+        "onoff",
+        "target_ac_mode",
+        "measure_temperature.inside",
+        "target_temperature.inside",
+        "measure_temperature_outside",
+        "measured_ac_mode",
+        "measured_fan_mode",
+        "measured_swing_mode",
+        "measured_power_selection",
+        "target_fan_mode"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
+      "pair": [
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "logo.png",
+            "usernameLabel": {
+              "en": "Username",
+              "nl": "Gebruikersnaam"
+            },
+            "usernamePlaceholder": {
+              "en": "JohnDoe",
+              "nl": "JanJansen"
+            },
+            "passwordLabel": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            },
+            "passwordPlaceholder": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            }
+          }
+        },
+        {
+          "id": "list_my_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_my_devices",
+            "prev": "login_credentials"
+          }
+        },
+        {
+          "id": "add_my_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "logo.png",
+            "usernameLabel": {
+              "en": "Username",
+              "nl": "Gebruikersnaam"
+            },
+            "usernamePlaceholder": {
+              "en": "JohnDoe",
+              "nl": "JanJansen"
+            },
+            "passwordLabel": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            },
+            "passwordPlaceholder": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            }
+          }
+        }
+      ],
+      "icon": "/drivers/ac/assets/icon.svg",
+      "images": {
+        "large": "/drivers/ac/assets/images/large.png",
+        "small": "/drivers/ac/assets/images/small.png"
+      },
+      "id": "ac",
+      "settings": [
+        {
+          "id": "username",
+          "type": "text",
+          "label": {
+            "en": "Username",
+            "nl": "Gebruikersnaam"
+          },
+          "value": "John Doe",
+          "hint": {
+            "en": "The name of the user.",
+            "nl": "De naam van de gebruiker"
+          }
+        },
+        {
+          "id": "password",
+          "type": "password",
+          "label": {
+            "en": "Password",
+            "nl": "Wachtwoord"
+          },
+          "value": "Secret",
+          "hint": {
+            "en": "The password of the user.",
+            "nl": "Het wachtwoord van de gebruiker"
+          }
+        }
+      ]
+    }
+  ],
+  "capabilities": {
+    "measure_temperature": {
+      "type": "number",
+      "title": {
+        "en": "Current temperature",
+        "nl": "Huidige temperatuur"
+      },
+      "units": {
+        "en": "°C",
+        "nl": "°C"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "icon": "/assets/icon.svg"
+    },
+    "measure_temperature_outside": {
+      "type": "number",
+      "title": {
+        "en": "Current temperature outside",
+        "nl": "Huidige temperatuur buiten"
+      },
+      "units": {
+        "en": "°C",
+        "nl": "°C"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "icon": "/assets/icon.svg"
+    },
+    "measured_ac_mode": {
+      "type": "string",
+      "title": {
+        "en": "Mode",
+        "nl": "Mode"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "icon": "/assets/icon.svg"
+    },
+    "measured_fan_mode": {
+      "type": "string",
+      "title": {
+        "en": "Fan mode",
+        "nl": "Ventilator mode"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "icon": "/assets/icon.svg"
+    },
+    "measured_power_selection": {
+      "type": "string",
+      "title": {
+        "en": "Power selection",
+        "nl": "Power selectie"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "icon": "/assets/icon.svg"
+    },
+    "measured_swing_mode": {
+      "type": "string",
+      "title": {
+        "en": "Swing mode",
+        "nl": "Swing mode"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "icon": "/assets/icon.svg"
+    },
+    "target_ac_mode": {
+      "type": "enum",
+      "title": {
+        "en": "Mode",
+        "nl": "Mode"
+      },
+      "uiComponent": "picker",
+      "getable": true,
+      "setable": true,
+      "icon": "/assets/icon.svg",
+      "values": [
+        {
+          "id": "Auto",
+          "title": {
+            "en": "Auto"
+          }
+        },
+        {
+          "id": "Cool",
+          "title": {
+            "en": "Cool"
+          }
+        },
+        {
+          "id": "Heat",
+          "title": {
+            "en": "Heat"
+          }
+        },
+        {
+          "id": "Dry",
+          "title": {
+            "en": "Dry"
+          }
+        },
+        {
+          "id": "Fan",
+          "title": {
+            "en": "Fan"
+          }
+        }
+      ]
+    },
+    "target_fan_mode": {
+      "type": "enum",
+      "title": {
+        "en": "Fab mode",
+        "nl": "Ventilator mode"
+      },
+      "uiComponent": "picker",
+      "getable": true,
+      "setable": true,
+      "icon": "/assets/icon.svg",
+      "values": [
+        {
+          "id": "Auto",
+          "title": {
+            "en": "Auto"
+          }
+        },
+        {
+          "id": "Quiet",
+          "title": {
+            "en": "Quiet"
+          }
+        },
+        {
+          "id": "Low",
+          "title": {
+            "en": "Low"
+          }
+        },
+        {
+          "id": "MediumLow",
+          "title": {
+            "en": "MediumLow"
+          }
+        },
+        {
+          "id": "Medium",
+          "title": {
+            "en": "Medium"
+          }
+        },
+        {
+          "id": "MediumHigh",
+          "title": {
+            "en": "MediumHigh"
+          }
+        },
+        {
+          "id": "High",
+          "title": {
+            "en": "High"
+          }
+        }
+      ]
+    },
+    "target_temperature": {
+      "type": "number",
+      "title": {
+        "en": "Target temperature",
+        "nl": "Doel temperatuur"
+      },
+      "units": {
+        "en": "min",
+        "nl": "min"
+      },
+      "uiComponent": "thermostat",
+      "min": 17,
+      "max": 30,
+      "step": 1,
+      "getable": true,
+      "setable": true,
+      "icon": "/assets/icon.svg"
+    }
+  }
+}

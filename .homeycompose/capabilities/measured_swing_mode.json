@@ -1,0 +1,11 @@
+{
+  "type": "string",
+  "title": {
+    "en": "Swing mode",
+    "nl": "Swing mode"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "icon": "/assets/icon.svg"
+}
