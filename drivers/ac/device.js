@@ -5,13 +5,13 @@ const ACHelper = require( "../../lib/AC");
 const StateUtils = require ("../../lib/state_utils")
 
 class ACDevice extends Device {
-
   /**
    * onInit is called when the device is initialized.
    */
   async onInit() {
     this.log('MyDevice has been initialized');
-    this.acHelper = new ACHelper(this.homey, this.getSetting( "username"), this.getSetting( "password"), this.getStoreValue( "tokeninformation") );
+    this.acHelper = new ACHelper(this.homey, this.getSetting( "username"), this.getSetting( "password"), this.getStoreValue( "tokeninformation"));
+    this.token = "";
 
     this.registerCapabilityListener("onoff", async (value) => {
      console.log( "onoff changed", value );
@@ -28,6 +28,9 @@ class ACDevice extends Device {
    this.registerCapabilityListener("target_fan_mode", async (value) => {
     //do nothing, just setting the value
    });
+
+   const token = await this.acHelper.getSASToken( this.getData().id )
+   this.token = token;
   }
 
   /**
