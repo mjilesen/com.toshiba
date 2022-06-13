@@ -1,20 +1,21 @@
-'use strict';
-
 const { Device } = require('homey');
-const ACHelper = require( "../../lib/AC");
-const StateUtils = require ("../../lib/state_utils")
+const httpApi = require( "../../lib/ToshibaHttpApi");
+const amqpApi = require( "../../lib/ToshibaAmqpApi");
+const StateUtils = require ("../../lib/state_utils");
 
 class ACDevice extends Device {
   /**
    * onInit is called when the device is initialized.
    */
   async onInit() {
-    this.log('MyDevice has been initialized');
-    this.acHelper = new ACHelper(this.homey, this.getSetting( "username"), this.getSetting( "password"), this.getStoreValue( "tokeninformation"));
-    this.token = "";
+    //initialize the http api
+    const initial_state = await this.driver.httpAPI.getACStatus( this.getData().DeviceId );
+    this.updateState( initial_state );
 
+    // initialize the capability listeners
     this.registerCapabilityListener("onoff", async (value) => {
-     console.log( "onoff changed", value );
+      if( !value ){
+      this.driver.amqpAPI.sendMessage( "31ffffffffffffffffffffffffffffffffffff", this.getData().DeviceUniqueID )}
     });
 
    this.registerCapabilityListener("target_ac_mode", async (value) => {
@@ -29,16 +30,13 @@ class ACDevice extends Device {
     //do nothing, just setting the value
    });
 
-   const token = await this.acHelper.getSASToken( this.getData().id )
-   this.token = token;
   }
 
   /**
    * onAdded is called when the user adds the device, called just after pairing.
    */
   async onAdded() {
-    this.log('MyDevice has been added');
-    StateUtils.convertStateToCapabilities( this, this.getStoreValue("state"))
+    this.log('ACDevice has been added');
   }
 
   /**
@@ -50,7 +48,7 @@ class ACDevice extends Device {
    * @returns {Promise<string|void>} return a custom message that will be displayed
    */
   async onSettings({ oldSettings, newSettings, changedKeys }) {
-    this.log('MyDevice settings where changed');
+    this.log('ACDevice settings where changed');
   }
 
   /**
@@ -59,16 +57,21 @@ class ACDevice extends Device {
    * @param {string} name The new name
    */
   async onRenamed(name) {
-    this.log('MyDevice was renamed');
+    this.log('ACDevice was renamed');
   }
 
   /**
    * onDeleted is called when the user deleted the device.
    */
   async onDeleted() {
-    this.log('MyDevice has been deleted');
+    this.log('ACDevice has been deleted', this.driver.getDevices().length );
+
   }
 
+  updateState( state ){
+    this.setStoreValue( "state", state );
+    StateUtils.convertStateToCapabilities( this, state );
+  }
 }
 
 module.exports = ACDevice;
