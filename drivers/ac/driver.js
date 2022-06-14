@@ -28,8 +28,8 @@ class ACDriver extends Driver {
   }
 
   async initializeAmqp(){
-    const token = await this.httpAPI.getSASToken( this.deviceId )
-    this.amqpAPI = await new amqpApi( token, this.deviceId )
+    const token = await this.httpAPI.getSASToken( this.deviceId);
+    this.amqpAPI = await new amqpApi( token, this )
   }
 
   async onPair( session )
