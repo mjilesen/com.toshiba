@@ -16,26 +16,11 @@ class ACDevice extends Device {
     // initialize the capability listeners
     this.registerMultipleCapabilityListener( [Constants.CapabilityOnOff,
                                               Constants.CapabilityTargetACMode,
-                                              Constants.CapabilityTargetTemperatureInside]
-                                              , async ( capabilityValues, capabilityOptions ) => {
+                                              Constants.CapabilityTargetTemperatureInside],
+                                              async ( capabilityValues, capabilityOptions ) => {
       await this.updateCapabilities( capabilityValues );
       }
     );
-
-  // this.registerCapabilityListener( Constants.CapabilityTargetACMode, async (value) => {
-//     this.updateCapability( Constants.CapabilityTargetACMode, value);
-//     }
-//   );
-
-  // this.registerCapabilityListener(Constants.CapabilityTargetTemperatureInside, async (value) => {
-  //  this.updateCapability( Constants.CapabilityTargetTemperatureInside, value);
-//    }
-  //);
-
-  // this.registerCapabilityListener("target_fan_mode", async (value) => {
-    //do nothing, just setting the value
-  // });
-
 };
 
   /**
