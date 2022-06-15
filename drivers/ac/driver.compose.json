@@ -14,7 +14,9 @@
         "measured_fan_mode",
         "measured_swing_mode",
         "measured_power_selection",
-       "target_fan_mode"
+        "target_fan_mode",
+        "target_power_mode",
+        "target_swing_mode"
     ],
     "platforms": [
         "local"

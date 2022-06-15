@@ -1,7 +1,7 @@
 {
   "type": "enum",
   "title": {
-    "en": "Fab mode",
+    "en": "Fan mode",
     "nl": "Ventilator mode"
   },
   "uiComponent": "picker",
@@ -9,11 +9,11 @@
   "setable": true,
   "icon": "/assets/icon.svg",
   "values":[{"id":"Auto", "title": {"en":"Auto"}},
-            {"id":"Quiet", "title": {"en":"Quiet"}},
-            {"id":"Low", "title": {"en":"Low"}},
-            {"id":"MediumLow", "title": {"en":"MediumLow"}},
+            {"id":"Quiet", "title": {"en":"Quiet", "nl":"Stil"}},
+            {"id":"Low", "title": {"en":"Low", "nl":"Laag"}},
+            {"id":"MediumLow", "title": {"en":"MediumLow", "nl":"Medium laag" }},
             {"id":"Medium", "title": {"en":"Medium"}},
-            {"id":"MediumHigh", "title": {"en":"MediumHigh"}},
-            {"id":"High", "title": {"en":"High"}}
+            {"id":"MediumHigh", "title": {"en":"MediumHigh", "nl": "Medium hoog"}},
+            {"id":"High", "title": {"en":"High", "nl":"Hoog"}}
           ]
 }

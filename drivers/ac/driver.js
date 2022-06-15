@@ -2,9 +2,11 @@
 const { Driver } = require('homey');
 
 const Homey = require( 'homey' );
+const uuid = require("uuid");
+
 const httpApi = require( "../../lib/ToshibaHttpApi");
 const amqpApi = require( "../../lib/ToshibaAmqpApi");
-const uuid = require("uuid");
+const Constants = require("../../lib/constants");
 
 class ACDriver extends Driver {
   /**
@@ -12,17 +14,17 @@ class ACDriver extends Driver {
    */
   async onInit() {
     this.log('ACDriver has been initialized');
-    this.homey.settings.unset("DeviceID")
-    let deviceID = this.homey.settings.get( "DeviceID")
+    this.homey.settings.unset( Constants.SettingDriverDeviceID )
+    let deviceID = this.homey.settings.get( Constants.SettingDriverDeviceID )
     if ( !deviceID ){
       deviceID = "Homey-" + uuid.v4()
-      this.homey.settings.set( "DeviceID", deviceID )
+      this.homey.settings.set( Constants.SettingDriverDeviceID, deviceID )
     }
     this.deviceId = deviceID
 
     this.httpAPI = await new httpApi(this.homey )
 
-    if ( this.homey.settings.get( "Username") ){
+    if ( this.homey.settings.get( Constants.SettingUserName ) ){
       await this.initializeAmqp()
     }
   }
@@ -43,8 +45,8 @@ class ACDriver extends Driver {
       password = data.password;
 
       //save the username and password
-      this.homey.settings.set("Username", username);
-      this.homey.settings.set("Password", password );
+      this.homey.settings.set( Constants.SettingUserName, username);
+      this.homey.settings.set( Constants.SettingPassword, password );
 
       resobj = await this.httpAPI.login( username, password );
 

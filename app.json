@@ -43,7 +43,9 @@
         "measured_fan_mode",
         "measured_swing_mode",
         "measured_power_selection",
-        "target_fan_mode"
+        "target_fan_mode",
+        "target_power_mode",
+        "target_swing_mode"
       ],
       "platforms": [
         "local"
@@ -270,7 +272,7 @@
     "target_fan_mode": {
       "type": "enum",
       "title": {
-        "en": "Fab mode",
+        "en": "Fan mode",
         "nl": "Ventilator mode"
       },
       "uiComponent": "picker",
@@ -287,19 +289,22 @@
         {
           "id": "Quiet",
           "title": {
-            "en": "Quiet"
+            "en": "Quiet",
+            "nl": "Stil"
           }
         },
         {
           "id": "Low",
           "title": {
-            "en": "Low"
+            "en": "Low",
+            "nl": "Laag"
           }
         },
         {
           "id": "MediumLow",
           "title": {
-            "en": "MediumLow"
+            "en": "MediumLow",
+            "nl": "Medium laag"
           }
         },
         {
@@ -311,13 +316,124 @@
         {
           "id": "MediumHigh",
           "title": {
-            "en": "MediumHigh"
+            "en": "MediumHigh",
+            "nl": "Medium hoog"
           }
         },
         {
           "id": "High",
           "title": {
-            "en": "High"
+            "en": "High",
+            "nl": "Hoog"
+          }
+        }
+      ]
+    },
+    "target_power_mode": {
+      "type": "enum",
+      "title": {
+        "en": "Power selection",
+        "nl": "Power selectie"
+      },
+      "uiComponent": "picker",
+      "getable": true,
+      "setable": true,
+      "icon": "/assets/icon.svg",
+      "values": [
+        {
+          "id": "Power50",
+          "title": {
+            "en": "Power 50%"
+          }
+        },
+        {
+          "id": "Power70",
+          "title": {
+            "en": "Power 75%"
+          }
+        },
+        {
+          "id": "Power100",
+          "title": {
+            "en": "Power 100%"
+          }
+        },
+        {
+          "id": "None",
+          "title": {
+            "en": "None",
+            "nl": "Geen"
+          }
+        }
+      ]
+    },
+    "target_swing_mode": {
+      "type": "enum",
+      "title": {
+        "en": "Swing mode",
+        "nl": "Swing mode"
+      },
+      "uiComponent": "picker",
+      "getable": true,
+      "setable": true,
+      "icon": "/assets/icon.svg",
+      "values": [
+        {
+          "id": "Off",
+          "title": {
+            "en": "Off",
+            "nl": "Uit"
+          }
+        },
+        {
+          "id": "Swing vertical",
+          "title": {
+            "en": "Swing vertical",
+            "nl": "Swing verticaal"
+          }
+        },
+        {
+          "id": "Swing horizontal",
+          "title": {
+            "en": "Swing horizontal",
+            "nl": "Swing horizontaal"
+          }
+        },
+        {
+          "id": "Swing vertical and horizontal",
+          "title": {
+            "en": "Swing vertical and horizontal",
+            "nl": "Swing verticaal and horizontaal"
+          }
+        },
+        {
+          "id": "Fixed 1",
+          "title": {
+            "en": "Fixed 1"
+          }
+        },
+        {
+          "id": "Fixed 2",
+          "title": {
+            "en": "Fixed 2"
+          }
+        },
+        {
+          "id": "Fixed 3",
+          "title": {
+            "en": "Fixed 3"
+          }
+        },
+        {
+          "id": "Fixed 4",
+          "title": {
+            "en": "Fixed 4"
+          }
+        },
+        {
+          "id": "Fixed 5",
+          "title": {
+            "en": "Fixed 5"
           }
         }
       ]
