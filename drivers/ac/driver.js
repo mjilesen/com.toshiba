@@ -2,10 +2,10 @@
 const { Driver } = require('homey');
 
 const Homey = require( 'homey' );
-const uuid = require("uuid");
+const Uuid = require("uuid");
 
-const httpApi = require( "../../lib/ToshibaHttpApi");
-const amqpApi = require( "../../lib/ToshibaAmqpApi");
+const HttpApi = require( "../../lib/ToshibaHttpApi");
+const AmqpApi = require( "../../lib/ToshibaAmqpApi");
 const Constants = require("../../lib/constants");
 
 class ACDriver extends Driver {
@@ -16,12 +16,12 @@ class ACDriver extends Driver {
     this.log('ACDriver has been initialized');
     let deviceID = await this.homey.settings.get( Constants.SettingDriverDeviceID )
     if ( !deviceID ){
-      deviceID = "Homey-" + uuid.v4()
+      deviceID = "Homey-" + Uuid.v4()
       await this.homey.settings.set( Constants.SettingDriverDeviceID, deviceID )
     }
     this.deviceId = deviceID
 
-    this.httpAPI = await new httpApi(this.homey )
+    this.httpAPI = await new HttpApi(this.homey )
 
     if ( await this.homey.settings.get( Constants.SettingUserName ) ){
       await this.initializeAmqp()
@@ -30,7 +30,7 @@ class ACDriver extends Driver {
 
   async initializeAmqp(){
     const token = await this.httpAPI.getSASToken( this.deviceId);
-    this.amqpAPI = await new amqpApi( token, this )
+    this.amqpAPI = await new AmqpApi( token, this )
   }
 
   async onPair( session )

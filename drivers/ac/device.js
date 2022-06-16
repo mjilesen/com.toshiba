@@ -1,7 +1,6 @@
 const { Device } = require('homey');
-const httpApi = require( "../../lib/ToshibaHttpApi");
-const amqpApi = require( "../../lib/ToshibaAmqpApi");
 const StateUtils = require ("../../lib/state_utils");
+const ACFeatures = require ("../../lib/ToshibaACFeatures");
 const Constants = require("../../lib/constants");
 
 class ACDevice extends Device {
@@ -10,12 +9,16 @@ class ACDevice extends Device {
    */
   async onInit() {
     // initialize the capability listeners
+    const acMode    = await this.getStoreValue( Constants.StoredCapabilityTargetACMode);
+    const swingMode = await this.getStoreValue( Constants.StoredCapabilityTargetSwingMode );
+
     this.registerMultipleCapabilityListener( [Constants.CapabilityOnOff,
-                                              Constants.CapabilityTargetACMode,
+                                              acMode,
                                               Constants.CapabilityTargetTemperatureInside,
                                               Constants.CapabilityTargetFanMode,
                                               Constants.CapabilityTargetPowerMode,
-                                              Constants.CapabilityTargetSwingMode],
+                                              swingMode
+                                              ],
                                               async ( capabilityValues, capabilityOptions ) => {
       await this.updateCapabilities( capabilityValues );
       }
@@ -27,9 +30,11 @@ class ACDevice extends Device {
    */
   async onAdded() {
     this.log('ACDevice has been added');
-    //initialize the http api
-    const initial_state = await this.driver.httpAPI.getACStatus( this.getData().DeviceId );
-    this.updateState( initial_state );
+    //determine the capabilities for this type of AC
+    await ACFeatures.setCapabilities( this )
+    //set starting values for the AC
+    const state = await this.getStoreValue( Constants.StoredValueState );
+    StateUtils.convertStateToCapabilities( this, state );
   };
 
   /**
@@ -66,8 +71,10 @@ class ACDevice extends Device {
        await this.setCapabilityValue( key, value )
        onoffChanged = onoffChanged || ( key === Constants.CapabilityOnOff )
      }
+
      const state = StateUtils.convertCapabilitiesToState( this )
      await this.setStoreValue( Constants.StoredValueState, state )
+
      if ( onoffChanged ){
         this.driver.amqpAPI.sendMessage( state, this.getData().DeviceUniqueID )
      }
@@ -75,7 +82,7 @@ class ACDevice extends Device {
 
   updateStateAfterHeartBeat(insideTemperature, outsideTemperature ){
       StateUtils.setOutsideTemperature( this, outsideTemperature );
-      StateUtils.setInsideTemperature( this, insideTempererature );
+      StateUtils.setInsideTemperature( this, insideTemperature );
   };
 
   updateState( state ){
