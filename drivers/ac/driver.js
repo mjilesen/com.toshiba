@@ -14,17 +14,16 @@ class ACDriver extends Driver {
    */
   async onInit() {
     this.log('ACDriver has been initialized');
-    this.homey.settings.unset( Constants.SettingDriverDeviceID )
-    let deviceID = this.homey.settings.get( Constants.SettingDriverDeviceID )
+    let deviceID = await this.homey.settings.get( Constants.SettingDriverDeviceID )
     if ( !deviceID ){
       deviceID = "Homey-" + uuid.v4()
-      this.homey.settings.set( Constants.SettingDriverDeviceID, deviceID )
+      await this.homey.settings.set( Constants.SettingDriverDeviceID, deviceID )
     }
     this.deviceId = deviceID
 
     this.httpAPI = await new httpApi(this.homey )
 
-    if ( this.homey.settings.get( Constants.SettingUserName ) ){
+    if ( await this.homey.settings.get( Constants.SettingUserName ) ){
       await this.initializeAmqp()
     }
   }

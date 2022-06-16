@@ -9,14 +9,13 @@ class ACDevice extends Device {
    * onInit is called when the device is initialized.
    */
   async onInit() {
-    //initialize the http api
-    const initial_state = await this.driver.httpAPI.getACStatus( this.getData().DeviceId );
-    this.updateState( initial_state );
-
     // initialize the capability listeners
     this.registerMultipleCapabilityListener( [Constants.CapabilityOnOff,
                                               Constants.CapabilityTargetACMode,
-                                              Constants.CapabilityTargetTemperatureInside],
+                                              Constants.CapabilityTargetTemperatureInside,
+                                              Constants.CapabilityTargetFanMode,
+                                              Constants.CapabilityTargetPowerMode,
+                                              Constants.CapabilityTargetSwingMode],
                                               async ( capabilityValues, capabilityOptions ) => {
       await this.updateCapabilities( capabilityValues );
       }
@@ -28,6 +27,9 @@ class ACDevice extends Device {
    */
   async onAdded() {
     this.log('ACDevice has been added');
+    //initialize the http api
+    const initial_state = await this.driver.httpAPI.getACStatus( this.getData().DeviceId );
+    this.updateState( initial_state );
   };
 
   /**
@@ -59,12 +61,16 @@ class ACDevice extends Device {
   };
 
   async updateCapabilities( capabilityValues ){
+    let onoffChanged = this.getCapabilityValue( Constants.CapabilityOnOff )
      for( let[key, value] of Object.entries( capabilityValues) ){
        await this.setCapabilityValue( key, value )
+       onoffChanged = onoffChanged || ( key === Constants.CapabilityOnOff )
      }
      const state = StateUtils.convertCapabilitiesToState( this )
-     this.setStoreValue( Constants.StoredValueState, state )
-     this.driver.amqpAPI.sendMessage( state, this.getData().DeviceUniqueID )
+     await this.setStoreValue( Constants.StoredValueState, state )
+     if ( onoffChanged ){
+        this.driver.amqpAPI.sendMessage( state, this.getData().DeviceUniqueID )
+     }
   };
 
   updateStateAfterHeartBeat(insideTemperature, outsideTemperature ){

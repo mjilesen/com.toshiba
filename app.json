@@ -39,10 +39,6 @@
         "measure_temperature.inside",
         "target_temperature.inside",
         "measure_temperature_outside",
-        "measured_ac_mode",
-        "measured_fan_mode",
-        "measured_swing_mode",
-        "measured_power_selection",
         "target_fan_mode",
         "target_power_mode",
         "target_swing_mode"
@@ -182,50 +178,6 @@
       "setable": false,
       "icon": "/assets/icon.svg"
     },
-    "measured_ac_mode": {
-      "type": "string",
-      "title": {
-        "en": "Mode",
-        "nl": "Mode"
-      },
-      "uiComponent": "sensor",
-      "getable": true,
-      "setable": false,
-      "icon": "/assets/icon.svg"
-    },
-    "measured_fan_mode": {
-      "type": "string",
-      "title": {
-        "en": "Fan mode",
-        "nl": "Ventilator mode"
-      },
-      "uiComponent": "sensor",
-      "getable": true,
-      "setable": false,
-      "icon": "/assets/icon.svg"
-    },
-    "measured_power_selection": {
-      "type": "string",
-      "title": {
-        "en": "Power selection",
-        "nl": "Power selectie"
-      },
-      "uiComponent": "sensor",
-      "getable": true,
-      "setable": false,
-      "icon": "/assets/icon.svg"
-    },
-    "measured_swing_mode": {
-      "type": "string",
-      "title": {
-        "en": "Swing mode",
-        "nl": "Swing mode"
-      },
-      "uiComponent": "sensor",
-      "getable": true,
-      "setable": false,
-      "icon": "/assets/icon.svg"
-    },
     "target_ac_mode": {
       "type": "enum",
       "title": {
@@ -341,19 +293,19 @@
       "icon": "/assets/icon.svg",
       "values": [
         {
-          "id": "Power50",
+          "id": "Power 50%",
           "title": {
             "en": "Power 50%"
           }
         },
         {
-          "id": "Power70",
+          "id": "Power 70%",
           "title": {
             "en": "Power 75%"
           }
         },
         {
-          "id": "Power100",
+          "id": "Power 100%",
           "title": {
             "en": "Power 100%"
           }
