@@ -76,11 +76,32 @@ class ACDevice extends Device {
   };
 
   initConditions(){
-    //outside temperature
-    const outsideTemperatureCondition = this.homey.flow.getConditionCard('OutsideTemperatureTooHigh');
-    outsideTemperatureCondition.registerRunListener(async (args, state) => {
+    //outside temperature above
+    const outsideTemperatureAboveCondition = this.homey.flow.getConditionCard('OutsideTemperatureAbove');
+    outsideTemperatureAboveCondition.registerRunListener(async (args, state) => {
       const outsideTemperature = await this.getCapabilityValue( Constants.CapabilityMeasureTemperaturOutside );
       return outsideTemperature > args.trashholdTemp;
+    });
+
+    //outside temperature below
+    const outsideTemperatureBelowCondition = this.homey.flow.getConditionCard('OutsideTemperatureBelow');
+    outsideTemperatureBelowCondition.registerRunListener(async (args, state) => {
+      const outsideTemperature = await this.getCapabilityValue( Constants.CapabilityMeasureTemperaturOutside );
+      return outsideTemperature < args.trashholdTemp;
+    });
+
+    //inside temperature above
+    const insideTemperatureAboveCondition = this.homey.flow.getConditionCard('InsideTemperatureAbove');
+    insideTemperatureAboveCondition.registerRunListener(async (args, state) => {
+      const insideTemperature = await this.getCapabilityValue( Constants.CapabilityMeasureTemperatureInside );
+      return insideTemperature > args.trashholdTemp;
+    });
+
+    //inside temperature below
+    const insideTemperatureBelowCondition = this.homey.flow.getConditionCard('InsideTemperatureBelow');
+    insideTemperatureBelowCondition.registerRunListener(async (args, state) => {
+      const insideTemperature = await this.getCapabilityValue( Constants.CapabilityMeasureTemperatureInside );
+      return insideTemperature < args.trashholdTemp;
     });
   };
 

@@ -27,6 +27,124 @@
     "email": "monique.jilesen@gmail.com"
   },
   "flow": {
+    "conditions": [
+      {
+        "id": "OutsideTemperatureAbove",
+        "title": {
+          "en": "Outside temperature above",
+          "nl": "Buiten temperatuur is meer"
+        },
+        "titleFormatted": {
+          "en": "Outside temperature is above [[trashholdTemp]]",
+          "nl": "Buiten temperatuur is meer dan [[trashholdTemp]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ac"
+          },
+          {
+            "name": "trashholdTemp",
+            "type": "number",
+            "min": -30,
+            "max": 50,
+            "step": 1,
+            "placeholder": {
+              "en": "In °C",
+              "nl": "In °C"
+            }
+          }
+        ]
+      },
+      {
+        "id": "OutsideTemperatureBelow",
+        "title": {
+          "en": "Outside temperature below",
+          "nl": "Buiten temperatuur is onder"
+        },
+        "titleFormatted": {
+          "en": "Outside temperature is below [[trashholdTemp]]",
+          "nl": "Buiten temperatuur is minder dan [[trashholdTemp]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ac"
+          },
+          {
+            "name": "trashholdTemp",
+            "type": "number",
+            "min": -30,
+            "max": 50,
+            "step": 1,
+            "placeholder": {
+              "en": "In °C",
+              "nl": "In °C"
+            }
+          }
+        ]
+      },
+      {
+        "id": "InsideTemperatureAbove",
+        "title": {
+          "en": "Inside temperature above",
+          "nl": "Binnen temperatuur is meer"
+        },
+        "titleFormatted": {
+          "en": "Inside temperature is above [[trashholdTemp]]",
+          "nl": "Binnen temperatuur is meer dan [[trashholdTemp]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ac"
+          },
+          {
+            "name": "trashholdTemp",
+            "type": "number",
+            "min": -30,
+            "max": 50,
+            "step": 1,
+            "placeholder": {
+              "en": "In °C",
+              "nl": "In °C"
+            }
+          }
+        ]
+      },
+      {
+        "id": "InsideTemperatureBelow",
+        "title": {
+          "en": "Inside temperature below",
+          "nl": "Binnen temperatuur is onder"
+        },
+        "titleFormatted": {
+          "en": "Inside temperature is below [[trashholdTemp]]",
+          "nl": "Binnen temperatuur is minder dan [[trashholdTemp]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ac"
+          },
+          {
+            "name": "trashholdTemp",
+            "type": "number",
+            "min": -30,
+            "max": 50,
+            "step": 1,
+            "placeholder": {
+              "en": "In °C",
+              "nl": "In °C"
+            }
+          }
+        ]
+      }
+    ],
     "actions": [
       {
         "id": "SetMode",
