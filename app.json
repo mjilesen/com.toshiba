@@ -26,6 +26,128 @@
     "name": "Monique Jilesen",
     "email": "monique.jilesen@gmail.com"
   },
+  "flow": {
+    "actions": [
+      {
+        "id": "SetMode",
+        "title": {
+          "en": "Set mode",
+          "nl": "Zet mode"
+        },
+        "titleFormatted": {
+          "en": "Set mode to [[acMode]]",
+          "nl": "Zet mode naar [[acMode]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ac&capabilities=target_ac_mode1|target_ac_mode2|target_ac_mode3"
+          },
+          {
+            "name": "acMode",
+            "type": "autocomplete"
+          }
+        ]
+      },
+      {
+        "id": "SetSwingMode",
+        "title": {
+          "en": "Set swing mode",
+          "nl": "Zet swing mode"
+        },
+        "titleFormatted": {
+          "en": "Set swing mode to [[acSwingMode]]",
+          "nl": "Zet swing mode naar [[acSwingMode]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ac&capabilities=target_swing_mode1|target_swing_mode2|target_swing_mode3|target_swing_mode4"
+          },
+          {
+            "name": "acSwingMode",
+            "type": "autocomplete"
+          }
+        ]
+      },
+      {
+        "id": "SetPowerMode",
+        "title": {
+          "en": "Set power mode",
+          "nl": "Zet power mode"
+        },
+        "titleFormatted": {
+          "en": "Set power mode to [[acPowerMode]]",
+          "nl": "Zet power mode naar [[acPowerMode]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ac&capabilities=target_power_mode"
+          },
+          {
+            "name": "acPowerMode",
+            "type": "autocomplete"
+          }
+        ]
+      },
+      {
+        "id": "SetFanMode",
+        "title": {
+          "en": "Set fan mode",
+          "nl": "Zet ventilator mode"
+        },
+        "titleFormatted": {
+          "en": "Set fan mode to [[acFanMode]]",
+          "nl": "Zet ventilator mode naar [[acFanMode]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ac&capabilities=target_fan_mode"
+          },
+          {
+            "name": "acFanMode",
+            "type": "autocomplete"
+          }
+        ]
+      },
+      {
+        "id": "SetTargetTemperature",
+        "title": {
+          "en": "Set temperature",
+          "nl": "Zet temperatuur"
+        },
+        "titleFormatted": {
+          "en": "Set temperature to [[targetTemperature]]",
+          "nl": "Zet temperatuur naar [[targetTemperature]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ac"
+          },
+          {
+            "name": "targetTemperature",
+            "type": "range",
+            "min": 17,
+            "max": 30,
+            "step": 1,
+            "label": "°C",
+            "title": {
+              "en": "Temperature",
+              "nl": "Temperatuur"
+            }
+          }
+        ]
+      }
+    ]
+  },
   "drivers": [
     {
       "name": {

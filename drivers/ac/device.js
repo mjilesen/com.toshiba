@@ -2,27 +2,19 @@ const { Device } = require('homey');
 const StateUtils = require ("../../lib/state_utils");
 const ACFeatures = require ("../../lib/ToshibaACFeatures");
 const Constants = require("../../lib/constants");
+const FlowSelections = require("../../lib/flowselections");
+
+let acMode ="";
+let swingMode = "";
 
 class ACDevice extends Device {
   /**
    * onInit is called when the device is initialized.
    */
   async onInit() {
-    // initialize the capability listeners
-    const acMode    = await this.getStoreValue( Constants.StoredCapabilityTargetACMode);
-    const swingMode = await this.getStoreValue( Constants.StoredCapabilityTargetSwingMode );
-
-    this.registerMultipleCapabilityListener( [Constants.CapabilityOnOff,
-                                              acMode,
-                                              Constants.CapabilityTargetTemperatureInside,
-                                              Constants.CapabilityTargetFanMode,
-                                              Constants.CapabilityTargetPowerMode,
-                                              swingMode
-                                              ],
-                                              async ( capabilityValues, capabilityOptions ) => {
-      await this.updateCapabilities( capabilityValues );
-      }
-    );
+    await this.initCapabilities();
+    this.initFlows();
+    this.initConditions();
 };
 
   /**
@@ -65,6 +57,85 @@ class ACDevice extends Device {
     this.log('ACDevice has been deleted' );
   };
 
+  async initCapabilities(){
+    // initialize the capability listeners
+    acMode    = await this.getStoreValue( Constants.StoredCapabilityTargetACMode);
+    swingMode = await this.getStoreValue( Constants.StoredCapabilityTargetSwingMode );
+
+    this.registerMultipleCapabilityListener( [Constants.CapabilityOnOff,
+                                              acMode,
+                                              Constants.CapabilityTargetTemperatureInside,
+                                              Constants.CapabilityTargetFanMode,
+                                              Constants.CapabilityTargetPowerMode,
+                                              swingMode
+                                              ],
+                                              async ( capabilityValues, capabilityOptions ) => {
+      await this.updateCapabilities( capabilityValues );
+      }
+    );
+  };
+
+  initConditions(){
+    //outside temperature
+    const outsideTemperatureCondition = this.homey.flow.getConditionCard('OutsideTemperatureTooHigh');
+    outsideTemperatureCondition.registerRunListener(async (args, state) => {
+      const outsideTemperature = await this.getCapabilityValue( Constants.CapabilityMeasureTemperaturOutside );
+      return outsideTemperature > args.trashholdTemp;
+    });
+  };
+
+  async initFlows(){
+    //mode
+    const modeActionCard = this.homey.flow.getActionCard( "SetMode");
+    modeActionCard.registerRunListener(async (args, state) => {
+        this.setCapabilityValue( acMode, args.acMode.id )
+    });
+
+    modeActionCard.registerArgumentAutocompleteListener('acMode', async (query, args) => {
+      const results = FlowSelections.getModeResult( this );
+      return this.getResult( results, query );
+    });
+
+    //swing mode
+    const swingModeActionCard = this.homey.flow.getActionCard( "SetSwingMode");
+    swingModeActionCard.registerRunListener(async (args, state) => {
+        this.setCapabilityValue( swingMode, args.acSwingMode.id )
+    });
+
+    swingModeActionCard.registerArgumentAutocompleteListener('acSwingMode', async (query, args) => {
+       const results = FlowSelections.getSwingModeResult( this );
+       return this.getResult( results, query );
+   });
+
+   //power mode
+   const powerModeActionCard = this.homey.flow.getActionCard( "SetPowerMode");
+   powerModeActionCard.registerRunListener(async (args, state) => {
+       this.setCapabilityValue( Constants.CapabilityTargetPowerMode, args.acPowerMode.id )
+   });
+
+   powerModeActionCard.registerArgumentAutocompleteListener('acPowerMode', async (query, args) => {
+      const results = FlowSelections.getPowerModeResult();
+      return this.getResult( results, query );
+   });
+
+   //fan mode
+   const fanModeActionCard = this.homey.flow.getActionCard( "SetFanMode");
+   fanModeActionCard.registerRunListener(async (args, state) => {
+       this.setCapabilityValue( Constants.CapabilityTargetFanMode, args.acFanMode.id )
+   });
+
+   fanModeActionCard.registerArgumentAutocompleteListener('acFanMode', async (query, args) => {
+      const results = FlowSelections.getFanModeResult();
+      return this.getResult( results, query );
+   });
+
+    //target temperature
+    const targetTemperatureActionCard = this.homey.flow.getActionCard( "SetTargetTemperature");
+    targetTemperatureActionCard.registerRunListener(async (args, state) => {
+        this.setCapabilityValue( Constants.CapabilityTargetTemperatureInside, args.targetTemperature )
+    });
+  };
+
   async updateCapabilities( capabilityValues ){
     let onoffChanged = this.getCapabilityValue( Constants.CapabilityOnOff )
      for( let[key, value] of Object.entries( capabilityValues) ){
@@ -93,6 +164,14 @@ class ACDevice extends Device {
       StateUtils.convertStateToCapabilities( this, state );
     }
   };
-};
 
+  getResult( results, query ){
+    // filter based on the query
+    return results.filter((result) => {
+       return result.name.toLowerCase().includes(query.toLowerCase());
+       });
+  };
+
+
+};
 module.exports = ACDevice;
