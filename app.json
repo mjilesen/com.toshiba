@@ -11,8 +11,10 @@
     "en": "Toshiba"
   },
   "description": {
-    "en": "Adds support for Toshiba AC units"
+    "en": "Adds support for Toshiba AC units",
+    "nl": "Support voor Toshiba AC units"
   },
+  "brandColor": "#a52019",
   "category": [
     "climate"
   ],
@@ -24,7 +26,29 @@
   },
   "author": {
     "name": "Monique Jilesen",
-    "email": "monique.jilesen@gmail.com"
+    "email": "monique.jilesen.homey@gmail.com"
+  },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "mjilesen"
+      }
+    }
+  },
+  "bugs": {
+    "url": "https://github.com/mjilesen/com.toshiba/issues"
+  },
+  "source": "https://github.com/mjilesen/com.toshiba",
+  "support": "https://github.com/mjilesen/com.toshiba/issues",
+  "tags": {
+    "en": [
+      "Toshiba AC",
+      "Airconditioner"
+    ],
+    "nl": [
+      "Toshiba AC",
+      "Airconditioner"
+    ]
   },
   "flow": {
     "conditions": [
