@@ -11,8 +11,10 @@
     "en": "Toshiba"
   },
   "description": {
-    "en": "Adds support for Toshiba AC units"
+    "en": "Adds support for Toshiba AC units",
+    "nl": "Support voor Toshiba AC units"
   },
+  "brandColor": "#a52019",
   "category": [
     "climate"
   ],
@@ -24,7 +26,269 @@
   },
   "author": {
     "name": "Monique Jilesen",
-    "email": "monique.jilesen@gmail.com"
+    "email": "monique.jilesen.homey@gmail.com"
+  },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "mjilesen"
+      }
+    }
+  },
+  "bugs": {
+    "url": "https://github.com/mjilesen/com.toshiba/issues"
+  },
+  "source": "https://github.com/mjilesen/com.toshiba",
+  "support": "https://github.com/mjilesen/com.toshiba/issues",
+  "tags": {
+    "en": [
+      "Toshiba AC",
+      "Airconditioner"
+    ],
+    "nl": [
+      "Toshiba AC",
+      "Airconditioner"
+    ]
+  },
+  "flow": {
+    "conditions": [
+      {
+        "id": "OutsideTemperatureAbove",
+        "title": {
+          "en": "Outside temperature above",
+          "nl": "Buiten temperatuur is meer"
+        },
+        "titleFormatted": {
+          "en": "Outside temperature is above [[trashholdTemp]]",
+          "nl": "Buiten temperatuur is meer dan [[trashholdTemp]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ac"
+          },
+          {
+            "name": "trashholdTemp",
+            "type": "number",
+            "min": -30,
+            "max": 50,
+            "step": 1,
+            "placeholder": {
+              "en": "In °C",
+              "nl": "In °C"
+            }
+          }
+        ]
+      },
+      {
+        "id": "OutsideTemperatureBelow",
+        "title": {
+          "en": "Outside temperature below",
+          "nl": "Buiten temperatuur is onder"
+        },
+        "titleFormatted": {
+          "en": "Outside temperature is below [[trashholdTemp]]",
+          "nl": "Buiten temperatuur is minder dan [[trashholdTemp]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ac"
+          },
+          {
+            "name": "trashholdTemp",
+            "type": "number",
+            "min": -30,
+            "max": 50,
+            "step": 1,
+            "placeholder": {
+              "en": "In °C",
+              "nl": "In °C"
+            }
+          }
+        ]
+      },
+      {
+        "id": "InsideTemperatureAbove",
+        "title": {
+          "en": "Inside temperature above",
+          "nl": "Binnen temperatuur is meer"
+        },
+        "titleFormatted": {
+          "en": "Inside temperature is above [[trashholdTemp]]",
+          "nl": "Binnen temperatuur is meer dan [[trashholdTemp]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ac"
+          },
+          {
+            "name": "trashholdTemp",
+            "type": "number",
+            "min": -30,
+            "max": 50,
+            "step": 1,
+            "placeholder": {
+              "en": "In °C",
+              "nl": "In °C"
+            }
+          }
+        ]
+      },
+      {
+        "id": "InsideTemperatureBelow",
+        "title": {
+          "en": "Inside temperature below",
+          "nl": "Binnen temperatuur is onder"
+        },
+        "titleFormatted": {
+          "en": "Inside temperature is below [[trashholdTemp]]",
+          "nl": "Binnen temperatuur is minder dan [[trashholdTemp]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ac"
+          },
+          {
+            "name": "trashholdTemp",
+            "type": "number",
+            "min": -30,
+            "max": 50,
+            "step": 1,
+            "placeholder": {
+              "en": "In °C",
+              "nl": "In °C"
+            }
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": "SetMode",
+        "title": {
+          "en": "Set mode",
+          "nl": "Zet mode"
+        },
+        "titleFormatted": {
+          "en": "Set mode to [[acMode]]",
+          "nl": "Zet mode naar [[acMode]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ac&capabilities=target_ac_mode1|target_ac_mode2|target_ac_mode3"
+          },
+          {
+            "name": "acMode",
+            "type": "autocomplete"
+          }
+        ]
+      },
+      {
+        "id": "SetSwingMode",
+        "title": {
+          "en": "Set swing mode",
+          "nl": "Zet swing mode"
+        },
+        "titleFormatted": {
+          "en": "Set swing mode to [[acSwingMode]]",
+          "nl": "Zet swing mode naar [[acSwingMode]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ac&capabilities=target_swing_mode1|target_swing_mode2|target_swing_mode3|target_swing_mode4"
+          },
+          {
+            "name": "acSwingMode",
+            "type": "autocomplete"
+          }
+        ]
+      },
+      {
+        "id": "SetPowerMode",
+        "title": {
+          "en": "Set power mode",
+          "nl": "Zet power mode"
+        },
+        "titleFormatted": {
+          "en": "Set power mode to [[acPowerMode]]",
+          "nl": "Zet power mode naar [[acPowerMode]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ac&capabilities=target_power_mode"
+          },
+          {
+            "name": "acPowerMode",
+            "type": "autocomplete"
+          }
+        ]
+      },
+      {
+        "id": "SetFanMode",
+        "title": {
+          "en": "Set fan mode",
+          "nl": "Zet ventilator mode"
+        },
+        "titleFormatted": {
+          "en": "Set fan mode to [[acFanMode]]",
+          "nl": "Zet ventilator mode naar [[acFanMode]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ac&capabilities=target_fan_mode"
+          },
+          {
+            "name": "acFanMode",
+            "type": "autocomplete"
+          }
+        ]
+      },
+      {
+        "id": "SetTargetTemperature",
+        "title": {
+          "en": "Set temperature",
+          "nl": "Zet temperatuur"
+        },
+        "titleFormatted": {
+          "en": "Set temperature to [[targetTemperature]]",
+          "nl": "Zet temperatuur naar [[targetTemperature]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ac"
+          },
+          {
+            "name": "targetTemperature",
+            "type": "range",
+            "min": 17,
+            "max": 30,
+            "step": 1,
+            "label": "°C",
+            "title": {
+              "en": "Temperature",
+              "nl": "Temperatuur"
+            }
+          }
+        ]
+      }
+    ]
   },
   "drivers": [
     {
@@ -35,15 +299,11 @@
       "class": "other",
       "capabilities": [
         "onoff",
-        "target_ac_mode",
         "measure_temperature.inside",
         "target_temperature.inside",
         "measure_temperature_outside",
-        "measured_ac_mode",
-        "measured_fan_mode",
-        "measured_swing_mode",
-        "measured_power_selection",
-        "target_fan_mode"
+        "target_fan_mode",
+        "target_power_mode"
       ],
       "platforms": [
         "local"
@@ -119,34 +379,7 @@
         "small": "/drivers/ac/assets/images/small.png"
       },
       "id": "ac",
-      "settings": [
-        {
-          "id": "username",
-          "type": "text",
-          "label": {
-            "en": "Username",
-            "nl": "Gebruikersnaam"
-          },
-          "value": "John Doe",
-          "hint": {
-            "en": "The name of the user.",
-            "nl": "De naam van de gebruiker"
-          }
-        },
-        {
-          "id": "password",
-          "type": "password",
-          "label": {
-            "en": "Password",
-            "nl": "Wachtwoord"
-          },
-          "value": "Secret",
-          "hint": {
-            "en": "The password of the user.",
-            "nl": "Het wachtwoord van de gebruiker"
-          }
-        }
-      ]
+      "settings": []
     }
   ],
   "capabilities": {
@@ -180,51 +413,7 @@
       "setable": false,
       "icon": "/assets/icon.svg"
     },
-    "measured_ac_mode": {
-      "type": "string",
-      "title": {
-        "en": "Mode",
-        "nl": "Mode"
-      },
-      "uiComponent": "sensor",
-      "getable": true,
-      "setable": false,
-      "icon": "/assets/icon.svg"
-    },
-    "measured_fan_mode": {
-      "type": "string",
-      "title": {
-        "en": "Fan mode",
-        "nl": "Ventilator mode"
-      },
-      "uiComponent": "sensor",
-      "getable": true,
-      "setable": false,
-      "icon": "/assets/icon.svg"
-    },
-    "measured_power_selection": {
-      "type": "string",
-      "title": {
-        "en": "Power selection",
-        "nl": "Power selectie"
-      },
-      "uiComponent": "sensor",
-      "getable": true,
-      "setable": false,
-      "icon": "/assets/icon.svg"
-    },
-    "measured_swing_mode": {
-      "type": "string",
-      "title": {
-        "en": "Swing mode",
-        "nl": "Swing mode"
-      },
-      "uiComponent": "sensor",
-      "getable": true,
-      "setable": false,
-      "icon": "/assets/icon.svg"
-    },
-    "target_ac_mode": {
+    "target_ac_mode1": {
       "type": "enum",
       "title": {
         "en": "Mode",
@@ -267,10 +456,66 @@
         }
       ]
     },
+    "target_ac_mode2": {
+      "type": "enum",
+      "title": {
+        "en": "Mode",
+        "nl": "Mode"
+      },
+      "uiComponent": "picker",
+      "getable": true,
+      "setable": true,
+      "icon": "/assets/icon.svg",
+      "values": [
+        {
+          "id": "Heat",
+          "title": {
+            "en": "Heat"
+          }
+        }
+      ]
+    },
+    "target_ac_mode3": {
+      "type": "enum",
+      "title": {
+        "en": "Mode",
+        "nl": "Mode"
+      },
+      "uiComponent": "picker",
+      "getable": true,
+      "setable": true,
+      "icon": "/assets/icon.svg",
+      "values": [
+        {
+          "id": "Auto",
+          "title": {
+            "en": "Auto"
+          }
+        },
+        {
+          "id": "Cool",
+          "title": {
+            "en": "Cool"
+          }
+        },
+        {
+          "id": "Dry",
+          "title": {
+            "en": "Dry"
+          }
+        },
+        {
+          "id": "Fan",
+          "title": {
+            "en": "Fan"
+          }
+        }
+      ]
+    },
     "target_fan_mode": {
       "type": "enum",
       "title": {
-        "en": "Fab mode",
+        "en": "Fan mode",
         "nl": "Ventilator mode"
       },
       "uiComponent": "picker",
@@ -287,19 +532,22 @@
         {
           "id": "Quiet",
           "title": {
-            "en": "Quiet"
+            "en": "Quiet",
+            "nl": "Stil"
           }
         },
         {
           "id": "Low",
           "title": {
-            "en": "Low"
+            "en": "Low",
+            "nl": "Laag"
           }
         },
         {
           "id": "MediumLow",
           "title": {
-            "en": "MediumLow"
+            "en": "MediumLow",
+            "nl": "Medium laag"
           }
         },
         {
@@ -311,13 +559,249 @@
         {
           "id": "MediumHigh",
           "title": {
-            "en": "MediumHigh"
+            "en": "MediumHigh",
+            "nl": "Medium hoog"
           }
         },
         {
           "id": "High",
           "title": {
-            "en": "High"
+            "en": "High",
+            "nl": "Hoog"
+          }
+        }
+      ]
+    },
+    "target_power_mode": {
+      "type": "enum",
+      "title": {
+        "en": "Power selection",
+        "nl": "Power selectie"
+      },
+      "uiComponent": "picker",
+      "getable": true,
+      "setable": true,
+      "icon": "/assets/icon.svg",
+      "values": [
+        {
+          "id": "Power 50%",
+          "title": {
+            "en": "Power 50%"
+          }
+        },
+        {
+          "id": "Power 75%",
+          "title": {
+            "en": "Power 75%"
+          }
+        },
+        {
+          "id": "Power 100%",
+          "title": {
+            "en": "Power 100%"
+          }
+        },
+        {
+          "id": "None",
+          "title": {
+            "en": "None",
+            "nl": "Geen"
+          }
+        }
+      ]
+    },
+    "target_swing_mode1": {
+      "type": "enum",
+      "title": {
+        "en": "Swing mode",
+        "nl": "Swing mode"
+      },
+      "uiComponent": "picker",
+      "getable": true,
+      "setable": true,
+      "icon": "/assets/icon.svg",
+      "values": [
+        {
+          "id": "Off",
+          "title": {
+            "en": "Off",
+            "nl": "Uit"
+          }
+        },
+        {
+          "id": "Swing vertical",
+          "title": {
+            "en": "Swing vertical",
+            "nl": "Swing verticaal"
+          }
+        },
+        {
+          "id": "Swing horizontal",
+          "title": {
+            "en": "Swing horizontal",
+            "nl": "Swing horizontaal"
+          }
+        },
+        {
+          "id": "Swing vertical and horizontal",
+          "title": {
+            "en": "Swing vertical and horizontal",
+            "nl": "Swing verticaal and horizontaal"
+          }
+        },
+        {
+          "id": "Fixed 1",
+          "title": {
+            "en": "Fixed 1"
+          }
+        },
+        {
+          "id": "Fixed 2",
+          "title": {
+            "en": "Fixed 2"
+          }
+        },
+        {
+          "id": "Fixed 3",
+          "title": {
+            "en": "Fixed 3"
+          }
+        },
+        {
+          "id": "Fixed 4",
+          "title": {
+            "en": "Fixed 4"
+          }
+        },
+        {
+          "id": "Fixed 5",
+          "title": {
+            "en": "Fixed 5"
+          }
+        }
+      ]
+    },
+    "target_swing_mode2": {
+      "type": "enum",
+      "title": {
+        "en": "Swing mode",
+        "nl": "Swing mode"
+      },
+      "uiComponent": "picker",
+      "getable": true,
+      "setable": true,
+      "icon": "/assets/icon.svg",
+      "values": [
+        {
+          "id": "Off",
+          "title": {
+            "en": "Off",
+            "nl": "Uit"
+          }
+        },
+        {
+          "id": "Swing vertical",
+          "title": {
+            "en": "Swing vertical",
+            "nl": "Swing verticaal"
+          }
+        }
+      ]
+    },
+    "target_swing_mode3": {
+      "type": "enum",
+      "title": {
+        "en": "Swing mode",
+        "nl": "Swing mode"
+      },
+      "uiComponent": "picker",
+      "getable": true,
+      "setable": true,
+      "icon": "/assets/icon.svg",
+      "values": [
+        {
+          "id": "Off",
+          "title": {
+            "en": "Off",
+            "nl": "Uit"
+          }
+        },
+        {
+          "id": "Swing vertical",
+          "title": {
+            "en": "Swing vertical",
+            "nl": "Swing verticaal"
+          }
+        },
+        {
+          "id": "Swing horizontal",
+          "title": {
+            "en": "Swing horizontal",
+            "nl": "Swing horizontaal"
+          }
+        },
+        {
+          "id": "Swing vertical and horizontal",
+          "title": {
+            "en": "Swing vertical and horizontal",
+            "nl": "Swing verticaal and horizontaal"
+          }
+        }
+      ]
+    },
+    "target_swing_mode4": {
+      "type": "enum",
+      "title": {
+        "en": "Swing mode",
+        "nl": "Swing mode"
+      },
+      "uiComponent": "picker",
+      "getable": true,
+      "setable": true,
+      "icon": "/assets/icon.svg",
+      "values": [
+        {
+          "id": "Off",
+          "title": {
+            "en": "Off",
+            "nl": "Uit"
+          }
+        },
+        {
+          "id": "Swing vertical",
+          "title": {
+            "en": "Swing vertical",
+            "nl": "Swing verticaal"
+          }
+        },
+        {
+          "id": "Fixed 1",
+          "title": {
+            "en": "Fixed 1"
+          }
+        },
+        {
+          "id": "Fixed 2",
+          "title": {
+            "en": "Fixed 2"
+          }
+        },
+        {
+          "id": "Fixed 3",
+          "title": {
+            "en": "Fixed 3"
+          }
+        },
+        {
+          "id": "Fixed 4",
+          "title": {
+            "en": "Fixed 4"
+          }
+        },
+        {
+          "id": "Fixed 5",
+          "title": {
+            "en": "Fixed 5"
           }
         }
       ]

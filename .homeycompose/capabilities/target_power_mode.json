@@ -1,0 +1,16 @@
+{
+  "type": "enum",
+  "title": {
+    "en": "Power selection",
+    "nl": "Power selectie"
+  },
+  "uiComponent": "picker",
+  "getable": true,
+  "setable": true,
+  "icon": "/assets/icon.svg",
+  "values":[{"id":"Power 50%", "title": {"en":"Power 50%"}},
+            {"id":"Power 75%", "title": {"en":"Power 75%"}},
+            {"id":"Power 100%", "title": {"en":"Power 100%"}},
+            {"id":"None", "title": {"en":"None", "nl":"Geen"}}
+          ]
+}

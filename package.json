@@ -13,6 +13,8 @@
     "eslint-config-athom": "^3.0.1"
   },
   "dependencies": {
-    "axios": "^0.27.2"
+    "axios": "^0.27.2",
+    "azure-iot-device": "^1.18.0",
+    "azure-iot-device-amqp": "^1.14.0"
   }
 }

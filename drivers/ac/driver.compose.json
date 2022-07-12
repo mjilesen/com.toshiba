@@ -6,15 +6,11 @@
     "class": "other",
     "capabilities": [
         "onoff",
-        "target_ac_mode",
         "measure_temperature.inside",
         "target_temperature.inside",
         "measure_temperature_outside",
-        "measured_ac_mode",
-        "measured_fan_mode",
-        "measured_swing_mode",
-        "measured_power_selection",
-       "target_fan_mode"
+        "target_fan_mode",
+        "target_power_mode"
     ],
     "platforms": [
         "local"

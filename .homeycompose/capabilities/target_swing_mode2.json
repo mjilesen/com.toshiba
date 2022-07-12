@@ -1,0 +1,14 @@
+{
+  "type": "enum",
+  "title": {
+    "en": "Swing mode",
+    "nl": "Swing mode"
+  },
+  "uiComponent": "picker",
+  "getable": true,
+  "setable": true,
+  "icon": "/assets/icon.svg",
+  "values":[{"id":"Off", "title": {"en":"Off", "nl":"Uit"}},
+            {"id":"Swing vertical", "title": {"en":"Swing vertical", "nl":"Swing verticaal"}}
+          ]
+}

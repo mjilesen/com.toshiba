@@ -1,0 +1,13 @@
+{
+  "type": "enum",
+  "title": {
+    "en": "Mode",
+    "nl": "Mode"
+  },
+  "uiComponent": "picker",
+  "getable": true,
+  "setable": true,
+  "icon": "/assets/icon.svg",
+  "values":[{"id":"Heat", "title": {"en":"Heat"}}
+          ]
+}
