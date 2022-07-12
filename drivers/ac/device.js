@@ -62,13 +62,20 @@ class ACDevice extends Device {
     acMode    = await this.getStoreValue( Constants.StoredCapabilityTargetACMode);
     swingMode = await this.getStoreValue( Constants.StoredCapabilityTargetSwingMode );
 
-    this.registerMultipleCapabilityListener( [Constants.CapabilityOnOff,
-                                              acMode,
-                                              Constants.CapabilityTargetTemperatureInside,
-                                              Constants.CapabilityTargetFanMode,
-                                              Constants.CapabilityTargetPowerMode,
-                                              swingMode
-                                              ],
+    let capabilities = [ Constants.CapabilityOnOff,
+                         Constants.CapabilityTargetTemperatureInside,
+                         Constants.CapabilityTargetFanMode,
+                         Constants.CapabilityTargetPowerMode,
+                       ]
+    //do not add if capabilities not added (yet)
+    if( acMode ){
+      capabilities.push( acMode )
+    }
+    if( swingMode ){
+      capabilities.push( swingMode )
+    }
+
+    this.registerMultipleCapabilityListener( capabilities,
                                               async ( capabilityValues, capabilityOptions ) => {
       await this.updateCapabilities( capabilityValues );
       }
@@ -163,13 +170,17 @@ class ACDevice extends Device {
        await this.setCapabilityValue( key, value )
        onoffChanged = onoffChanged || ( key === Constants.CapabilityOnOff )
      }
+    await this.updateStateAfterUpdateCapability( onoffChanged )
+  };
 
-     const state = StateUtils.convertCapabilitiesToState( this )
-     await this.setStoreValue( Constants.StoredValueState, state )
+  async updateStateAfterUpdateCapability( onoffChanged ){
+    const state = StateUtils.convertCapabilitiesToState( this )
+    await this.setStoreValue( Constants.StoredValueState, state )
 
-     if ( onoffChanged ){
-        this.driver.amqpAPI.sendMessage( state, this.getData().DeviceUniqueID )
-     }
+    //only send message when airco is turned on or OnOff capability changed
+    if ( onoffChanged ){
+       this.driver.amqpAPI.sendMessage( state, this.getData().DeviceUniqueID )
+    }
   };
 
   updateStateAfterHeartBeat(insideTemperature, outsideTemperature ){
