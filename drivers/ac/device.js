@@ -66,6 +66,8 @@ class ACDevice extends Device {
                          Constants.CapabilityTargetTemperatureInside,
                          Constants.CapabilityTargetFanMode,
                          Constants.CapabilityTargetPowerMode,
+                         Constants.CapabilitySelfCleaning,
+                         Constants.CapabilityTargetMeritA
                        ]
     //do not add if capabilities not added (yet)
     if( acMode ){
@@ -73,6 +75,9 @@ class ACDevice extends Device {
     }
     if( swingMode ){
       capabilities.push( swingMode )
+    }
+    if( this.hasCapability( Constants.CapabilityTargetMeritB ) ){
+      capabilities.push( Constants.CapabilityTargetMeritB )
     }
 
     this.registerMultipleCapabilityListener( capabilities,
@@ -116,11 +121,32 @@ class ACDevice extends Device {
     //mode
     const modeActionCard = this.homey.flow.getActionCard( "SetMode");
     modeActionCard.registerRunListener(async (args, state) => {
-        this.setCapabilityValue( acMode, args.acMode.id )
+        this.setCapabilityValue( acMode, args.acMode.id );
+        this.setCapabilityValue( Constants.CapabilityTargetMeritA, args.meritA.id );
+        this.setCapabilityValue( Constants.CapabilityTargetMeritB, args.meritB.id )
     });
 
     modeActionCard.registerArgumentAutocompleteListener('acMode', async (query, args) => {
       const results = FlowSelections.getModeResult( this );
+      return this.getResult( results, query );
+    });
+
+    modeActionCard.registerArgumentAutocompleteListener('meritA', async (query, args) => {
+      const acMode = args.acMode.id;
+      console.log( "Acmode", acMode, args.acMode )
+      let results =[];
+      if ( acMode){
+        results = FlowSelections.getMeritAResult( this, acMode );
+      }
+      return this.getResult( results, query );
+    });
+
+    modeActionCard.registerArgumentAutocompleteListener('meritB', async (query, args) => {
+      const acMode = args.acMode.id;
+      let results = [];
+      if ( acMode ){
+        results = FlowSelections.getMeritBResult( this, acMode );
+      };
       return this.getResult( results, query );
     });
 

@@ -177,8 +177,8 @@
           "nl": "Zet mode"
         },
         "titleFormatted": {
-          "en": "Set mode to [[acMode]]",
-          "nl": "Zet mode naar [[acMode]]"
+          "en": "Set mode to [[acMode]], merit A to [[meritA]] and merit B to [[meritB]]",
+          "nl": "Zet mode naar [[acMode]], merit A naar [[meritA]] en merit B naar [[meritB]]"
         },
         "args": [
           {
@@ -188,7 +188,29 @@
           },
           {
             "name": "acMode",
-            "type": "autocomplete"
+            "type": "autocomplete",
+            "title": {
+              "en": "Mode",
+              "nl": "Mode"
+            }
+          },
+          {
+            "type": "autocomplete",
+            "name": "meritA",
+            "required": "false",
+            "title": {
+              "en": "Merit A",
+              "nl": "Merit A"
+            }
+          },
+          {
+            "type": "autocomplete",
+            "name": "meritB",
+            "required": "false",
+            "title": {
+              "en": "Merit B",
+              "nl": "Merit B"
+            }
           }
         ]
       },
@@ -210,7 +232,11 @@
           },
           {
             "name": "acSwingMode",
-            "type": "autocomplete"
+            "type": "autocomplete",
+            "title": {
+              "en": "Swing mode",
+              "nl": "Swing mode"
+            }
           }
         ]
       },
@@ -232,7 +258,11 @@
           },
           {
             "name": "acPowerMode",
-            "type": "autocomplete"
+            "type": "autocomplete",
+            "title": {
+              "en": "Power mode",
+              "nl": "Power mode"
+            }
           }
         ]
       },
@@ -254,7 +284,11 @@
           },
           {
             "name": "acFanMode",
-            "type": "autocomplete"
+            "type": "autocomplete",
+            "title": {
+              "en": "Fan mode",
+              "nl": "Ventilator mode"
+            }
           }
         ]
       },
@@ -287,6 +321,28 @@
             }
           }
         ]
+      },
+      {
+        "id": "SetTargetAirPureIon",
+        "title": {
+          "en": "Set Pure",
+          "nl": "Zet Pure"
+        },
+        "titleFormatted": {
+          "en": "Set Pure to [[targetAirPureIon]]",
+          "nl": "Zet Pure naar [[targetAirPureIon]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ac&capabilities=target_air_pure_ion"
+          },
+          {
+            "name": "targetAirPureIon",
+            "type": "checkbox"
+          }
+        ]
       }
     ]
   },
@@ -303,7 +359,9 @@
         "target_temperature.inside",
         "measure_temperature_outside",
         "target_fan_mode",
-        "target_power_mode"
+        "target_power_mode",
+        "target_ac_merit_a",
+        "target_self_cleaning"
       ],
       "platforms": [
         "local"
@@ -413,6 +471,104 @@
       "setable": false,
       "icon": "/assets/icon.svg"
     },
+    "target_ac_merit_a": {
+      "type": "enum",
+      "title": {
+        "en": "Mode",
+        "nl": "Mode"
+      },
+      "uiComponent": "picker",
+      "getable": true,
+      "setable": true,
+      "icon": "/assets/icon.svg",
+      "values": [
+        {
+          "id": "Off",
+          "title": {
+            "en": "Off"
+          }
+        },
+        {
+          "id": "Sleep care",
+          "title": {
+            "en": "Sleep care"
+          }
+        },
+        {
+          "id": "Comfort",
+          "title": {
+            "en": "Comfort"
+          }
+        },
+        {
+          "id": "High Power",
+          "title": {
+            "en": "High Power"
+          }
+        },
+        {
+          "id": "Eco",
+          "title": {
+            "en": "Eco"
+          }
+        },
+        {
+          "id": "Floor",
+          "title": {
+            "en": "Floor"
+          }
+        },
+        {
+          "id": "CDU Silent 1",
+          "title": {
+            "en": "CDU Silent 1"
+          }
+        },
+        {
+          "id": "CDU Silent 2",
+          "title": {
+            "en": "CDU Silent 2"
+          }
+        },
+        {
+          "id": "Heating 8C",
+          "title": {
+            "en": "Heating 8C"
+          }
+        }
+      ]
+    },
+    "target_ac_merit_b": {
+      "type": "enum",
+      "title": {
+        "en": "Mode",
+        "nl": "Mode"
+      },
+      "uiComponent": "picker",
+      "getable": true,
+      "setable": true,
+      "icon": "/assets/icon.svg",
+      "values": [
+        {
+          "id": "Off",
+          "title": {
+            "en": "Off"
+          }
+        },
+        {
+          "id": "Fire Place 1",
+          "title": {
+            "en": "Fire place 1"
+          }
+        },
+        {
+          "id": "Fire Place 2",
+          "title": {
+            "en": "Fire place 2"
+          }
+        }
+      ]
+    },
     "target_ac_mode1": {
       "type": "enum",
       "title": {
@@ -512,6 +668,16 @@
         }
       ]
     },
+    "target_air_pure_ion": {
+      "type": "boolean",
+      "title": {
+        "en": "Pure",
+        "nl": "Pure"
+      },
+      "uiComponent": "toggle",
+      "getable": true,
+      "setable": true
+    },
     "target_fan_mode": {
       "type": "enum",
       "title": {
@@ -609,6 +775,16 @@
           }
         }
       ]
+    },
+    "target_self_cleaning": {
+      "type": "boolean",
+      "title": {
+        "en": "Self cleaning",
+        "nl": "Zelf reiniging"
+      },
+      "uiComponent": "toggle",
+      "getable": true,
+      "setable": true
     },
     "target_swing_mode1": {
       "type": "enum",
