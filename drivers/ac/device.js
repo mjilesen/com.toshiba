@@ -123,7 +123,9 @@ class ACDevice extends Device {
     modeActionCard.registerRunListener(async (args, state) => {
         this.setCapabilityValue( acMode, args.acMode.id );
         this.setCapabilityValue( Constants.CapabilityTargetMeritA, args.meritA.id );
-        this.setCapabilityValue( Constants.CapabilityTargetMeritB, args.meritB.id )
+        if ( this.hasCapability( Constants.CapabilityTargetMeritB ) ){
+          this.setCapabilityValue( Constants.CapabilityTargetMeritB, args.meritB.id )
+        }
     });
 
     modeActionCard.registerArgumentAutocompleteListener('acMode', async (query, args) => {
@@ -133,7 +135,6 @@ class ACDevice extends Device {
 
     modeActionCard.registerArgumentAutocompleteListener('meritA', async (query, args) => {
       const acMode = args.acMode.id;
-      console.log( "Acmode", acMode, args.acMode )
       let results =[];
       if ( acMode){
         results = FlowSelections.getMeritAResult( this, acMode );
@@ -187,6 +188,18 @@ class ACDevice extends Device {
     const targetTemperatureActionCard = this.homey.flow.getActionCard( "SetTargetTemperature");
     targetTemperatureActionCard.registerRunListener(async (args, state) => {
         this.setCapabilityValue( Constants.CapabilityTargetTemperatureInside, args.targetTemperature )
+    });
+
+    //target air pure
+    const targetAirPureActionCard = this.homey.flow.getActionCard( "SetTargetAirPureIon");
+    targetAirPureActionCard.registerRunListener(async (args, state) => {
+        this.setCapabilityValue( Constants.CapabilityTargetAirPureIon, args.targetAirPureIon )
+    });
+
+    //target self cleaning
+    const targetSelfCleaningActionCard = this.homey.flow.getActionCard( "SetTargetSelfCleaning");
+    targetSelfCleaningActionCard.registerRunListener(async (args, state) => {
+        this.setCapabilityValue( Constants.CapabilitySelfCleaning, args.targetSelfCleaning )
     });
   };
 

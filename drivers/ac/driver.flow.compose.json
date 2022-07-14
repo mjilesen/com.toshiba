@@ -103,6 +103,20 @@
     "type": "checkbox"
   }
  ]
+},
+{
+  "id": "SetTargetSelfCleaning",
+  "title": { "en": "Set self cleaning",
+             "nl": "Zet zelf reiniging" },
+  "titleFormatted": { "en": "Set self cleaning to [[targetSelfCleaning]]",
+                      "nl": "Zet zelf reiniging naar [[targetSelfCleaning]]" },
+                      "$filter": "capabilities=target_self_cleaning",
+  "args": [
+  {
+    "name": "targetSelfCleaning",
+    "type": "checkbox"
+  }
+ ]
 }
 ],
 "conditions": [

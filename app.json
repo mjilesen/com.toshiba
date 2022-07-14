@@ -343,6 +343,28 @@
             "type": "checkbox"
           }
         ]
+      },
+      {
+        "id": "SetTargetSelfCleaning",
+        "title": {
+          "en": "Set self cleaning",
+          "nl": "Zet zelf reiniging"
+        },
+        "titleFormatted": {
+          "en": "Set self cleaning to [[targetSelfCleaning]]",
+          "nl": "Zet zelf reiniging naar [[targetSelfCleaning]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ac&capabilities=target_self_cleaning"
+          },
+          {
+            "name": "targetSelfCleaning",
+            "type": "checkbox"
+          }
+        ]
       }
     ]
   },
