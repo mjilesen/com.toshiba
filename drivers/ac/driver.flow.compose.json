@@ -4,13 +4,26 @@
       "id": "SetMode",
       "title": { "en": "Set mode",
                  "nl": "Zet mode" },
-      "titleFormatted": { "en": "Set mode to [[acMode]]",
-                          "nl": "Zet mode naar [[acMode]]" },
+      "titleFormatted": { "en": "Set mode to [[acMode]], merit A to [[meritA]] and merit B to [[meritB]]",
+                          "nl": "Zet mode naar [[acMode]], merit A naar [[meritA]] en merit B naar [[meritB]]" },
       "$filter": "capabilities=target_ac_mode1|target_ac_mode2|target_ac_mode3",
     "args": [
       {
         "name": "acMode",
-        "type": "autocomplete"
+        "type": "autocomplete",
+        "title":{"en":"Mode", "nl": "Mode"}
+      },
+      {
+        "type": "autocomplete",
+        "name": "meritA",
+        "required":"false",
+        "title":{"en":"Merit A", "nl": "Merit A"}
+      },
+      {
+       "type": "autocomplete",
+       "name": "meritB",
+       "required":"false",
+       "title":{"en":"Merit B", "nl": "Merit B"}
       }
     ]
   },
@@ -24,7 +37,8 @@
   "args": [
     {
       "name": "acSwingMode",
-      "type": "autocomplete"
+      "type": "autocomplete",
+      "title":{"en":"Swing mode", "nl":"Swing mode"}
     }
   ]
 },
@@ -38,7 +52,8 @@
 "args": [
   {
     "name": "acPowerMode",
-    "type": "autocomplete"
+    "type": "autocomplete",
+    "title":{"en":"Power mode", "nl":"Power mode"}
   }
 ]
 },
@@ -52,7 +67,8 @@
 "args": [
   {
     "name": "acFanMode",
-    "type": "autocomplete"
+    "type": "autocomplete",
+    "title":{"en":"Fan mode", "nl":"Ventilator mode"}
   }
 ]
 },
@@ -71,6 +87,34 @@
     "step":1,
     "label":"°C",
     "title":{"en":"Temperature", "nl":"Temperatuur"}
+  }
+ ]
+},
+{
+  "id": "SetTargetAirPureIon",
+  "title": { "en": "Set Pure",
+             "nl": "Zet Pure" },
+  "titleFormatted": { "en": "Set Pure to [[targetAirPureIon]]",
+                      "nl": "Zet Pure naar [[targetAirPureIon]]" },
+                      "$filter": "capabilities=target_air_pure_ion",
+  "args": [
+  {
+    "name": "targetAirPureIon",
+    "type": "checkbox"
+  }
+ ]
+},
+{
+  "id": "SetTargetSelfCleaning",
+  "title": { "en": "Set self cleaning",
+             "nl": "Zet zelf reiniging" },
+  "titleFormatted": { "en": "Set self cleaning to [[targetSelfCleaning]]",
+                      "nl": "Zet zelf reiniging naar [[targetSelfCleaning]]" },
+                      "$filter": "capabilities=target_self_cleaning",
+  "args": [
+  {
+    "name": "targetSelfCleaning",
+    "type": "checkbox"
   }
  ]
 }

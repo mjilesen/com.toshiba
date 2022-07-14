@@ -1,0 +1,21 @@
+{
+  "type": "enum",
+  "title": {
+    "en": "Mode",
+    "nl": "Mode"
+  },
+  "uiComponent": "picker",
+  "getable": true,
+  "setable": true,
+  "icon": "/assets/icon.svg",
+  "values":[{"id":"Off", "title": {"en":"Off"}},
+            {"id":"Sleep care", "title": {"en":"Sleep care"}},
+            {"id":"Comfort", "title": {"en":"Comfort"}},
+            {"id":"High Power", "title": {"en":"High Power"}},
+            {"id":"Eco", "title": {"en":"Eco"}},
+            {"id":"Floor", "title": {"en":"Floor"}},
+            {"id":"CDU Silent 1", "title": {"en":"CDU Silent 1"}},
+            {"id":"CDU Silent 2", "title": {"en":"CDU Silent 2"}},
+            {"id":"Heating 8C", "title": {"en":"Heating 8C"}}
+          ]
+}

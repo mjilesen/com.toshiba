@@ -1,0 +1,15 @@
+{
+  "type": "enum",
+  "title": {
+    "en": "Mode",
+    "nl": "Mode"
+  },
+  "uiComponent": "picker",
+  "getable": true,
+  "setable": true,
+  "icon": "/assets/icon.svg",
+  "values":[{"id":"Off", "title": {"en":"Off"}},
+            {"id":"Fire Place 1", "title": {"en":"Fire place 1"}},
+            {"id":"Fire Place 2", "title": {"en":"Fire place 2"}}
+          ]
+}
