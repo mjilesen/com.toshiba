@@ -1,8 +1,8 @@
 {
   "type": "enum",
   "title": {
-    "en": "Mode",
-    "nl": "Mode"
+    "en": "Merit B",
+    "nl": "Merit B"
   },
   "uiComponent": "picker",
   "getable": true,

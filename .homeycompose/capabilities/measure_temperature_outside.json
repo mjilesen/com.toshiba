@@ -5,5 +5,5 @@
   "uiComponent": "sensor",
   "getable": true,
   "setable": false,
-  "icon": "/assets/icon.svg"
+  "icon": "/assets/thermometer.svg"
 }

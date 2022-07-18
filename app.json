@@ -491,13 +491,13 @@
       "uiComponent": "sensor",
       "getable": true,
       "setable": false,
-      "icon": "/assets/icon.svg"
+      "icon": "/assets/thermometer.svg"
     },
     "target_ac_merit_a": {
       "type": "enum",
       "title": {
-        "en": "Mode",
-        "nl": "Mode"
+        "en": "Merit A",
+        "nl": "Merit A"
       },
       "uiComponent": "picker",
       "getable": true,
@@ -563,8 +563,8 @@
     "target_ac_merit_b": {
       "type": "enum",
       "title": {
-        "en": "Mode",
-        "nl": "Mode"
+        "en": "Merit B",
+        "nl": "Merit B"
       },
       "uiComponent": "picker",
       "getable": true,
