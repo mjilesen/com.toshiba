@@ -48,7 +48,6 @@ class ACDriver extends Driver {
       this.homey.settings.set( Constants.SettingPassword, password );
 
       resobj = await this.httpAPI.login( username, password );
-
       if ( resobj.IsSuccess && !this.amqpAPI ){
         this.initializeAmqp()
       }
