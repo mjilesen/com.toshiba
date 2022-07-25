@@ -2,7 +2,6 @@ const { Device } = require('homey');
 const StateUtils = require ("../../lib/state_utils");
 const ACFeatures = require ("../../lib/ToshibaACFeatures");
 const Constants = require("../../lib/constants");
-const FlowSelections = require("../../lib/flowselections");
 
 let acMode ="";
 let swingMode = "";
@@ -13,8 +12,6 @@ class ACDevice extends Device {
    */
   async onInit() {
     await this.initCapabilities();
-    this.initFlows();
-    this.initConditions();
 };
 
   /**
@@ -87,123 +84,7 @@ class ACDevice extends Device {
     );
   };
 
-  initConditions(){
-    //outside temperature above
-    const outsideTemperatureAboveCondition = this.homey.flow.getConditionCard('OutsideTemperatureAbove');
-    outsideTemperatureAboveCondition.registerRunListener(async (args, state) => {
-      const outsideTemperature = await this.getCapabilityValue( Constants.CapabilityMeasureTemperaturOutside );
-      return outsideTemperature > args.trashholdTemp;
-    });
-
-    //outside temperature below
-    const outsideTemperatureBelowCondition = this.homey.flow.getConditionCard('OutsideTemperatureBelow');
-    outsideTemperatureBelowCondition.registerRunListener(async (args, state) => {
-      const outsideTemperature = await this.getCapabilityValue( Constants.CapabilityMeasureTemperaturOutside );
-      return outsideTemperature < args.trashholdTemp;
-    });
-
-    //inside temperature above
-    const insideTemperatureAboveCondition = this.homey.flow.getConditionCard('InsideTemperatureAbove');
-    insideTemperatureAboveCondition.registerRunListener(async (args, state) => {
-      const insideTemperature = await this.getCapabilityValue( Constants.CapabilityMeasureTemperatureInside );
-      return insideTemperature > args.trashholdTemp;
-    });
-
-    //inside temperature below
-    const insideTemperatureBelowCondition = this.homey.flow.getConditionCard('InsideTemperatureBelow');
-    insideTemperatureBelowCondition.registerRunListener(async (args, state) => {
-      const insideTemperature = await this.getCapabilityValue( Constants.CapabilityMeasureTemperatureInside );
-      return insideTemperature < args.trashholdTemp;
-    });
-  };
-
-  async initFlows(){
-    //mode
-    const modeActionCard = this.homey.flow.getActionCard( "SetMode");
-    modeActionCard.registerRunListener(async (args, state) => {
-        this.setCapabilityValue( acMode, args.acMode.id );
-        this.setCapabilityValue( Constants.CapabilityTargetMeritA, args.meritA.id );
-        if ( this.hasCapability( Constants.CapabilityTargetMeritB ) ){
-          this.setCapabilityValue( Constants.CapabilityTargetMeritB, args.meritB.id )
-        }
-    });
-
-    modeActionCard.registerArgumentAutocompleteListener('acMode', async (query, args) => {
-      const results = FlowSelections.getModeResult( this );
-      return this.getResult( results, query );
-    });
-
-    modeActionCard.registerArgumentAutocompleteListener('meritA', async (query, args) => {
-      const acMode = args.acMode.id;
-      let results =[];
-      if ( acMode){
-        results = FlowSelections.getMeritAResult( this, acMode );
-      }
-      return this.getResult( results, query );
-    });
-
-    modeActionCard.registerArgumentAutocompleteListener('meritB', async (query, args) => {
-      const acMode = args.acMode.id;
-      let results = [];
-      if ( acMode ){
-        results = FlowSelections.getMeritBResult( this, acMode );
-      };
-      return this.getResult( results, query );
-    });
-
-    //swing mode
-    const swingModeActionCard = this.homey.flow.getActionCard( "SetSwingMode");
-    swingModeActionCard.registerRunListener(async (args, state) => {
-        this.setCapabilityValue( swingMode, args.acSwingMode.id )
-    });
-
-    swingModeActionCard.registerArgumentAutocompleteListener('acSwingMode', async (query, args) => {
-       const results = FlowSelections.getSwingModeResult( this );
-       return this.getResult( results, query );
-   });
-
-   //power mode
-   const powerModeActionCard = this.homey.flow.getActionCard( "SetPowerMode");
-   powerModeActionCard.registerRunListener(async (args, state) => {
-       this.setCapabilityValue( Constants.CapabilityTargetPowerMode, args.acPowerMode.id )
-   });
-
-   powerModeActionCard.registerArgumentAutocompleteListener('acPowerMode', async (query, args) => {
-      const results = FlowSelections.getPowerModeResult();
-      return this.getResult( results, query );
-   });
-
-   //fan mode
-   const fanModeActionCard = this.homey.flow.getActionCard( "SetFanMode");
-   fanModeActionCard.registerRunListener(async (args, state) => {
-       this.setCapabilityValue( Constants.CapabilityTargetFanMode, args.acFanMode.id )
-   });
-
-   fanModeActionCard.registerArgumentAutocompleteListener('acFanMode', async (query, args) => {
-      const results = FlowSelections.getFanModeResult();
-      return this.getResult( results, query );
-   });
-
-    //target temperature
-    const targetTemperatureActionCard = this.homey.flow.getActionCard( "SetTargetTemperature");
-    targetTemperatureActionCard.registerRunListener(async (args, state) => {
-        this.setCapabilityValue( Constants.CapabilityTargetTemperatureInside, args.targetTemperature )
-    });
-
-    //target air pure
-    const targetAirPureActionCard = this.homey.flow.getActionCard( "SetTargetAirPureIon");
-    targetAirPureActionCard.registerRunListener(async (args, state) => {
-        this.setCapabilityValue( Constants.CapabilityTargetAirPureIon, args.targetAirPureIon )
-    });
-
-    //target self cleaning
-    const targetSelfCleaningActionCard = this.homey.flow.getActionCard( "SetTargetSelfCleaning");
-    targetSelfCleaningActionCard.registerRunListener(async (args, state) => {
-        this.setCapabilityValue( Constants.CapabilitySelfCleaning, args.targetSelfCleaning )
-    });
-  };
-
-  async updateCapabilities( capabilityValues ){
+    async updateCapabilities( capabilityValues ){
     let onoffChanged = this.getCapabilityValue( Constants.CapabilityOnOff )
      for( let[key, value] of Object.entries( capabilityValues) ){
        await this.setCapabilityValue( key, value )
