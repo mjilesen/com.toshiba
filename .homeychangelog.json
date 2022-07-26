@@ -13,5 +13,8 @@
   },
   "1.1.2": {
     "en": "Bug fixes"
+  },
+  "1.1.3": {
+    "en": "Fixed bugs in FanSpeed and Merit A"
   }
 }
