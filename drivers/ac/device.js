@@ -1,3 +1,5 @@
+'use strict';
+
 const { Device } = require('homey');
 const StateUtils = require('../../lib/state_utils');
 const ACFeatures = require('../../lib/ToshibaACFeatures');
