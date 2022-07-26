@@ -112,7 +112,7 @@ class ACDevice extends Device {
 
   updateState(state) {
     const currentState = this.getStoreValue(Constants.StoredValueState);
-    if (currentState != state) {
+    if (currentState !== state) {
       this.setStoreValue(Constants.StoredValueState, state);
       StateUtils.convertStateToCapabilities(this, state);
     }
