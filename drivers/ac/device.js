@@ -1,30 +1,31 @@
 const { Device } = require('homey');
-const StateUtils = require ("../../lib/state_utils");
-const ACFeatures = require ("../../lib/ToshibaACFeatures");
-const Constants = require("../../lib/constants");
+const StateUtils = require('../../lib/state_utils');
+const ACFeatures = require('../../lib/ToshibaACFeatures');
+const Constants = require('../../lib/constants');
 
-let acMode ="";
-let swingMode = "";
+let acMode = '';
+let swingMode = '';
 
 class ACDevice extends Device {
+
   /**
    * onInit is called when the device is initialized.
    */
   async onInit() {
     await this.initCapabilities();
-};
+  }
 
   /**
    * onAdded is called when the user adds the device, called just after pairing.
    */
   async onAdded() {
     this.log('ACDevice has been added');
-    //determine the capabilities for this type of AC
-    await ACFeatures.setCapabilities( this )
-    //set starting values for the AC
-    const state = await this.getStoreValue( Constants.StoredValueState );
-    StateUtils.convertStateToCapabilities( this, state );
-  };
+    // determine the capabilities for this type of AC
+    await ACFeatures.setCapabilities(this);
+    // set starting values for the AC
+    const state = await this.getStoreValue(Constants.StoredValueState);
+    StateUtils.convertStateToCapabilities(this, state);
+  }
 
   /**
    * onSettings is called when the user updates the device's settings.
@@ -36,7 +37,7 @@ class ACDevice extends Device {
    */
   async onSettings({ oldSettings, newSettings, changedKeys }) {
     this.log('ACDevice settings where changed');
-  };
+  }
 
   /**
    * onRenamed is called when the user updates the device's name.
@@ -45,85 +46,82 @@ class ACDevice extends Device {
    */
   async onRenamed(name) {
     this.log('ACDevice was renamed');
-  };
+  }
 
   /**
    * onDeleted is called when the user deleted the device.
    */
   async onDeleted() {
-    this.log('ACDevice has been deleted' );
-  };
+    this.log('ACDevice has been deleted');
+  }
 
-  async initCapabilities(){
+  async initCapabilities() {
     // initialize the capability listeners
-    acMode    = await this.getStoreValue( Constants.StoredCapabilityTargetACMode);
-    swingMode = await this.getStoreValue( Constants.StoredCapabilityTargetSwingMode );
+    acMode = await this.getStoreValue(Constants.StoredCapabilityTargetACMode);
+    swingMode = await this.getStoreValue(Constants.StoredCapabilityTargetSwingMode);
 
-    let capabilities = [ Constants.CapabilityOnOff,
-                         Constants.CapabilityTargetTemperatureInside,
-                         Constants.CapabilityTargetFanMode,
-                         Constants.CapabilityTargetPowerMode,
-                         Constants.CapabilitySelfCleaning,
-                         Constants.CapabilityTargetMeritA
-                       ]
-    //do not add if capabilities not added (yet)
-    if( acMode ){
-      capabilities.push( acMode )
+    const capabilities = [Constants.CapabilityOnOff,
+      Constants.CapabilityTargetTemperatureInside,
+      Constants.CapabilityTargetFanMode,
+      Constants.CapabilityTargetPowerMode,
+      Constants.CapabilitySelfCleaning,
+      Constants.CapabilityTargetMeritA,
+    ];
+    // do not add if capabilities not added (yet)
+    if (acMode) {
+      capabilities.push(acMode);
     }
-    if( swingMode ){
-      capabilities.push( swingMode )
+    if (swingMode) {
+      capabilities.push(swingMode);
     }
-    if( this.hasCapability( Constants.CapabilityTargetMeritB ) ){
-      capabilities.push( Constants.CapabilityTargetMeritB )
+    if (this.hasCapability(Constants.CapabilityTargetMeritB)) {
+      capabilities.push(Constants.CapabilityTargetMeritB);
     }
 
-    this.registerMultipleCapabilityListener( capabilities,
-                                              async ( capabilityValues, capabilityOptions ) => {
-      await this.updateCapabilities( capabilityValues );
-      }
-    );
-  };
+    this.registerMultipleCapabilityListener(capabilities,
+      async (capabilityValues, capabilityOptions) => {
+        await this.updateCapabilities(capabilityValues);
+      });
+  }
 
-    async updateCapabilities( capabilityValues ){
-    let onoffChanged = this.getCapabilityValue( Constants.CapabilityOnOff )
-     for( let[key, value] of Object.entries( capabilityValues) ){
-       await this.setCapabilityValue( key, value )
-       onoffChanged = onoffChanged || ( key === Constants.CapabilityOnOff )
-     }
-    await this.updateStateAfterUpdateCapability( onoffChanged )
-  };
-
-  async updateStateAfterUpdateCapability( onoffChanged ){
-    const state = StateUtils.convertCapabilitiesToState( this )
-    await this.setStoreValue( Constants.StoredValueState, state )
-    
-    //only send message when airco is turned on or OnOff capability changed
-    if ( onoffChanged ){
-       this.driver.amqpAPI.sendMessage( state, this.getData().DeviceUniqueID )
+  async updateCapabilities(capabilityValues) {
+    let onoffChanged = this.getCapabilityValue(Constants.CapabilityOnOff);
+    for (const [key, value] of Object.entries(capabilityValues)) {
+      await this.setCapabilityValue(key, value);
+      onoffChanged = onoffChanged || (key === Constants.CapabilityOnOff);
     }
-  };
+    await this.updateStateAfterUpdateCapability(onoffChanged);
+  }
 
-  updateStateAfterHeartBeat(insideTemperature, outsideTemperature ){
-      StateUtils.setOutsideTemperature( this, outsideTemperature );
-      StateUtils.setInsideTemperature( this, insideTemperature );
-  };
+  async updateStateAfterUpdateCapability(onoffChanged) {
+    const state = StateUtils.convertCapabilitiesToState(this);
+    await this.setStoreValue(Constants.StoredValueState, state);
 
-  updateState( state ){
-    const currentState = this.getStoreValue( Constants.StoredValueState );
-    if ( currentState != state )
-    {
-      this.setStoreValue( Constants.StoredValueState, state );
-      StateUtils.convertStateToCapabilities( this, state );
+    // only send message when airco is turned on or OnOff capability changed
+    if (onoffChanged) {
+      this.driver.amqpAPI.sendMessage(state, this.getData().DeviceUniqueID);
     }
-  };
+  }
 
-  getResult( results, query ){
+  updateStateAfterHeartBeat(insideTemperature, outsideTemperature) {
+    StateUtils.setOutsideTemperature(this, outsideTemperature);
+    StateUtils.setInsideTemperature(this, insideTemperature);
+  }
+
+  updateState(state) {
+    const currentState = this.getStoreValue(Constants.StoredValueState);
+    if (currentState != state) {
+      this.setStoreValue(Constants.StoredValueState, state);
+      StateUtils.convertStateToCapabilities(this, state);
+    }
+  }
+
+  getResult(results, query) {
     // filter based on the query
-    return results.filter((result) => {
-       return result.name.toLowerCase().includes(query.toLowerCase());
-       });
-  };
+    return results.filter(result => {
+      return result.name.toLowerCase().includes(query.toLowerCase());
+    });
+  }
 
-
-};
+}
 module.exports = ACDevice;
