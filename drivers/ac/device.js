@@ -96,7 +96,7 @@ class ACDevice extends Device {
   async updateStateAfterUpdateCapability( onoffChanged ){
     const state = StateUtils.convertCapabilitiesToState( this )
     await this.setStoreValue( Constants.StoredValueState, state )
-
+    
     //only send message when airco is turned on or OnOff capability changed
     if ( onoffChanged ){
        this.driver.amqpAPI.sendMessage( state, this.getData().DeviceUniqueID )
