@@ -15,6 +15,7 @@
   "dependencies": {
     "axios": "^0.27.2",
     "azure-iot-device": "^1.18.0",
-    "azure-iot-device-amqp": "^1.14.0"
+    "azure-iot-device-amqp": "^1.14.0",
+    "uuid": "^8.3.2"
   }
 }
