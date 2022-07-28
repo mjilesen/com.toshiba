@@ -14,6 +14,7 @@ class ACDevice extends Device {
    * onInit is called when the device is initialized.
    */
   async onInit() {
+    await this.fixCapabilities();
     await this.initCapabilities();
   }
 
@@ -57,6 +58,16 @@ class ACDevice extends Device {
     this.log('ACDevice has been deleted');
   }
 
+  async fixCapabilities(){
+     //fix capabilites that have been removed/added in a new version of the app
+     if ( this.hasCapability("target_self_cleaning")){
+       await this.removeCapability("target_self_cleaning")
+     };
+     if ( !this.hasCapability(Constants.CapabilitySelfCleaning)){
+       await this.addCapability(Constants.CapabilitySelfCleaning);
+     }
+  }
+
   async initCapabilities() {
     // initialize the capability listeners
     acMode = await this.getStoreValue(Constants.StoredCapabilityTargetACMode);
@@ -66,7 +77,6 @@ class ACDevice extends Device {
       Constants.CapabilityTargetTemperatureInside,
       Constants.CapabilityTargetFanMode,
       Constants.CapabilityTargetPowerMode,
-      Constants.CapabilitySelfCleaning,
       Constants.CapabilityTargetMeritA,
     ];
     // do not add if capabilities not added (yet)

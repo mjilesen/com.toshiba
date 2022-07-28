@@ -9,10 +9,10 @@
         "measure_temperature.inside",
         "target_temperature.inside",
         "measure_temperature_outside",
+        "measure_self_cleaning",
         "target_fan_mode",
         "target_power_mode",
-        "target_ac_merit_a",
-        "target_self_cleaning"
+        "target_ac_merit_a"
     ],
     "platforms": [
         "local"

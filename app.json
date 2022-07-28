@@ -343,28 +343,6 @@
             "type": "checkbox"
           }
         ]
-      },
-      {
-        "id": "SetTargetSelfCleaning",
-        "title": {
-          "en": "Set self cleaning",
-          "nl": "Zet zelf reiniging"
-        },
-        "titleFormatted": {
-          "en": "Set self cleaning to [[targetSelfCleaning]]",
-          "nl": "Zet zelf reiniging naar [[targetSelfCleaning]]"
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=ac&capabilities=target_self_cleaning"
-          },
-          {
-            "name": "targetSelfCleaning",
-            "type": "checkbox"
-          }
-        ]
       }
     ]
   },
@@ -380,10 +358,10 @@
         "measure_temperature.inside",
         "target_temperature.inside",
         "measure_temperature_outside",
+        "measure_self_cleaning",
         "target_fan_mode",
         "target_power_mode",
-        "target_ac_merit_a",
-        "target_self_cleaning"
+        "target_ac_merit_a"
       ],
       "platforms": [
         "local"
@@ -463,6 +441,17 @@
     }
   ],
   "capabilities": {
+    "measure_self_cleaning": {
+      "type": "boolean",
+      "title": {
+        "en": "Cleaning",
+        "nl": "Reinigen"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/assets/waterdrop.svg"
+    },
     "measure_temperature": {
       "type": "number",
       "title": {
@@ -797,16 +786,6 @@
           }
         }
       ]
-    },
-    "target_self_cleaning": {
-      "type": "boolean",
-      "title": {
-        "en": "Self cleaning",
-        "nl": "Zelf reiniging"
-      },
-      "uiComponent": "toggle",
-      "getable": true,
-      "setable": true
     },
     "target_swing_mode1": {
       "type": "enum",

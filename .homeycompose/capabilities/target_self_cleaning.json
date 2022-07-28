@@ -1,7 +1,0 @@
-{
-  "type": "boolean",
-  "title": { "en": "Self cleaning", "nl": "Zelf reiniging" },
-  "uiComponent": "toggle",
-  "getable": true,
-  "setable": true
-}

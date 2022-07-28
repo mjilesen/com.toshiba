@@ -108,12 +108,6 @@ class ToshibaACApp extends Homey.App {
     targetAirPureActionCard.registerRunListener(async (args, state) => {
       this.setCapabilityValue(Constants.CapabilityTargetAirPureIon, args.targetAirPureIon);
     });
-
-    // target self cleaning
-    const targetSelfCleaningActionCard = this.homey.flow.getActionCard('SetTargetSelfCleaning');
-    targetSelfCleaningActionCard.registerRunListener(async (args, state) => {
-      this.setCapabilityValue(Constants.CapabilitySelfCleaning, args.targetSelfCleaning);
-    });
   }
 
   initConditions() {
