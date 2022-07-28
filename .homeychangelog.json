@@ -16,5 +16,8 @@
   },
   "1.1.3": {
     "en": "Fixed bugs in FanSpeed and Merit A"
+  },
+  "1.2.0": {
+    "en": "PLEASE RE-INSTALL YOUR DEVICES TO GET ALL THE CHANGES! Fixed a lot of small issues and some re-structuring of the code"
   }
 }
