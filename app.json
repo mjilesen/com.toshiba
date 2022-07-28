@@ -197,7 +197,7 @@
           {
             "type": "autocomplete",
             "name": "meritA",
-            "required": "false",
+            "required": false,
             "title": {
               "en": "Merit A",
               "nl": "Merit A"
@@ -206,7 +206,7 @@
           {
             "type": "autocomplete",
             "name": "meritB",
-            "required": "false",
+            "required": false,
             "title": {
               "en": "Merit B",
               "nl": "Merit B"
