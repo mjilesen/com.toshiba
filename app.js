@@ -1,5 +1,3 @@
-'use strict';
-
 const Homey = require('homey');
 const FlowSelections = require('./lib/flowselections');
 const Constants = require('./lib/constants');
@@ -19,11 +17,11 @@ class ToshibaACApp extends Homey.App {
     // mode
     const modeActionCard = this.homey.flow.getActionCard('SetMode');
     modeActionCard.registerRunListener(async (args, state) => {
-      const {device} = args;
+      const { device } = args;
 
       const acMode = await device.getStoreValue(Constants.StoredCapabilityTargetACMode);
       device.setCapabilityValue(acMode, args.acMode.id);
-      if (args.meritA){
+      if (args.meritA) {
         device.setCapabilityValue(Constants.CapabilityTargetMeritA, args.meritA.id);
       }
       if (args.meritB && device.hasCapability(Constants.CapabilityTargetMeritB)) {
