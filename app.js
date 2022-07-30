@@ -100,13 +100,15 @@ class ToshibaACApp extends Homey.App {
     // target temperature
     const targetTemperatureActionCard = this.homey.flow.getActionCard('SetTargetTemperature');
     targetTemperatureActionCard.registerRunListener(async (args, state) => {
-      this.setCapabilityValue(Constants.CapabilityTargetTemperatureInside, args.targetTemperature);
+      const { device } = args;
+      device.setCapabilityValue(Constants.CapabilityTargetTemperatureInside, args.targetTemperature);
     });
 
     // target air pure
     const targetAirPureActionCard = this.homey.flow.getActionCard('SetTargetAirPureIon');
     targetAirPureActionCard.registerRunListener(async (args, state) => {
-      this.setCapabilityValue(Constants.CapabilityTargetAirPureIon, args.targetAirPureIon);
+      const { device } = args;
+      device.setCapabilityValue(Constants.CapabilityTargetAirPureIon, args.targetAirPureIon);
     });
   }
 
