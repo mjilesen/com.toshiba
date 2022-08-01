@@ -1,5 +1,3 @@
-'use strict';
-
 const { Driver } = require('homey');
 
 const Uuid = require('uuid');

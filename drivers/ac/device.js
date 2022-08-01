@@ -1,5 +1,3 @@
-'use strict';
-
 const { Device } = require('homey');
 const StateUtils = require('../../lib/state_utils');
 const ACFeatures = require('../../lib/ToshibaACFeatures');
@@ -58,14 +56,14 @@ class ACDevice extends Device {
     this.log('ACDevice has been deleted');
   }
 
-  async fixCapabilities(){
-     //fix capabilites that have been removed/added in a new version of the app
-     if ( this.hasCapability("target_self_cleaning")){
-       await this.removeCapability("target_self_cleaning")
-     };
-     if ( !this.hasCapability(Constants.CapabilitySelfCleaning)){
-       await this.addCapability(Constants.CapabilitySelfCleaning);
-     }
+  async fixCapabilities() {
+    // fix capabilites that have been removed/added in a new version of the app
+    if (this.hasCapability('target_self_cleaning')) {
+      await this.removeCapability('target_self_cleaning');
+    }
+    if (!this.hasCapability(Constants.CapabilitySelfCleaning)) {
+      await this.addCapability(Constants.CapabilitySelfCleaning);
+    }
   }
 
   async initCapabilities() {
