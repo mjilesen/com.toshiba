@@ -95,22 +95,17 @@ class ACDevice extends Device {
   }
 
   async updateCapabilities(capabilityValues) {
-    let onoffChanged = this.getCapabilityValue(Constants.CapabilityOnOff);
     for (const [key, value] of Object.entries(capabilityValues)) {
       await this.setCapabilityValue(key, value);
-      onoffChanged = onoffChanged || (key === Constants.CapabilityOnOff);
     }
-    await this.updateStateAfterUpdateCapability(onoffChanged);
+    await this.updateStateAfterUpdateCapability();
   }
 
-  async updateStateAfterUpdateCapability(onoffChanged) {
+  async updateStateAfterUpdateCapability() {
     const state = StateUtils.convertCapabilitiesToState(this);
     await this.setStoreValue(Constants.StoredValueState, state);
 
-    // only send message when airco is turned on or OnOff capability changed
-    if (onoffChanged) {
-      this.driver.amqpAPI.sendMessage(state, this.getData().DeviceUniqueID);
-    }
+    this.driver.amqpAPI.sendMessage(state, this.getData().DeviceUniqueID);
   }
 
   updateStateAfterHeartBeat(insideTemperature, outsideTemperature) {
@@ -121,8 +116,8 @@ class ACDevice extends Device {
   updateState(state) {
     const currentState = this.getStoreValue(Constants.StoredValueState);
     if (currentState !== state) {
-      this.setStoreValue(Constants.StoredValueState, state);
-      StateUtils.convertStateToCapabilities(this, state);
+        this.setStoreValue(Constants.StoredValueState, state);
+        StateUtils.convertStateToCapabilities(this, state);
     }
   }
 

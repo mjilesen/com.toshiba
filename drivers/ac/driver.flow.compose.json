@@ -103,6 +103,13 @@
     "type": "checkbox"
   }
  ]
+},
+{
+  "id": "SendToAC",
+  "title": { "en": "Send to AC",
+             "nl": "Stuur naar AC" },
+  "titleFormatted": { "en": "Send changes to AC",
+                      "nl": "Stuur veranderingen naar AC" }
 }
 ],
 "conditions": [
