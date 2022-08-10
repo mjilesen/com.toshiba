@@ -4,5 +4,5 @@
   "getable": true,
   "setable": false,
   "uiComponent":"sensor",
-  "icon": "/assets/waterdrop.svg"
+  "icon": "/assets/energy.svg"
 }
