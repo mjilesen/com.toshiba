@@ -459,6 +459,17 @@
     }
   ],
   "capabilities": {
+    "measure_energy_consumption": {
+      "type": "number",
+      "title": {
+        "en": "Energy consumption",
+        "nl": "Energie verbruik"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/assets/waterdrop.svg"
+    },
     "measure_self_cleaning": {
       "type": "boolean",
       "title": {

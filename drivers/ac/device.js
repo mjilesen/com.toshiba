@@ -12,7 +12,6 @@ class ACDevice extends Device {
    * onInit is called when the device is initialized.
    */
   async onInit() {
-    await this.fixCapabilities();
     await this.initCapabilities();
   }
 
@@ -64,6 +63,8 @@ class ACDevice extends Device {
     if (!this.hasCapability(Constants.CapabilitySelfCleaning)) {
       await this.addCapability(Constants.CapabilitySelfCleaning);
     }
+    //reset the features
+    await ACFeatures.setCapabilities(this);
   }
 
   async initCapabilities() {
