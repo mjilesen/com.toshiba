@@ -63,6 +63,9 @@ class ACDevice extends Device {
     if (!this.hasCapability(Constants.CapabilitySelfCleaning)) {
       await this.addCapability(Constants.CapabilitySelfCleaning);
     }
+    if (!this.hasCapability( Constants.CapabilityStatus)){
+      await this.addCapability( Constants.CapabilityStatus );
+    }
     //reset the features
     await ACFeatures.setCapabilities(this);
   }
@@ -99,7 +102,21 @@ class ACDevice extends Device {
     for (const [key, value] of Object.entries(capabilityValues)) {
       await this.setCapabilityValue(key, value);
     }
+    await this.setStatusCapability();
     await this.updateStateAfterUpdateCapability();
+  }
+
+  async setStatusCapability(){
+    if (this.hasCapability( Constants.CapabilityStatus) ){
+      let value = this.getCapabilityValue( acMode );
+      if ( !this.getCapabilityValue( Constants.CapabilityOnOff)){
+        value = Constants.StatusOff;
+      }
+      else if( this.getCapabilityValue( Constants.CapabilitySelfCleaning) ){
+        value = Constants.StatusCleaning;
+      }
+      await this.setCapabilityValue( Constants.CapabilityStatus, value );
+    }
   }
 
   async updateStateAfterUpdateCapability() {
