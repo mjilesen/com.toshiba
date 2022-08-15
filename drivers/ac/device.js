@@ -1,10 +1,12 @@
 const { Device } = require('homey');
-const StateUtils = require('../../lib/state_utils');
-const ACFeatures = require('../../lib/ToshibaACFeatures');
+const StateUtils = require('../../lib/stateUtils');
+const ACFeatures = require('../../lib/acFeatures');
 const Constants = require('../../lib/constants');
+const dayjs = require( 'dayjs');
 
 let acMode = '';
 let swingMode = '';
+let hasEnergyCapability = false;
 
 class ACDevice extends Device {
 
@@ -74,6 +76,7 @@ class ACDevice extends Device {
     // initialize the capability listeners
     acMode = await this.getStoreValue(Constants.StoredCapabilityTargetACMode);
     swingMode = await this.getStoreValue(Constants.StoredCapabilityTargetSwingMode);
+    hasEnergyCapability = this.hasCapability(Constants.CapabilityEnergyConsumptionLastDay);
 
     const capabilities = [Constants.CapabilityOnOff,
       Constants.CapabilityTargetTemperatureInside,
@@ -126,6 +129,19 @@ class ACDevice extends Device {
     this.driver.amqpAPI.sendMessage(state, this.getData().DeviceUniqueID);
   }
 
+  async setEnergyIntervalTimer(){
+    this.interval = 60;
+    this.timerId = null;
+
+    if ( this.hasEnergyCapability || true ){
+      const energyConsumption = this.driver.energyConsumption;
+      let date = dayjs();
+      this.timerId = this.homey.setInterval(async() => {
+        energyConsumption.getEnergyConsumptionPerDay( this.getData().DeviceUniqueID, date );
+      }, this.interval * 1000);
+  }
+  }
+
   updateStateAfterHeartBeat(insideTemperature, outsideTemperature) {
     StateUtils.setOutsideTemperature(this, outsideTemperature);
     StateUtils.setInsideTemperature(this, insideTemperature);
@@ -145,6 +161,5 @@ class ACDevice extends Device {
       return result.name.toLowerCase().includes(query.toLowerCase());
     });
   }
-
 }
 module.exports = ACDevice;

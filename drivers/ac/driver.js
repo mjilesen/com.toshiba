@@ -2,9 +2,10 @@ const { Driver } = require('homey');
 
 const Uuid = require('uuid');
 
-const HttpApi = require('../../lib/ToshibaHttpApi');
-const AmqpApi = require('../../lib/ToshibaAmqpApi');
+const HttpApi = require('../../lib/httpApi');
+const AmqpApi = require('../../lib/amqpApi');
 const Constants = require('../../lib/constants');
+const EnergyConsumption = require( '../../lib/energyConsumption')
 
 class ACDriver extends Driver {
 
@@ -25,6 +26,15 @@ class ACDriver extends Driver {
     if (await this.homey.settings.get(Constants.SettingUserName)) {
       await this.initializeAmqp();
     }
+  
+    this.energyConsumption = await new EnergyConsumption(this);
+
+    this.initEnergyTimer();
+  };
+
+  async initEnergyTimer(){
+    const devices = this.getDevices();
+    devices.forEach(device=>device.setEnergyIntervalTimer());
   }
 
   async initializeAmqp() {

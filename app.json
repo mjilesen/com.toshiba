@@ -460,11 +460,22 @@
     }
   ],
   "capabilities": {
-    "measure_energy_consumption": {
+    "measure_energy_consumption_last_day": {
       "type": "number",
       "title": {
-        "en": "Energy consumption",
-        "nl": "Energie verbruik"
+        "en": "Energy consumption last day",
+        "nl": "Energie verbruik vandaag"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/assets/energy.svg"
+    },
+    "measure_energy_consumption_last_hour": {
+      "type": "number",
+      "title": {
+        "en": "Energy consumption last hour",
+        "nl": "Energie verbruik huidige uur"
       },
       "getable": true,
       "setable": false,

@@ -1,6 +1,6 @@
 {
   "type": "number",
-  "title": { "en": "Energy consumption", "nl": "Energie verbruik" },
+  "title": { "en": "Energy consumption last hour", "nl": "Energie verbruik huidige uur" },
   "getable": true,
   "setable": false,
   "uiComponent":"sensor",
