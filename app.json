@@ -466,9 +466,13 @@
         "en": "Energy consumption last hour",
         "nl": "Energie verbruik huidige uur"
       },
+      "units": {
+        "en": "kWh"
+      },
       "getable": true,
       "setable": false,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/assets/energy.svg"
     },
     "measure_energy_consumption_today": {
@@ -477,9 +481,13 @@
         "en": "Energy consumption today",
         "nl": "Energie verbruik vandaag"
       },
+      "units": {
+        "en": "kWh"
+      },
       "getable": true,
       "setable": false,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/assets/energy.svg"
     },
     "measure_self_cleaning": {

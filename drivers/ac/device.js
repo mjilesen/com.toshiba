@@ -6,8 +6,6 @@ const { DateTime } = require("luxon");
 
 let acMode = '';
 let swingMode = '';
-let hasEnergyCapability = false;
-
 
 class ACDevice extends Device {
 
@@ -77,7 +75,6 @@ class ACDevice extends Device {
     // initialize the capability listeners
     acMode = await this.getStoreValue(Constants.StoredCapabilityTargetACMode);
     swingMode = await this.getStoreValue(Constants.StoredCapabilityTargetSwingMode);
-    hasEnergyCapability = this.hasCapability(Constants.CapabilityEnergyConsumptionLastDay);
 
     const capabilities = [Constants.CapabilityOnOff,
       Constants.CapabilityTargetTemperatureInside,
@@ -134,11 +131,14 @@ class ACDevice extends Device {
     this.interval = 60;
     this.timerId = null;
 
-    if ( this.hasEnergyCapability ){
+    const hasEnergyCapability = await this.hasCapability(Constants.CapabilityEnergyConsumptionLastHour);
+
+    if ( hasEnergyCapability ){
       const energyConsumption = this.driver.energyConsumption;
-      let date = DateTime.now();
       this.timerId = this.homey.setInterval(async() => {
-        let value = await energyConsumption.getEnergyConsumptionPerDay( this.getData().DeviceUniqueID, date );
+        const date = DateTime.now();
+        const value = await energyConsumption.getEnergyConsumptionPerDay( this.getData().DeviceUniqueID, date );
+
         this.setCapabilityValue( Constants.CapabilityEnergyConsumptionToday, value.lastDay );
         this.setCapabilityValue( Constants.CapabilityEnergyConsumptionLastHour, value.lastHour );
       }, this.interval * 1000);
