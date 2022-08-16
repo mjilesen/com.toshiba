@@ -1,6 +1,7 @@
 {
   "type": "number",
   "title": { "en": "Energy consumption last hour", "nl": "Energie verbruik huidige uur" },
+  "units": { "en":"kWh"},
   "getable": true,
   "setable": false,
   "uiComponent":"sensor",

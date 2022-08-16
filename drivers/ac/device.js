@@ -2,11 +2,12 @@ const { Device } = require('homey');
 const StateUtils = require('../../lib/stateUtils');
 const ACFeatures = require('../../lib/acFeatures');
 const Constants = require('../../lib/constants');
-const dayjs = require( 'dayjs');
+const { DateTime } = require("luxon");
 
 let acMode = '';
 let swingMode = '';
 let hasEnergyCapability = false;
+
 
 class ACDevice extends Device {
 
@@ -133,11 +134,13 @@ class ACDevice extends Device {
     this.interval = 60;
     this.timerId = null;
 
-    if ( this.hasEnergyCapability || true ){
+    if ( this.hasEnergyCapability ){
       const energyConsumption = this.driver.energyConsumption;
-      let date = dayjs();
+      let date = DateTime.now();
       this.timerId = this.homey.setInterval(async() => {
-        energyConsumption.getEnergyConsumptionPerDay( this.getData().DeviceUniqueID, date );
+        let value = await energyConsumption.getEnergyConsumptionPerDay( this.getData().DeviceUniqueID, date );
+        this.setCapabilityValue( Constants.CapabilityEnergyConsumptionToday, value.lastDay );
+        this.setCapabilityValue( Constants.CapabilityEnergyConsumptionLastHour, value.lastHour );
       }, this.interval * 1000);
   }
   }
