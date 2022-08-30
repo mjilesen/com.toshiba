@@ -39,10 +39,12 @@ class ACDriver extends Driver {
 
   async initializeAmqp() {
     const token = await this.httpAPI.getSASToken(this.deviceId);
-    if(!this.amqpAPI) {
-      this.amqpAPI = await new AmqpApi(token, this) }
+    if (!this.amqpAPI) {
+      this.amqpAPI = await new AmqpApi(token, this)
+    };
     else {
-      this.amqpAPI.setToken(token) }
+      this.amqpAPI.setToken(token);
+    };
   }
 
   async onPair(session) {
@@ -55,8 +57,8 @@ class ACDriver extends Driver {
     });
   }
 
-  async onRepair(session, device ) {
-    session.setHandler('login', async data =>{
+  async onRepair(session, device) {
+    session.setHandler('login', async data => {
       const returnValue = await this.login(data.username, data.password);
       device.fixCapabilities();
       return returnValue;
@@ -77,7 +79,7 @@ class ACDriver extends Driver {
     // thrown errors will also be shown to the user
     return resobj.IsSuccess;
   }
-  
+
   async sendMessage(message) {
     await this.amqpAPI.sendMessage(message);
   }
