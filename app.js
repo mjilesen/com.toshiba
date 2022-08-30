@@ -1,5 +1,5 @@
 const Homey = require('homey');
-const FlowSelections = require('./lib/flowselections');
+const FlowSelections = require('./lib/flowSelections');
 const Constants = require('./lib/constants');
 
 class ToshibaACApp extends Homey.App {
@@ -7,6 +7,7 @@ class ToshibaACApp extends Homey.App {
   /**
    * onInit is called when the app is initialized.
    */
+
   async onInit() {
     this.log('ToshibaACApp has been initialized');
     this.initFlows();
@@ -26,7 +27,7 @@ class ToshibaACApp extends Homey.App {
       }
       if (args.meritB && device.hasCapability(Constants.CapabilityTargetMeritB)) {
         await device.setCapabilityValue(Constants.CapabilityTargetMeritB, args.meritB.id);
-      };
+      }
     });
 
     modeActionCard.registerArgumentAutocompleteListener('acMode', async (query, args) => {
@@ -109,7 +110,7 @@ class ToshibaACApp extends Homey.App {
       await device.setCapabilityValue(Constants.CapabilityTargetAirPureIon, args.targetAirPureIon);
     });
 
-    //send to AC
+    // send to AC
     const sendToACActionCard = this.homey.flow.getActionCard('SendToAC');
     sendToACActionCard.registerRunListener(async (args, state) => {
       const { device } = args;

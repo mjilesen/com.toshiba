@@ -12,7 +12,8 @@
         "measure_self_cleaning",
         "target_fan_mode",
         "target_power_mode",
-        "target_ac_merit_a"
+        "target_ac_merit_a",
+        "measure_status"
     ],
     "platforms": [
         "local"
