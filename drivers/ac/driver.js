@@ -26,7 +26,7 @@ class ACDriver extends Driver {
     if (await this.homey.settings.get(Constants.SettingUserName)) {
       await this.initializeAmqp();
     }
-  
+
     this.energyConsumption = await new EnergyConsumption(this);
 
     this.initEnergyTimer();
@@ -34,17 +34,15 @@ class ACDriver extends Driver {
 
   async initEnergyTimer(){
     const devices = this.getDevices();
-    devices.forEach(device=>device.setEnergyIntervalTimer());
+    devices.forEach(device => device.setEnergyIntervalTimer());
   }
 
   async initializeAmqp() {
     const token = await this.httpAPI.getSASToken(this.deviceId);
-    if( !this.amqpAPI ){
-      this.amqpAPI = await new AmqpApi(token, this);
-    }
+    if(!this.amqpAPI) {
+      this.amqpAPI = await new AmqpApi(token, this) }
     else {
-      this.amqpAPI.setToken(token);
-    }
+      this.amqpAPI.setToken(token) }
   }
 
   async onPair(session) {
@@ -58,20 +56,20 @@ class ACDriver extends Driver {
   }
 
   async onRepair(session, device ) {
-    session.setHandler('login', async data => {
+    session.setHandler('login', async data =>{
       const returnValue = await this.login(data.username, data.password);
       device.fixCapabilities();
-      return returnValue
+      return returnValue;
     });
   }
 
-  async login( username, password ){
+  async login(username, password) {
     // save the username and password
     this.homey.settings.set(Constants.SettingUserName, username);
     this.homey.settings.set(Constants.SettingPassword, password);
 
     const resobj = await this.httpAPI.login(username, password);
-    if (resobj.IsSuccess ) {
+    if (resobj.IsSuccess) {
       this.initializeAmqp();
     }
     // return true to continue adding the device if the login succeeded
@@ -79,6 +77,7 @@ class ACDriver extends Driver {
     // thrown errors will also be shown to the user
     return resobj.IsSuccess;
   }
+  
   async sendMessage(message) {
     await this.amqpAPI.sendMessage(message);
   }
