@@ -41,7 +41,7 @@ class ACDriver extends Driver {
     const token = await this.httpAPI.getSASToken(this.deviceId);
     if (!this.amqpAPI) {
       this.amqpAPI = await new AmqpApi(token, this)
-    };
+    }
     else {
       this.amqpAPI.setToken(token);
     };
