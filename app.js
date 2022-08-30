@@ -25,7 +25,7 @@ class ToshibaACApp extends Homey.App {
       }
       if (args.meritB && device.hasCapability(Constants.CapabilityTargetMeritB)) {
         await device.setCapabilityValue(Constants.CapabilityTargetMeritB, args.meritB.id);
-      };
+      }
     });
 
     modeActionCard.registerArgumentAutocompleteListener('acMode', async (query, args) => {
@@ -108,7 +108,7 @@ class ToshibaACApp extends Homey.App {
       await device.setCapabilityValue(Constants.CapabilityTargetAirPureIon, args.targetAirPureIon);
     });
 
-    //send to AC
+    // send to AC
     const sendToACActionCard = this.homey.flow.getActionCard('SendToAC');
     sendToACActionCard.registerRunListener(async (args, state) => {
       const { device } = args;

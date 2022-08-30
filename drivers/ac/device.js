@@ -1,8 +1,8 @@
 const { Device } = require('homey');
+const { DateTime } = require('luxon');
 const StateUtils = require('../../lib/stateUtils');
 const ACFeatures = require('../../lib/acFeatures');
 const Constants = require('../../lib/constants');
-const { DateTime } = require("luxon");
 
 let acMode = '';
 let swingMode = '';
@@ -64,10 +64,10 @@ class ACDevice extends Device {
     if (!this.hasCapability(Constants.CapabilitySelfCleaning)) {
       await this.addCapability(Constants.CapabilitySelfCleaning);
     }
-    if (!this.hasCapability( Constants.CapabilityStatus)){
-      await this.addCapability( Constants.CapabilityStatus );
+    if (!this.hasCapability(Constants.CapabilityStatus)) {
+      await this.addCapability(Constants.CapabilityStatus);
     }
-    //reset the features
+    // reset the features
     await ACFeatures.setCapabilities(this);
   }
 
@@ -107,16 +107,16 @@ class ACDevice extends Device {
     await this.updateStateAfterUpdateCapability();
   }
 
-  async setStatusCapability(){
-    if (this.hasCapability( Constants.CapabilityStatus) ){
+  async setStatusCapability() {
+    if (this.hasCapability(Constants.CapabilityStatus)) {
       let value = this.getCapabilityValue( acMode );
-      if ( !this.getCapabilityValue( Constants.CapabilityOnOff)){
+      if (!this.getCapabilityValue(Constants.CapabilityOnOff)) {
         value = Constants.StatusOff;
       }
-      else if( this.getCapabilityValue( Constants.CapabilitySelfCleaning) ){
+      else if (this.getCapabilityValue(Constants.CapabilitySelfCleaning)) {
         value = Constants.StatusCleaning;
       }
-      await this.setCapabilityValue( Constants.CapabilityStatus, value );
+      await this.setCapabilityValue(Constants.CapabilityStatus, value);
     }
   }
 
@@ -127,22 +127,22 @@ class ACDevice extends Device {
     this.driver.amqpAPI.sendMessage(state, this.getData().DeviceUniqueID);
   }
 
-  async setEnergyIntervalTimer(){
+  async setEnergyIntervalTimer() {
     this.interval = 60;
     this.timerId = null;
 
     const hasEnergyCapability = await this.hasCapability(Constants.CapabilityEnergyConsumptionLastHour);
 
-    if ( hasEnergyCapability ){
+    if (hasEnergyCapability) {
       const energyConsumption = this.driver.energyConsumption;
-      this.timerId = this.homey.setInterval(async() => {
+      this.timerId = this.homey.setInterval(async () => {
         const date = DateTime.now();
-        const value = await energyConsumption.getEnergyConsumptionPerDay( this.getData().DeviceUniqueID, date );
+        const value = await energyConsumption.getEnergyConsumptionPerDay(this.getData().DeviceUniqueID, date);
 
-        this.setCapabilityValue( Constants.CapabilityEnergyConsumptionToday, value.totalDay );
-        this.setCapabilityValue( Constants.CapabilityEnergyConsumptionLastHour, value.lastHour );
+        this.setCapabilityValue(Constants.CapabilityEnergyConsumptionToday, value.totalDay);
+        this.setCapabilityValue(Constants.CapabilityEnergyConsumptionLastHour, value.lastHour);
       }, this.interval * 1000);
-  }
+    }
   }
 
   updateStateAfterHeartBeat(insideTemperature, outsideTemperature) {
@@ -153,8 +153,8 @@ class ACDevice extends Device {
   updateState(state) {
     const currentState = this.getStoreValue(Constants.StoredValueState);
     if (currentState !== state) {
-        this.setStoreValue(Constants.StoredValueState, state);
-        StateUtils.convertStateToCapabilities(this, state);
+      this.setStoreValue(Constants.StoredValueState, state);
+      StateUtils.convertStateToCapabilities(this, state);
     }
   }
 
@@ -164,5 +164,6 @@ class ACDevice extends Device {
       return result.name.toLowerCase().includes(query.toLowerCase());
     });
   }
+  
 }
 module.exports = ACDevice;
