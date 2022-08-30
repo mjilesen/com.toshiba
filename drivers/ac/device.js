@@ -139,7 +139,7 @@ class ACDevice extends Device {
         const date = DateTime.now();
         const value = await energyConsumption.getEnergyConsumptionPerDay( this.getData().DeviceUniqueID, date );
 
-        this.setCapabilityValue( Constants.CapabilityEnergyConsumptionToday, value.lastDay );
+        this.setCapabilityValue( Constants.CapabilityEnergyConsumptionToday, value.totalDay );
         this.setCapabilityValue( Constants.CapabilityEnergyConsumptionLastHour, value.lastHour );
       }, this.interval * 1000);
   }
