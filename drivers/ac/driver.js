@@ -5,7 +5,7 @@ const Uuid = require('uuid');
 const HttpApi = require('../../lib/httpApi');
 const AmqpApi = require('../../lib/amqpApi');
 const Constants = require('../../lib/constants');
-const EnergyConsumption = require( '../../lib/energyConsumption')
+const EnergyConsumption = require('../../lib/energyConsumption');
 
 class ACDriver extends Driver {
 
@@ -30,9 +30,9 @@ class ACDriver extends Driver {
     this.energyConsumption = await new EnergyConsumption(this);
 
     this.initEnergyTimer();
-  };
+  }
 
-  async initEnergyTimer(){
+  async initEnergyTimer() {
     const devices = this.getDevices();
     devices.forEach(device => device.setEnergyIntervalTimer());
   }
@@ -40,11 +40,11 @@ class ACDriver extends Driver {
   async initializeAmqp() {
     const token = await this.httpAPI.getSASToken(this.deviceId);
     if (!this.amqpAPI) {
-      this.amqpAPI = await new AmqpApi(token, this)
+      this.amqpAPI = await new AmqpApi(token, this);
     }
     else {
       this.amqpAPI.setToken(token);
-    };
+    }
   }
 
   async onPair(session) {

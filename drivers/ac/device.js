@@ -134,7 +134,7 @@ class ACDevice extends Device {
     const hasEnergyCapability = await this.hasCapability(Constants.CapabilityEnergyConsumptionLastHour);
 
     if (hasEnergyCapability) {
-      const energyConsumption = this.driver.energyConsumption;
+      const { energyConsumption } = this.driver;
       this.timerId = this.homey.setInterval(async () => {
         const date = DateTime.now();
         const value = await energyConsumption.getEnergyConsumptionPerDay(this.getData().DeviceUniqueID, date);
@@ -164,5 +164,6 @@ class ACDevice extends Device {
       return result.name.toLowerCase().includes(query.toLowerCase());
     });
   }
+
 }
 module.exports = ACDevice;
