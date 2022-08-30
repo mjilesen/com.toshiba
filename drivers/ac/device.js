@@ -109,7 +109,7 @@ class ACDevice extends Device {
 
   async setStatusCapability() {
     if (this.hasCapability(Constants.CapabilityStatus)) {
-      let value = this.getCapabilityValue( acMode );
+      let value = this.getCapabilityValue(acMode);
       if (!this.getCapabilityValue(Constants.CapabilityOnOff)) {
         value = Constants.StatusOff;
       }
@@ -164,6 +164,5 @@ class ACDevice extends Device {
       return result.name.toLowerCase().includes(query.toLowerCase());
     });
   }
-  
 }
 module.exports = ACDevice;

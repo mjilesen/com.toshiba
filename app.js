@@ -3,6 +3,7 @@ const FlowSelections = require('./lib/flowSelections');
 const Constants = require('./lib/constants');
 
 class ToshibaACApp extends Homey.App {
+
   /**
    * onInit is called when the app is initialized.
    */
