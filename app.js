@@ -1,5 +1,5 @@
 const Homey = require('homey');
-const FlowSelections = require('./lib/flowSelections.js');
+const FlowSelections = require('./lib/flowSelections');
 const Constants = require('./lib/constants');
 
 class ToshibaACApp extends Homey.App {

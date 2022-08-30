@@ -112,8 +112,7 @@ class ACDevice extends Device {
       let value = this.getCapabilityValue(acMode);
       if (!this.getCapabilityValue(Constants.CapabilityOnOff)) {
         value = Constants.StatusOff;
-      }
-      else if (this.getCapabilityValue(Constants.CapabilitySelfCleaning)) {
+      } else if (this.getCapabilityValue(Constants.CapabilitySelfCleaning)) {
         value = Constants.StatusCleaning;
       }
       await this.setCapabilityValue(Constants.CapabilityStatus, value);
