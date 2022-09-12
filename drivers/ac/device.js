@@ -54,6 +54,9 @@ class ACDevice extends Device {
    */
   async onDeleted() {
     this.log('ACDevice has been deleted');
+    if (this.timerId) {
+      this.homey.clearInterval(this.timerId);
+    }
   }
 
   async fixCapabilities() {
