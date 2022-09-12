@@ -34,5 +34,8 @@
   },
   "1.4.2": {
     "en": "Fixed reading merit string"
+  },
+  "1.4.3": {
+    "en": "Changed type to Thermostat, when the temperature received is outside boundaries, it will be undefined and fixed energy consumption. PLEASE RE-INSTALL YOUR DEVICES!"
   }
 }
