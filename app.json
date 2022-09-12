@@ -373,8 +373,8 @@
       "class": "thermostat",
       "capabilities": [
         "onoff",
-        "measure_temperature.inside",
-        "target_temperature.inside",
+        "measure_temperature",
+        "target_temperature",
         "measure_temperature_outside",
         "measure_self_cleaning",
         "target_fan_mode",
@@ -515,14 +515,14 @@
     "measure_temperature": {
       "type": "number",
       "title": {
-        "en": "Current temperature",
-        "nl": "Huidige temperatuur"
+        "en": "Temperature",
+        "nl": "Temperatuur"
       },
       "units": {
         "en": "°C",
         "nl": "°C"
       },
-      "uiComponent": "sensor",
+      "uiComponent": "thermostat",
       "getable": true,
       "setable": false,
       "icon": "/assets/icon.svg"
@@ -1046,12 +1046,12 @@
     "target_temperature": {
       "type": "number",
       "title": {
-        "en": "Target temperature",
-        "nl": "Doel temperatuur"
+        "en": "Temperature",
+        "nl": "Temperatuur"
       },
       "units": {
-        "en": "min",
-        "nl": "min"
+        "en": "°C",
+        "nl": "°C"
       },
       "uiComponent": "thermostat",
       "min": 17,

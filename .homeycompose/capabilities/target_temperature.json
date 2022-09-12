@@ -1,7 +1,7 @@
 {
   "type": "number",
-  "title": { "en": "Target temperature", "nl": "Doel temperatuur" },
-  "units": { "en": "min", "nl": "min" },
+  "title": { "en": "Temperature", "nl": "Temperatuur" },
+  "units": { "en": "°C", "nl": "°C" },
   "uiComponent": "thermostat",
   "min":17,
   "max":30,

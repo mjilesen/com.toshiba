@@ -1,8 +1,8 @@
 {
   "type": "number",
-  "title": { "en": "Current temperature", "nl": "Huidige temperatuur" },
+  "title": { "en": "Temperature", "nl": "Temperatuur" },
   "units": { "en": "°C", "nl": "°C" },
-  "uiComponent": "sensor",
+  "uiComponent": "thermostat",
   "getable": true,
   "setable": false,
   "icon": "/assets/icon.svg"

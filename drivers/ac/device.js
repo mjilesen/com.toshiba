@@ -59,21 +59,6 @@ class ACDevice extends Device {
     }
   }
 
-  async fixCapabilities() {
-    // fix capabilites that have been removed/added in a new version of the app
-    if (this.hasCapability('target_self_cleaning')) {
-      await this.removeCapability('target_self_cleaning');
-    }
-    if (!this.hasCapability(Constants.CapabilitySelfCleaning)) {
-      await this.addCapability(Constants.CapabilitySelfCleaning);
-    }
-    if (!this.hasCapability(Constants.CapabilityStatus)) {
-      await this.addCapability(Constants.CapabilityStatus);
-    }
-    // reset the features
-    await ACFeatures.setCapabilities(this);
-  }
-
   async initCapabilities() {
     // initialize the capability listeners
     acMode = await this.getStoreValue(Constants.StoredCapabilityTargetACMode);

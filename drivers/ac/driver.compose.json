@@ -6,8 +6,8 @@
     "class": "thermostat",
     "capabilities": [
         "onoff",
-        "measure_temperature.inside",
-        "target_temperature.inside",
+        "measure_temperature",
+        "target_temperature",
         "measure_temperature_outside",
         "measure_self_cleaning",
         "target_fan_mode",
