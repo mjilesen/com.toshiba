@@ -370,7 +370,7 @@
         "en": "Airconditioners",
         "nl": "Airconditioners"
       },
-      "class": "other",
+      "class": "thermostat",
       "capabilities": [
         "onoff",
         "measure_temperature.inside",
