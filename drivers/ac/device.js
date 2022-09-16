@@ -115,7 +115,7 @@ class ACDevice extends Device {
   }
 
   async setEnergyIntervalTimer() {
-    this.interval = 60;
+    this.interval = 120;
     this.timerId = null;
 
     const hasEnergyCapability = await this.hasCapability(Constants.CapabilityEnergyConsumptionLastHour);
