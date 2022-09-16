@@ -40,5 +40,8 @@
   },
   "1.4.4": {
     "en": "Fixed energy time issue"
+  },
+  "1.4.5": {
+    "en": "Fixed small issue"
   }
 }
