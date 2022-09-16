@@ -176,6 +176,26 @@
         "placeholder":{ "en": "In °C", "nl": "In °C" }
       }
     ]
+  },
+  {
+    "id": "IsStatus",
+    "title": { "en": "Status is",
+               "nl": "Status is" },
+    "titleFormatted": { "en": "If status is [[status]]",
+                        "nl": "Als status is [[status]]" },
+    "args":[
+      {
+      "name": "status",
+      "type": "autocomplete"
+      }
+    ]
+  },
+  {
+    "id": "IsCleaning",
+    "title": { "en": "AC is cleaning",
+               "nl": "AC is aan het reinigen" },
+    "titleFormatted": { "en": "AC !{{is|isn't}} cleaning ",
+                        "nl": "AC !{{is|is niet}} aan het reinigen" }
   }
 ]
 }

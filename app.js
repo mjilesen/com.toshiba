@@ -150,8 +150,29 @@ class ToshibaACApp extends Homey.App {
       const insideTemperature = await device.getCapabilityValue(Constants.CapabilityMeasureTemperatureInside);
       return insideTemperature < args.trashholdTemp;
     });
+
+    // status equal
+    const statusCondition = this.homey.flow.getConditionCard('IsStatus');
+    statusCondition.registerRunListener(async (args, state) => {
+      const { device } = args;
+      const status = await device.getCapabilityValue(Constants.CapabilityStatus);
+      return status === args.status.id;
+    });
+
+    statusCondition.registerArgumentAutocompleteListener('status', async (query, args) => {
+      const { device } = args;
+      const results = FlowSelections.getStatusResult(device, true);
+      return device.getResult(results, query);
+    });
+
+    // isCleaning
+    const isCleaningCondition = this.homey.flow.getConditionCard('IsCleaning');
+    isCleaningCondition.registerRunListener(async (args, state) => {
+      const { device } = args;
+      const isCleaning = await device.getCapabilityValue(Constants.CapabilitySelfCleaning);
+      return isCleaning;
+    });
   }
 
 }
-
 module.exports = ToshibaACApp;
