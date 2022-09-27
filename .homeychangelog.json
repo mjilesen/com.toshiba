@@ -40,5 +40,8 @@
   },
   "1.4.4": {
     "en": "Fixed energy time issue"
+  },
+  "1.5.0": {
+    "en": "1. added some additional flows 2. fixed a major issues with capabilities of the AC. Please repair or re-install your device."
   }
 }
