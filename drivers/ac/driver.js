@@ -59,7 +59,6 @@ class ACDriver extends Driver {
   async onRepair(session, device) {
     session.setHandler('login', async data => {
       const returnValue = await this.login(data.username, data.password);
-      device.fixCapabilities();
       return returnValue;
     });
   }
