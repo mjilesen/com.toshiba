@@ -43,5 +43,8 @@
   },
   "1.5.0": {
     "en": "1. added some additional flows 2. fixed a major issues with capabilities of the AC. Please repair or re-install your device."
+  },
+  "1.5.1": {
+    "en": "Due to major changes in 1.5, repair does not work. Please re-install your device."
   }
 }
