@@ -13,7 +13,21 @@ class ACDevice extends Device {
    * onInit is called when the device is initialized.
    */
   async onInit() {
+    await this.ConvertCapabilities();
     await this.initCapabilities();
+  }
+
+  async ConvertCapabilities() {
+    if (this.getStoreValue(Constants.StoredValuesMeritA)?.includes(Constants.MeritA_Heating_8C)) {
+      await this.addCapability(Constants.CapabilityTargetTemperatureInside_8c);
+      await this.setCapabilityOptions(Constants.CapabilityTargetTemperatureInside_8c, {
+        title: { en: 'Temperature 8C', nl: 'Temperatuur 8C' },
+        min: 5,
+        max: 13,
+      });
+      await this.addCapability(Constants.CapabilityMeasureTemperatureInside_8c);
+      await this.setCapabilityOptions(Constants.CapabilityMeasureTemperatureInside_8c, { title: { en: 'Temperature 8C', nl: 'Temperatuur 8C' } });
+    }
   }
 
   /**
@@ -81,6 +95,10 @@ class ACDevice extends Device {
       capabilities.push(Constants.CapabilityTargetMeritB);
     }
 
+    if (this.hasCapability(Constants.CapabilityTargetTemperatureInside_8c)) {
+      capabilities.push(Constants.CapabilityTargetTemperatureInside_8c);
+    }
+
     this.registerMultipleCapabilityListener(capabilities,
       async (capabilityValues, capabilityOptions) => {
         await this.updateCapabilities(capabilityValues);
@@ -90,6 +108,9 @@ class ACDevice extends Device {
   async updateCapabilities(capabilityValues) {
     for (const [key, value] of Object.entries(capabilityValues)) {
       await this.setCapabilityValue(key, value);
+      if (key === Constants.CapabilityTargetMeritA && value === Constants.MeritA_Heating_8C) {
+        await this.setCapabilityValue(acMode, Constants.Heat);
+      }
     }
     await this.setStatusCapability();
     await this.updateStateAfterUpdateCapability();
