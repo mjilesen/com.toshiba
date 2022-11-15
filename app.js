@@ -103,6 +103,13 @@ class ToshibaACApp extends Homey.App {
       await device.setCapabilityValue(Constants.CapabilityTargetTemperatureInside, args.targetTemperature);
     });
 
+    // target temperature 8c
+    const targetTemperature8CActionCard = this.homey.flow.getActionCard('SetTargetTemperature8C');
+    targetTemperature8CActionCard.registerRunListener(async (args, state) => {
+      const { device } = args;
+      await device.setCapabilityValue(Constants.CapabilityTargetTemperatureInside_8c, args.targetTemperature8C);
+    });
+
     // target air pure
     const targetAirPureActionCard = this.homey.flow.getActionCard('SetTargetAirPureIon');
     targetAirPureActionCard.registerRunListener(async (args, state) => {
@@ -114,7 +121,10 @@ class ToshibaACApp extends Homey.App {
     const sendToACActionCard = this.homey.flow.getActionCard('SendToAC');
     sendToACActionCard.registerRunListener(async (args, state) => {
       const { device } = args;
-      await device.updateStateAfterUpdateCapability();
+      // Wait a couple of seconds to make sure all the async transactions are finished
+      this.timerId = this.homey.setTimeout(async () => {
+        await device.updateStateAfterUpdateCapability();
+      }, 3000);
     });
   }
 

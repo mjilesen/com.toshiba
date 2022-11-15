@@ -363,6 +363,36 @@
         ]
       },
       {
+        "id": "SetTargetTemperature8C",
+        "title": {
+          "en": "Set temperature 8C",
+          "nl": "Zet temperatuur 8C"
+        },
+        "titleFormatted": {
+          "en": "Set temperature 8C to [[targetTemperature8C]]",
+          "nl": "Zet temperatuur 8C naar [[targetTemperature8C]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ac"
+          },
+          {
+            "name": "targetTemperature8C",
+            "type": "range",
+            "min": 5,
+            "max": 13,
+            "step": 1,
+            "label": "°C",
+            "title": {
+              "en": "Temperature 8C",
+              "nl": "Temperatuur 8C"
+            }
+          }
+        ]
+      },
+      {
         "id": "SetTargetAirPureIon",
         "title": {
           "en": "Set Pure",
