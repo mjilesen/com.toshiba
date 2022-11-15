@@ -1,1 +1,3 @@
-{}
+{"errorMeritNotSupported":"This Merit __merit__ mode is not supported by your AC",
+"errorMeritNotSupportedInMode":"This Merit __merit__ mode is not supported by your AC in mode __mode__"
+}
