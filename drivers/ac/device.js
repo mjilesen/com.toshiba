@@ -19,15 +19,20 @@ class ACDevice extends Device {
   }
 
   async ConvertCapabilities() {
-    if (this.getStoreValue(Constants.StoredValuesMeritA)?.includes(Constants.MeritA_Heating_8C)) {
+    if (!this.hasCapability(Constants.CapabilityTargetTemperatureInside_8c) && this.getStoreValue(Constants.StoredValuesMeritA)?.includes(Constants.MeritA_Heating_8C)) {
       await this.addCapability(Constants.CapabilityTargetTemperatureInside_8c);
       await this.setCapabilityOptions(Constants.CapabilityTargetTemperatureInside_8c, {
         title: { en: 'Temperature 8C', nl: 'Temperatuur 8C' },
         min: 5,
         max: 13,
       });
+      await this.setCapabilityValue(Constants.CapabilityTargetTemperatureInside_8c, 13);
       await this.addCapability(Constants.CapabilityMeasureTemperatureInside_8c);
       await this.setCapabilityOptions(Constants.CapabilityMeasureTemperatureInside_8c, { title: { en: 'Temperature 8C', nl: 'Temperatuur 8C' } });
+    }
+
+    if (this.hasCapability(Constants.CapabilityTargetTemperatureInside_8c) && !this.getCapabilityValue(Constants.CapabilityTargetTemperatureInside_8c)) {
+      await this.setCapabilityValue(Constants.CapabilityTargetTemperatureInside_8c, 13);
     }
   }
 
