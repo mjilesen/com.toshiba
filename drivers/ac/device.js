@@ -3,6 +3,7 @@ const { DateTime } = require('luxon');
 const StateUtils = require('../../lib/stateUtils');
 const ACFeatures = require('../../lib/acFeatures');
 const Constants = require('../../lib/constants');
+const ValidityChecks = require('../../lib/validityChecks');
 
 let acMode = '';
 let swingMode = '';
@@ -18,15 +19,20 @@ class ACDevice extends Device {
   }
 
   async ConvertCapabilities() {
-    if (this.getStoreValue(Constants.StoredValuesMeritA)?.includes(Constants.MeritA_Heating_8C)) {
+    if (!this.hasCapability(Constants.CapabilityTargetTemperatureInside_8c) && this.getStoreValue(Constants.StoredValuesMeritA)?.includes(Constants.MeritA_Heating_8C)) {
       await this.addCapability(Constants.CapabilityTargetTemperatureInside_8c);
       await this.setCapabilityOptions(Constants.CapabilityTargetTemperatureInside_8c, {
         title: { en: 'Temperature 8C', nl: 'Temperatuur 8C' },
         min: 5,
         max: 13,
       });
+      await this.setCapabilityValue(Constants.CapabilityTargetTemperatureInside_8c, 13);
       await this.addCapability(Constants.CapabilityMeasureTemperatureInside_8c);
       await this.setCapabilityOptions(Constants.CapabilityMeasureTemperatureInside_8c, { title: { en: 'Temperature 8C', nl: 'Temperatuur 8C' } });
+    }
+
+    if (this.hasCapability(Constants.CapabilityTargetTemperatureInside_8c) && !this.getCapabilityValue(Constants.CapabilityTargetTemperatureInside_8c)) {
+      await this.setCapabilityValue(Constants.CapabilityTargetTemperatureInside_8c, 13);
     }
   }
 
@@ -106,14 +112,42 @@ class ACDevice extends Device {
   }
 
   async updateCapabilities(capabilityValues) {
+    const isValid = ValidityChecks.isValid(this, capabilityValues);
+    if (!isValid.valid) {
+      throw new Error(isValid.errormessage);
+    }
     for (const [key, value] of Object.entries(capabilityValues)) {
       await this.setCapabilityValue(key, value);
       if (key === Constants.CapabilityTargetMeritA && value === Constants.MeritA_Heating_8C) {
         await this.setCapabilityValue(acMode, Constants.Heat);
       }
+      await this.resetMeritA(key, value);
+      if (this.hasCapability(Constants.CapabilityTargetMeritB)) {
+        await this.resetMeritB(key, value);
+      }
     }
     await this.setStatusCapability();
     await this.updateStateAfterUpdateCapability();
+  }
+
+  async resetMeritA(key, value) {
+    if (key === Constants.CapabilityTargetACMode1 || key === Constants.CapabilityTargetACMode2 || key === Constants.CapabilityTargetACMode3) {
+      const valueMeritA = await this.getCapabilityValue(Constants.CapabilityTargetMeritA);
+      const isValidMeritA = ValidityChecks.checkSupportedMeritForMode(this, Constants.CapabilityTargetMeritA, valueMeritA, value, ACFeatures.disabledMeritAForMode).valid;
+      if (!isValidMeritA) {
+        await this.setCapabilityValue(Constants.CapabilityTargetMeritA, Constants.MeritA_Off);
+      }
+    }
+  }
+
+  async resetMeritB(key, value) {
+    if (key === Constants.CapabilityTargetACMode1 || key === Constants.CapabilityTargetACMode2 || key === Constants.CapabilityTargetACMode3) {
+      const valueMeritB = await this.getCapabilityValue(Constants.CapabilityTargetMeritB);
+      const isValidMeritB = ValidityChecks.checkSupportedMeritForMode(this, Constants.CapabilityTargetMeritB, valueMeritB, value, ACFeatures.disabledMeritBForMode).valid;
+      if (!isValidMeritB) {
+        await this.setCapabilityValue(Constants.CapabilityTargetMeritA, Constants.MeritB_Off);
+      }
+    }
   }
 
   async setStatusCapability() {

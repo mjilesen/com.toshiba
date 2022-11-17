@@ -46,5 +46,8 @@
   },
   "1.5.1": {
     "en": "Due to major changes in 1.5, repair does not work. Please re-install your device."
+  },
+  "1.6.0": {
+    "en": "- added support for 8C"
   }
 }
