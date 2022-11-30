@@ -1,0 +1,8 @@
+{
+  "type": "boolean",
+  "title": { "en": "Has 8c" },
+  "getable": false,
+  "setable": false,
+  "uiComponent": "toggle",
+  "uiQuickAction": false
+}

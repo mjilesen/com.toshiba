@@ -73,16 +73,17 @@
 ]
 },
 {
-  "id": "SetTargetTemperature",
+  "id": "SetTargetTemperatureNo8C",
   "title": { "en": "Set temperature",
              "nl": "Zet temperatuur" },
+  "$filter": "capabilities=has_no_8c",
   "titleFormatted": { "en": "Set temperature to [[targetTemperature]]",
                       "nl": "Zet temperatuur naar [[targetTemperature]]" },
 "args": [
   {
     "name": "targetTemperature",
     "type": "range",
-    "min":17,
+    "min":16,
     "max":30,
     "step":1,
     "label":"°C",
@@ -91,20 +92,40 @@
  ]
 },
 {
-  "id": "SetTargetTemperature8C",
-  "title": { "en": "Set temperature 8C",
-             "nl": "Zet temperatuur 8C" },
-  "titleFormatted": { "en": "Set temperature 8C to [[targetTemperature8C]]",
-                      "nl": "Zet temperatuur 8C naar [[targetTemperature8C]]" },
+  "id": "SetTargetTemperature",
+  "deprecated":true,
+  "title": { "en": "Set temperature",
+             "nl": "Zet temperatuur" },
+  "titleFormatted": { "en": "Set temperature to [[targetTemperature]]",
+                      "nl": "Zet temperatuur naar [[targetTemperature]]" },
 "args": [
   {
-    "name": "targetTemperature8C",
+    "name": "targetTemperature",
     "type": "range",
-    "min":5,
-    "max":13,
+    "min":16,
+    "max":30,
     "step":1,
     "label":"°C",
-    "title":{"en":"Temperature 8C", "nl":"Temperatuur 8C"}
+    "title":{"en":"Temperature", "nl":"Temperatuur"}
+  }
+ ]
+},
+{
+  "id": "SetTargetTemperature8c",
+  "title": { "en": "Set temperature",
+             "nl": "Zet temperatuur" },
+  "$filter": "capabilities=has_8c",
+  "titleFormatted": { "en": "Set temperature to [[targetTemperature]]",
+                      "nl": "Zet temperatuur naar [[targetTemperature]]" },
+"args": [
+  {
+    "name": "targetTemperature",
+    "type": "range",
+    "min":5,
+    "max":30,
+    "step":1,
+    "label":"°C",
+    "title":{"en":"Temperature", "nl":"Temperatuur"}
   }
  ]
 },
