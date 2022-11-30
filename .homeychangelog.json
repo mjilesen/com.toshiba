@@ -52,5 +52,8 @@
   },
   "1.6.1": {
     "en": "Small bug fix"
+  },
+  "1.6.2": {
+    "en": "Updated 8C behavior"
   }
 }
