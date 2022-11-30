@@ -29,7 +29,6 @@ class ACDevice extends Device {
       } else {
         await this.addCapability(Constants.CapabilityHasNo8C);
       }
-      this.setStoreValue('Is8CConverted', true);
     }
   }
 
