@@ -1,3 +1,4 @@
 {"errorMeritNotSupported":"This Merit __merit__ mode is not supported by your AC",
-"errorMeritNotSupportedInMode":"This Merit __merit__ mode is not supported by your AC in mode __mode__"
+"errorMeritNotSupportedInMode":"This Merit __merit__ mode is not supported by your AC in mode __mode__",
+"errorTemperatureNotSupportedInMode":"Temperatures below 16 degrees are only suported in mode Heat"
 }

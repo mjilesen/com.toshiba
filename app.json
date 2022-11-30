@@ -333,7 +333,38 @@
         ]
       },
       {
+        "id": "SetTargetTemperatureNo8C",
+        "title": {
+          "en": "Set temperature",
+          "nl": "Zet temperatuur"
+        },
+        "titleFormatted": {
+          "en": "Set temperature to [[targetTemperature]]",
+          "nl": "Zet temperatuur naar [[targetTemperature]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ac&capabilities=has_no_8c"
+          },
+          {
+            "name": "targetTemperature",
+            "type": "range",
+            "min": 16,
+            "max": 30,
+            "step": 1,
+            "label": "°C",
+            "title": {
+              "en": "Temperature",
+              "nl": "Temperatuur"
+            }
+          }
+        ]
+      },
+      {
         "id": "SetTargetTemperature",
+        "deprecated": true,
         "title": {
           "en": "Set temperature",
           "nl": "Zet temperatuur"
@@ -351,7 +382,7 @@
           {
             "name": "targetTemperature",
             "type": "range",
-            "min": 17,
+            "min": 16,
             "max": 30,
             "step": 1,
             "label": "°C",
@@ -363,31 +394,31 @@
         ]
       },
       {
-        "id": "SetTargetTemperature8C",
+        "id": "SetTargetTemperature8c",
         "title": {
-          "en": "Set temperature 8C",
-          "nl": "Zet temperatuur 8C"
+          "en": "Set temperature",
+          "nl": "Zet temperatuur"
         },
         "titleFormatted": {
-          "en": "Set temperature 8C to [[targetTemperature8C]]",
-          "nl": "Zet temperatuur 8C naar [[targetTemperature8C]]"
+          "en": "Set temperature to [[targetTemperature]]",
+          "nl": "Zet temperatuur naar [[targetTemperature]]"
         },
         "args": [
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=ac"
+            "filter": "driver_id=ac&capabilities=has_8c"
           },
           {
-            "name": "targetTemperature8C",
+            "name": "targetTemperature",
             "type": "range",
             "min": 5,
-            "max": 13,
+            "max": 30,
             "step": 1,
             "label": "°C",
             "title": {
-              "en": "Temperature 8C",
-              "nl": "Temperatuur 8C"
+              "en": "Temperature",
+              "nl": "Temperatuur"
             }
           }
         ]
@@ -530,6 +561,26 @@
     }
   ],
   "capabilities": {
+    "has_8c": {
+      "type": "boolean",
+      "title": {
+        "en": "Has 8c"
+      },
+      "getable": false,
+      "setable": false,
+      "uiComponent": "toggle",
+      "uiQuickAction": false
+    },
+    "has_no_8c": {
+      "type": "boolean",
+      "title": {
+        "en": "Has no 8c"
+      },
+      "getable": false,
+      "setable": false,
+      "uiComponent": "toggle",
+      "uiQuickAction": false
+    },
     "measure_energy_consumption_last_hour": {
       "type": "number",
       "title": {

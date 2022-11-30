@@ -1,3 +1,4 @@
 {"errorMeritNotSupported":"Deze Merit __merit__ mode wordt niet ondersteund door jouw AC",
-"errorMeritNotSupportedInMode":"Deze Merit __merit__ mode wordt niet ondersteund door jouw AC in mode __mode__"
+"errorMeritNotSupportedInMode":"Deze Merit __merit__ mode wordt niet ondersteund door jouw AC in mode __mode__",
+"errorTemperatureNotSupportedInMode":"Temperaturen lager dan 16 graden zijn alleen mogelijk in Heat mode"
 }
