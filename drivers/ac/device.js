@@ -9,7 +9,6 @@ let acMode = '';
 let swingMode = '';
 
 class ACDevice extends Device {
-
   /**
    * onInit is called when the device is initialized.
    */
@@ -19,12 +18,22 @@ class ACDevice extends Device {
   }
 
   async ConvertCapabilities() {
-    if (this.getStoreValue(Constants.StoredValuesMeritA) || !this.hasCapability(Constants.CapabilityHas8C)
-        || !this.hasCapability(Constants.CapabilityHasNo8C)) {
-      if (this.getStoreValue(Constants.StoredValuesMeritA)?.includes(Constants.MeritA_Heating_8C)) {
-        await this.setCapabilityOptions(Constants.CapabilityTargetTemperatureInside, {
-          min: 5,
-        });
+    if (
+      this.getStoreValue(Constants.StoredValuesMeritA) &&
+      !this.hasCapability(Constants.CapabilityHas8C) &&
+      !this.hasCapability(Constants.CapabilityHasNo8C)
+    ) {
+      if (
+        this.getStoreValue(Constants.StoredValuesMeritA)?.includes(
+          Constants.MeritA_Heating_8C,
+        )
+      ) {
+        await this.setCapabilityOptions(
+          Constants.CapabilityTargetTemperatureInside,
+          {
+            min: 5,
+          },
+        );
         await this.addCapability(Constants.CapabilityHas8C);
       } else {
         await this.addCapability(Constants.CapabilityHasNo8C);
@@ -78,9 +87,12 @@ class ACDevice extends Device {
   async initCapabilities() {
     // initialize the capability listeners
     acMode = await this.getStoreValue(Constants.StoredCapabilityTargetACMode);
-    swingMode = await this.getStoreValue(Constants.StoredCapabilityTargetSwingMode);
+    swingMode = await this.getStoreValue(
+      Constants.StoredCapabilityTargetSwingMode,
+    );
 
-    const capabilities = [Constants.CapabilityOnOff,
+    const capabilities = [
+      Constants.CapabilityOnOff,
       Constants.CapabilityTargetTemperatureInside,
       Constants.CapabilityTargetFanMode,
       Constants.CapabilityTargetPowerMode,
@@ -97,10 +109,12 @@ class ACDevice extends Device {
       capabilities.push(Constants.CapabilityTargetMeritB);
     }
 
-    this.registerMultipleCapabilityListener(capabilities,
+    this.registerMultipleCapabilityListener(
+      capabilities,
       async (capabilityValues, capabilityOptions) => {
         await this.updateCapabilities(capabilityValues);
-      });
+      },
+    );
   }
 
   async updateCapabilities(capabilityValues) {
@@ -110,7 +124,10 @@ class ACDevice extends Device {
     }
     for (const [key, value] of Object.entries(capabilityValues)) {
       await this.setCapabilityValue(key, value);
-      if (key === Constants.CapabilityTargetMeritA && value === Constants.MeritA_Heating_8C) {
+      if (
+        key === Constants.CapabilityTargetMeritA &&
+        value === Constants.MeritA_Heating_8C
+      ) {
         await this.setCapabilityValue(acMode, Constants.Heat);
       }
 
@@ -124,21 +141,51 @@ class ACDevice extends Device {
   }
 
   async resetMeritA(key, value) {
-    if (key === Constants.CapabilityTargetACMode1 || key === Constants.CapabilityTargetACMode2 || key === Constants.CapabilityTargetACMode3) {
-      const valueMeritA = await this.getCapabilityValue(Constants.CapabilityTargetMeritA);
-      const isValidMeritA = ValidityChecks.checkSupportedMeritForMode(this, Constants.CapabilityTargetMeritA, valueMeritA, value, ACFeatures.disabledMeritAForMode).valid;
+    if (
+      key === Constants.CapabilityTargetACMode1 ||
+      key === Constants.CapabilityTargetACMode2 ||
+      key === Constants.CapabilityTargetACMode3
+    ) {
+      const valueMeritA = await this.getCapabilityValue(
+        Constants.CapabilityTargetMeritA,
+      );
+      const isValidMeritA = ValidityChecks.checkSupportedMeritForMode(
+        this,
+        Constants.CapabilityTargetMeritA,
+        valueMeritA,
+        value,
+        ACFeatures.disabledMeritAForMode,
+      ).valid;
       if (!isValidMeritA) {
-        await this.setCapabilityValue(Constants.CapabilityTargetMeritA, Constants.MeritA_Off);
+        await this.setCapabilityValue(
+          Constants.CapabilityTargetMeritA,
+          Constants.MeritA_Off,
+        );
       }
     }
   }
 
   async resetMeritB(key, value) {
-    if (key === Constants.CapabilityTargetACMode1 || key === Constants.CapabilityTargetACMode2 || key === Constants.CapabilityTargetACMode3) {
-      const valueMeritB = await this.getCapabilityValue(Constants.CapabilityTargetMeritB);
-      const isValidMeritB = ValidityChecks.checkSupportedMeritForMode(this, Constants.CapabilityTargetMeritB, valueMeritB, value, ACFeatures.disabledMeritBForMode).valid;
+    if (
+      key === Constants.CapabilityTargetACMode1 ||
+      key === Constants.CapabilityTargetACMode2 ||
+      key === Constants.CapabilityTargetACMode3
+    ) {
+      const valueMeritB = await this.getCapabilityValue(
+        Constants.CapabilityTargetMeritB,
+      );
+      const isValidMeritB = ValidityChecks.checkSupportedMeritForMode(
+        this,
+        Constants.CapabilityTargetMeritB,
+        valueMeritB,
+        value,
+        ACFeatures.disabledMeritBForMode,
+      ).valid;
       if (!isValidMeritB) {
-        await this.setCapabilityValue(Constants.CapabilityTargetMeritA, Constants.MeritB_Off);
+        await this.setCapabilityValue(
+          Constants.CapabilityTargetMeritA,
+          Constants.MeritB_Off,
+        );
       }
     }
   }
@@ -163,19 +210,34 @@ class ACDevice extends Device {
   }
 
   async setEnergyIntervalTimer() {
-    this.interval = 120;
+    this.interval = 300;
     this.timerId = null;
 
-    const hasEnergyCapability = await this.hasCapability(Constants.CapabilityEnergyConsumptionLastHour);
+    const hasEnergyCapability = await this.hasCapability(
+      Constants.CapabilityEnergyConsumptionLastHour,
+    );
 
     if (hasEnergyCapability) {
       const { energyConsumption } = this.driver;
       this.timerId = this.homey.setInterval(async () => {
-        const date = DateTime.now();
-        const value = await energyConsumption.getEnergyConsumptionPerDay(this.getData().DeviceUniqueID, date);
+        const timezone = this.homey.clock.getTimezone();
+        const dateTime = DateTime.local().setZone(timezone, {
+          keepLocalTime: true,
+        });
 
-        this.setCapabilityValue(Constants.CapabilityEnergyConsumptionToday, value.totalDay);
-        this.setCapabilityValue(Constants.CapabilityEnergyConsumptionLastHour, value.lastHour);
+        const value = await energyConsumption.getEnergyConsumptionPerDay(
+          this.getData().DeviceUniqueID,
+          dateTime,
+        );
+
+        this.setCapabilityValue(
+          Constants.CapabilityEnergyConsumptionToday,
+          value.totalDay,
+        );
+        this.setCapabilityValue(
+          Constants.CapabilityEnergyConsumptionLastHour,
+          value.lastHour,
+        );
       }, this.interval * 1000);
     }
   }
@@ -199,6 +261,5 @@ class ACDevice extends Device {
       return result.name.toLowerCase().includes(query.toLowerCase());
     });
   }
-
 }
 module.exports = ACDevice;
