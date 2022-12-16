@@ -20,108 +20,165 @@ class ToshibaACApp extends Homey.App {
     modeActionCard.registerRunListener(async (args, state) => {
       const { device } = args;
 
-      const acMode = await device.getStoreValue(Constants.StoredCapabilityTargetACMode);
+      const acMode = await device.getStoreValue(
+        Constants.StoredCapabilityTargetACMode,
+      );
       await device.setCapabilityValue(acMode, args.acMode.id);
       if (args.meritA) {
-        await device.setCapabilityValue(Constants.CapabilityTargetMeritA, args.meritA.id);
+        await device.setCapabilityValue(
+          Constants.CapabilityTargetMeritA,
+          args.meritA.id,
+        );
       }
-      if (args.meritB && device.hasCapability(Constants.CapabilityTargetMeritB)) {
-        await device.setCapabilityValue(Constants.CapabilityTargetMeritB, args.meritB.id);
+      if (
+        args.meritB
+        && device.hasCapability(Constants.CapabilityTargetMeritB)
+      ) {
+        await device.setCapabilityValue(
+          Constants.CapabilityTargetMeritB,
+          args.meritB.id,
+        );
       }
     });
 
-    modeActionCard.registerArgumentAutocompleteListener('acMode', async (query, args) => {
-      const { device } = args;
-      const results = FlowSelections.getModeResult(device, true);
-      return device.getResult(results, query);
-    });
+    modeActionCard.registerArgumentAutocompleteListener(
+      'acMode',
+      async (query, args) => {
+        const { device } = args;
+        const results = FlowSelections.getModeResult(device, true);
+        return device.getResult(results, query);
+      },
+    );
 
-    modeActionCard.registerArgumentAutocompleteListener('meritA', async (query, args) => {
-      const acMode = args.acMode.id;
-      const { device } = args;
-      let results = [];
-      if (acMode) {
-        results = FlowSelections.getMeritAResult(device, acMode);
-      }
-      return device.getResult(results, query);
-    });
+    modeActionCard.registerArgumentAutocompleteListener(
+      'meritA',
+      async (query, args) => {
+        const acMode = args.acMode.id;
+        const { device } = args;
+        let results = [];
+        if (acMode) {
+          results = FlowSelections.getMeritAResult(device, acMode);
+        }
+        return device.getResult(results, query);
+      },
+    );
 
-    modeActionCard.registerArgumentAutocompleteListener('meritB', async (query, args) => {
-      const acMode = args.acMode.id;
-      const { device } = args;
-      let results = [];
-      if (acMode) {
-        results = FlowSelections.getMeritBResult(device, acMode);
-      }
-      return device.getResult(results, query);
-    });
+    modeActionCard.registerArgumentAutocompleteListener(
+      'meritB',
+      async (query, args) => {
+        const acMode = args.acMode.id;
+        const { device } = args;
+        let results = [];
+        if (acMode) {
+          results = FlowSelections.getMeritBResult(device, acMode);
+        }
+        return device.getResult(results, query);
+      },
+    );
 
     // swing mode
     const swingModeActionCard = this.homey.flow.getActionCard('SetSwingMode');
     swingModeActionCard.registerRunListener(async (args, state) => {
       const { device } = args;
-      const swingMode = await device.getStoreValue(Constants.StoredCapabilityTargetSwingMode);
+      const swingMode = await device.getStoreValue(
+        Constants.StoredCapabilityTargetSwingMode,
+      );
       await device.setCapabilityValue(swingMode, args.acSwingMode.id);
     });
 
-    swingModeActionCard.registerArgumentAutocompleteListener('acSwingMode', async (query, args) => {
-      const { device } = args;
-      const results = FlowSelections.getSwingModeResult(device, true);
-      return device.getResult(results, query);
-    });
+    swingModeActionCard.registerArgumentAutocompleteListener(
+      'acSwingMode',
+      async (query, args) => {
+        const { device } = args;
+        const results = FlowSelections.getSwingModeResult(device, true);
+        return device.getResult(results, query);
+      },
+    );
 
     // power mode
     const powerModeActionCard = this.homey.flow.getActionCard('SetPowerMode');
     powerModeActionCard.registerRunListener(async (args, state) => {
       const { device } = args;
-      await device.setCapabilityValue(Constants.CapabilityTargetPowerMode, args.acPowerMode.id);
+      await device.setCapabilityValue(
+        Constants.CapabilityTargetPowerMode,
+        args.acPowerMode.id,
+      );
     });
 
-    powerModeActionCard.registerArgumentAutocompleteListener('acPowerMode', async (query, args) => {
-      const { device } = args;
-      const results = FlowSelections.getPowerModeResult();
-      return device.getResult(results, query);
-    });
+    powerModeActionCard.registerArgumentAutocompleteListener(
+      'acPowerMode',
+      async (query, args) => {
+        const { device } = args;
+        const results = FlowSelections.getPowerModeResult();
+        return device.getResult(results, query);
+      },
+    );
 
     // fan mode
     const fanModeActionCard = this.homey.flow.getActionCard('SetFanMode');
     fanModeActionCard.registerRunListener(async (args, state) => {
       const { device } = args;
-      await device.setCapabilityValue(Constants.CapabilityTargetFanMode, args.acFanMode.id);
+      await device.setCapabilityValue(
+        Constants.CapabilityTargetFanMode,
+        args.acFanMode.id,
+      );
     });
 
-    fanModeActionCard.registerArgumentAutocompleteListener('acFanMode', async (query, args) => {
-      const { device } = args;
-      const results = FlowSelections.getFanModeResult();
-      return device.getResult(results, query);
-    });
+    fanModeActionCard.registerArgumentAutocompleteListener(
+      'acFanMode',
+      async (query, args) => {
+        const { device } = args;
+        const results = FlowSelections.getFanModeResult();
+        return device.getResult(results, query);
+      },
+    );
 
     // target temperature deprecated
-    const targetTemperatureActionCard = this.homey.flow.getActionCard('SetTargetTemperature');
+    const targetTemperatureActionCard = this.homey.flow.getActionCard(
+      'SetTargetTemperature',
+    );
     targetTemperatureActionCard.registerRunListener(async (args, state) => {
       const { device } = args;
-      await device.setCapabilityValue(Constants.CapabilityTargetTemperatureInside, args.targetTemperature);
+      await device.setCapabilityValue(
+        Constants.CapabilityTargetTemperatureInside,
+        args.targetTemperature,
+      );
     });
 
     // target temperature
-    const targetTemperatureNo8CActionCard = this.homey.flow.getActionCard('SetTargetTemperatureNo8C');
+    const targetTemperatureNo8CActionCard = this.homey.flow.getActionCard(
+      'SetTargetTemperatureNo8C',
+    );
     targetTemperatureNo8CActionCard.registerRunListener(async (args, state) => {
       const { device } = args;
-      await device.setCapabilityValue(Constants.CapabilityTargetTemperatureInside, args.targetTemperature);
+      await device.setCapabilityValue(
+        Constants.CapabilityTargetTemperatureInside,
+        args.targetTemperature,
+      );
     });
 
     // target temperature 8c
-    const targetTemperatureActionCard8c = this.homey.flow.getActionCard('SetTargetTemperature8c');
+    const targetTemperatureActionCard8c = this.homey.flow.getActionCard(
+      'SetTargetTemperature8c',
+    );
     targetTemperatureActionCard8c.registerRunListener(async (args, state) => {
       const { device } = args;
-      await device.setCapabilityValue(Constants.CapabilityTargetTemperatureInside, args.targetTemperature);
+      await device.setCapabilityValue(
+        Constants.CapabilityTargetTemperatureInside,
+        args.targetTemperature,
+      );
     });
 
     // target air pure
-    const targetAirPureActionCard = this.homey.flow.getActionCard('SetTargetAirPureIon');
+    const targetAirPureActionCard = this.homey.flow.getActionCard(
+      'SetTargetAirPureIon',
+    );
     targetAirPureActionCard.registerRunListener(async (args, state) => {
       const { device } = args;
-      await device.setCapabilityValue(Constants.CapabilityTargetAirPureIon, args.targetAirPureIon);
+      await device.setCapabilityValue(
+        Constants.CapabilityTargetAirPureIon,
+        args.targetAirPureIon,
+      );
     });
 
     // send to AC
@@ -137,34 +194,54 @@ class ToshibaACApp extends Homey.App {
 
   initConditions() {
     // outside temperature above
-    const outsideTemperatureAboveCondition = this.homey.flow.getConditionCard('OutsideTemperatureAbove');
-    outsideTemperatureAboveCondition.registerRunListener(async (args, state) => {
-      const { device } = args;
-      const outsideTemperature = await device.getCapabilityValue(Constants.CapabilityMeasureTemperaturOutside);
-      return outsideTemperature > args.trashholdTemp;
-    });
+    const outsideTemperatureAboveCondition = this.homey.flow.getConditionCard(
+      'OutsideTemperatureAbove',
+    );
+    outsideTemperatureAboveCondition.registerRunListener(
+      async (args, state) => {
+        const { device } = args;
+        const outsideTemperature = await device.getCapabilityValue(
+          Constants.CapabilityMeasureTemperaturOutside,
+        );
+        return outsideTemperature > args.trashholdTemp;
+      },
+    );
 
     // outside temperature below
-    const outsideTemperatureBelowCondition = this.homey.flow.getConditionCard('OutsideTemperatureBelow');
-    outsideTemperatureBelowCondition.registerRunListener(async (args, state) => {
-      const { device } = args;
-      const outsideTemperature = await device.getCapabilityValue(Constants.CapabilityMeasureTemperaturOutside);
-      return outsideTemperature < args.trashholdTemp;
-    });
+    const outsideTemperatureBelowCondition = this.homey.flow.getConditionCard(
+      'OutsideTemperatureBelow',
+    );
+    outsideTemperatureBelowCondition.registerRunListener(
+      async (args, state) => {
+        const { device } = args;
+        const outsideTemperature = await device.getCapabilityValue(
+          Constants.CapabilityMeasureTemperatureOutside,
+        );
+        return outsideTemperature < args.trashholdTemp;
+      },
+    );
 
     // inside temperature above
-    const insideTemperatureAboveCondition = this.homey.flow.getConditionCard('InsideTemperatureAbove');
+    const insideTemperatureAboveCondition = this.homey.flow.getConditionCard(
+      'InsideTemperatureAbove',
+    );
     insideTemperatureAboveCondition.registerRunListener(async (args, state) => {
       const { device } = args;
-      const insideTemperature = await device.getCapabilityValue(Constants.CapabilityMeasureTemperatureInside);
+      const insideTemperature = await device.getCapabilityValue(
+        Constants.CapabilityMeasureTemperatureInside,
+      );
       return insideTemperature > args.trashholdTemp;
     });
 
     // inside temperature below
-    const insideTemperatureBelowCondition = this.homey.flow.getConditionCard('InsideTemperatureBelow');
+    const insideTemperatureBelowCondition = this.homey.flow.getConditionCard(
+      'InsideTemperatureBelow',
+    );
     insideTemperatureBelowCondition.registerRunListener(async (args, state) => {
       const { device } = args;
-      const insideTemperature = await device.getCapabilityValue(Constants.CapabilityMeasureTemperatureInside);
+      const insideTemperature = await device.getCapabilityValue(
+        Constants.CapabilityMeasureTemperatureInside,
+      );
       return insideTemperature < args.trashholdTemp;
     });
 
@@ -172,23 +249,53 @@ class ToshibaACApp extends Homey.App {
     const statusCondition = this.homey.flow.getConditionCard('IsStatus');
     statusCondition.registerRunListener(async (args, state) => {
       const { device } = args;
-      const status = await device.getCapabilityValue(Constants.CapabilityStatus);
+      const status = await device.getCapabilityValue(
+        Constants.CapabilityStatus,
+      );
       return status === args.status.id;
     });
 
-    statusCondition.registerArgumentAutocompleteListener('status', async (query, args) => {
-      const { device } = args;
-      const results = FlowSelections.getStatusResult(device, true);
-      return device.getResult(results, query);
-    });
+    statusCondition.registerArgumentAutocompleteListener(
+      'status',
+      async (query, args) => {
+        const { device } = args;
+        const results = FlowSelections.getStatusResult(device, true);
+        return device.getResult(results, query);
+      },
+    );
 
     // isCleaning
     const isCleaningCondition = this.homey.flow.getConditionCard('IsCleaning');
     isCleaningCondition.registerRunListener(async (args, state) => {
       const { device } = args;
-      const isCleaning = await device.getCapabilityValue(Constants.CapabilitySelfCleaning);
+      const isCleaning = await device.getCapabilityValue(
+        Constants.CapabilitySelfCleaning,
+      );
       return isCleaning;
     });
+
+    // energy consumption last hour above
+    const energyConsumptionLastHourAboveCondition = this.homey.flow.getConditionCard('EnergyConsumptionLastHourAbove');
+    energyConsumptionLastHourAboveCondition.registerRunListener(
+      async (args, state) => {
+        const { device } = args;
+        const energyConsumption = await device.getCapabilityValue(
+          Constants.CapabilityEnergyConsumptionLastHour,
+        );
+        return energyConsumption > args.trashholdTemp;
+      },
+    );
+    // energy consumption today above
+    const energyConsumptionTodayAboveCondition = this.homey.flow.getConditionCard('EnergyConsumptionTodayAbove');
+    energyConsumptionTodayAboveCondition.registerRunListener(
+      async (args, state) => {
+        const { device } = args;
+        const energyConsumption = await device.getCapabilityValue(
+          Constants.CapabilityEnergyConsumptionToday,
+        );
+        return energyConsumption > args.trashholdTemp;
+      },
+    );
   }
 
 }
