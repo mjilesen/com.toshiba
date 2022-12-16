@@ -9,6 +9,7 @@ const EnergyConsumption = require('../../lib/energyConsumption');
 const { setCapabilities } = require('../../lib/acFeatures');
 
 class ACDriver extends Driver {
+
   /**
    * onInit is called when the driver is initialized.
    */
@@ -84,5 +85,6 @@ class ACDriver extends Driver {
   async sendMessage(message) {
     await this.amqpAPI.sendMessage(message);
   }
+
 }
 module.exports = ACDriver;

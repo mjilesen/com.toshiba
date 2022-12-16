@@ -9,6 +9,7 @@ let acMode = '';
 let swingMode = '';
 
 class ACDevice extends Device {
+
   /**
    * onInit is called when the device is initialized.
    */
@@ -100,8 +101,8 @@ class ACDevice extends Device {
     for (const [key, value] of Object.entries(capabilityValues)) {
       await this.setCapabilityValue(key, value);
       if (
-        key === Constants.CapabilityTargetMeritA &&
-        value === Constants.MeritA_Heating_8C
+        key === Constants.CapabilityTargetMeritA
+        && value === Constants.MeritA_Heating_8C
       ) {
         await this.setCapabilityValue(acMode, Constants.Heat);
       }
@@ -117,9 +118,9 @@ class ACDevice extends Device {
 
   async resetMeritA(key, value) {
     if (
-      key === Constants.CapabilityTargetACMode1 ||
-      key === Constants.CapabilityTargetACMode2 ||
-      key === Constants.CapabilityTargetACMode3
+      key === Constants.CapabilityTargetACMode1
+      || key === Constants.CapabilityTargetACMode2
+      || key === Constants.CapabilityTargetACMode3
     ) {
       const valueMeritA = await this.getCapabilityValue(
         Constants.CapabilityTargetMeritA,
@@ -142,9 +143,9 @@ class ACDevice extends Device {
 
   async resetMeritB(key, value) {
     if (
-      key === Constants.CapabilityTargetACMode1 ||
-      key === Constants.CapabilityTargetACMode2 ||
-      key === Constants.CapabilityTargetACMode3
+      key === Constants.CapabilityTargetACMode1
+      || key === Constants.CapabilityTargetACMode2
+      || key === Constants.CapabilityTargetACMode3
     ) {
       const valueMeritB = await this.getCapabilityValue(
         Constants.CapabilityTargetMeritB,
@@ -236,5 +237,6 @@ class ACDevice extends Device {
       return result.name.toLowerCase().includes(query.toLowerCase());
     });
   }
+
 }
 module.exports = ACDevice;

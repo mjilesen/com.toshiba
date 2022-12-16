@@ -3,6 +3,7 @@ const FlowSelections = require('./lib/flowSelection');
 const Constants = require('./lib/constants');
 
 class ToshibaACApp extends Homey.App {
+
   /**
    * onInit is called when the app is initialized.
    */
@@ -30,8 +31,8 @@ class ToshibaACApp extends Homey.App {
         );
       }
       if (
-        args.meritB &&
-        device.hasCapability(Constants.CapabilityTargetMeritB)
+        args.meritB
+        && device.hasCapability(Constants.CapabilityTargetMeritB)
       ) {
         await device.setCapabilityValue(
           Constants.CapabilityTargetMeritB,
@@ -274,8 +275,7 @@ class ToshibaACApp extends Homey.App {
     });
 
     // energy consumption last hour above
-    const energyConsumptionLastHourAboveCondition =
-      this.homey.flow.getConditionCard('EnergyConsumptionLastHourAbove');
+    const energyConsumptionLastHourAboveCondition = this.homey.flow.getConditionCard('EnergyConsumptionLastHourAbove');
     energyConsumptionLastHourAboveCondition.registerRunListener(
       async (args, state) => {
         const { device } = args;
@@ -286,8 +286,7 @@ class ToshibaACApp extends Homey.App {
       },
     );
     // energy consumption today above
-    const energyConsumptionTodayAboveCondition =
-      this.homey.flow.getConditionCard('EnergyConsumptionTodayAbove');
+    const energyConsumptionTodayAboveCondition = this.homey.flow.getConditionCard('EnergyConsumptionTodayAbove');
     energyConsumptionTodayAboveCondition.registerRunListener(
       async (args, state) => {
         const { device } = args;
@@ -298,5 +297,6 @@ class ToshibaACApp extends Homey.App {
       },
     );
   }
+
 }
 module.exports = ToshibaACApp;
