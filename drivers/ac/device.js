@@ -14,31 +14,6 @@ class ACDevice extends Device {
    */
   async onInit() {
     await this.initCapabilities();
-    await this.ConvertCapabilities();
-  }
-
-  async ConvertCapabilities() {
-    if (
-      this.getStoreValue(Constants.StoredValuesMeritA) &&
-      !this.hasCapability(Constants.CapabilityHas8C) &&
-      !this.hasCapability(Constants.CapabilityHasNo8C)
-    ) {
-      if (
-        this.getStoreValue(Constants.StoredValuesMeritA)?.includes(
-          Constants.MeritA_Heating_8C,
-        )
-      ) {
-        await this.setCapabilityOptions(
-          Constants.CapabilityTargetTemperatureInside,
-          {
-            min: 5,
-          },
-        );
-        await this.addCapability(Constants.CapabilityHas8C);
-      } else {
-        await this.addCapability(Constants.CapabilityHasNo8C);
-      }
-    }
   }
 
   /**

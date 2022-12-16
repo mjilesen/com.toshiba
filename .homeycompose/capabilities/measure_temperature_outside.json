@@ -1,8 +1,13 @@
 {
   "type": "number",
-  "title": { "en": "Current temperature outside", "nl": "Huidige temperatuur buiten" },
+  "title": {
+    "en": "Current temperature outside",
+    "nl": "Huidige temperatuur buiten"
+  },
   "units": { "en": "°C", "nl": "°C" },
   "uiComponent": "sensor",
+  "min": -50,
+  "max": 50,
   "getable": true,
   "setable": false,
   "icon": "/assets/thermometer.svg"

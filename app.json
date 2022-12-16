@@ -207,6 +207,64 @@
             "filter": "driver_id=ac"
           }
         ]
+      },
+      {
+        "id": "EnergyConsumptionLastHourAbove",
+        "title": {
+          "en": "The energy consumption over the last hour is above",
+          "nl": "Het energie verbruik het afgelopen uur is boven"
+        },
+        "titleFormatted": {
+          "en": "The energy consumption over the last hour is above [[trashholdEnergyConsumption]]",
+          "nl": "Het energie verbruik het afgelopen uur is boven [[trashholdEnergyConsumption]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ac&capabilities=measure_energy_consumption_last_hour"
+          },
+          {
+            "name": "trashholdEnergyConsumption",
+            "type": "number",
+            "min": 0,
+            "max": 50,
+            "step": 1,
+            "placeholder": {
+              "en": "In kWh",
+              "nl": "In kWh"
+            }
+          }
+        ]
+      },
+      {
+        "id": "EnergyConsumptionTodayAbove",
+        "title": {
+          "en": "The total energy consumption today is above",
+          "nl": "Het totale energie verbruik vandaag is boven"
+        },
+        "titleFormatted": {
+          "en": "The total energy consumption today is above [[trashholdEnergyConsumption]]",
+          "nl": "Het totale energie verbruik vandaag is boven [[trashholdEnergyConsumption]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ac&capabilities=measure_energy_consumption_today"
+          },
+          {
+            "name": "trashholdEnergyConsumption",
+            "type": "number",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "placeholder": {
+              "en": "In kWh",
+              "nl": "In kWh"
+            }
+          }
+        ]
       }
     ],
     "actions": [
@@ -659,6 +717,8 @@
         "nl": "°C"
       },
       "uiComponent": "sensor",
+      "min": -50,
+      "max": 50,
       "getable": true,
       "setable": false,
       "icon": "/assets/thermometer.svg"

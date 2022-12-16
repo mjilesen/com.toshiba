@@ -6,15 +6,17 @@ const HttpApi = require('../../lib/httpApi');
 const AmqpApi = require('../../lib/amqpApi');
 const Constants = require('../../lib/constants');
 const EnergyConsumption = require('../../lib/energyConsumption');
+const { setCapabilities } = require('../../lib/acFeatures');
 
 class ACDriver extends Driver {
-
   /**
    * onInit is called when the driver is initialized.
    */
   async onInit() {
     this.log('ACDriver has been initialized');
-    let deviceID = await this.homey.settings.get(Constants.SettingDriverDeviceID);
+    let deviceID = await this.homey.settings.get(
+      Constants.SettingDriverDeviceID,
+    );
     if (!deviceID) {
       deviceID = `Homey-${Uuid.v4()}`;
       await this.homey.settings.set(Constants.SettingDriverDeviceID, deviceID);
@@ -57,10 +59,11 @@ class ACDriver extends Driver {
   }
 
   async onRepair(session, device) {
-    session.setHandler('login', async data => {
-      const returnValue = await this.login(data.username, data.password);
-      return returnValue;
-    });
+    setCapabilities(device);
+    // session.setHandler('login', async data => {
+    //  const returnValue = await this.login(data.username, data.password);
+    //  return returnValue;
+    // });
   }
 
   async login(username, password) {
@@ -81,6 +84,5 @@ class ACDriver extends Driver {
   async sendMessage(message) {
     await this.amqpAPI.sendMessage(message);
   }
-
 }
 module.exports = ACDriver;
