@@ -179,7 +179,7 @@ class ACDevice extends Device {
   }
 
   async updateStateAfterUpdateCapability() {
-    const state = StateUtils.convertCapabilitiesToState(this);
+    const state = await StateUtils.convertCapabilitiesToState(this);
     await this.setStoreValue(Constants.StoredValueState, state);
 
     this.driver.amqpAPI.sendMessage(state, this.getData().DeviceUniqueID);
