@@ -58,5 +58,8 @@
   },
   "2.0.0": {
     "en": "Fixed 8C functionality (when applicable), added energy consumption (when applicable) and some small fixes. Please repair your AC to see this new functionality. "
+  },
+  "2.0.1": {
+    "en": "Fixed 8C functionality (when applicable), added energy consumption (when applicable) and some small fixes. Please repair your AC to see this new functionality."
   }
 }
