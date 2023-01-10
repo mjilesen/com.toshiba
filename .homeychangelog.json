@@ -61,5 +61,8 @@
   },
   "2.0.1": {
     "en": "Fixed 8C functionality (when applicable), added energy consumption (when applicable) and some small fixes. Please repair your AC to see this new functionality."
+  },
+  "2.1.0": {
+    "en": "Fixed 8C functionality (when applicable), added energy consumption (when applicable) and some small fixes. Please repair your AC to see this new functionality. Also added new triggers that can be used when capabilities are changed (either via Homey or via the app)."
   }
 }
