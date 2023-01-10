@@ -105,6 +105,10 @@ class ACDevice extends Device {
         && value === Constants.MeritA_Heating_8C
       ) {
         await this.setCapabilityValue(acMode, Constants.Heat);
+        // in 8C mode, meritB has to be turned off
+        if (this.hasCapability(Constants.CapabilityTargetMeritB)) {
+          await this.setCapabilityValue(Constants.CapabilityTargetMeritB, Constants.MeritB_Off);
+        }
       }
 
       await this.resetMeritA(key, value);
