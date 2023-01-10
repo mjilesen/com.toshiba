@@ -99,6 +99,7 @@ class ACDevice extends Device {
       throw new Error(isValid.errormessage);
     }
     for (const [key, value] of Object.entries(capabilityValues)) {
+      const oldvalue = this.getCapabilityValue(key);
       await this.setCapabilityValue(key, value);
       if (
         key === Constants.CapabilityTargetMeritA
@@ -115,6 +116,8 @@ class ACDevice extends Device {
       if (this.hasCapability(Constants.CapabilityTargetMeritB)) {
         await this.resetMeritB(key, value);
       }
+
+      this.startTrigger(key, oldvalue, value);
     }
     await this.setStatusCapability();
     await this.updateStateAfterUpdateCapability();
@@ -222,6 +225,18 @@ class ACDevice extends Device {
     }
   }
 
+  startTrigger(key, oldValue, newValue) {
+    const triggerName = this.getTriggerName(key);
+    const trigger = this.homey.flow.getDeviceTriggerCard(triggerName);
+    if (trigger) {
+      const token = {
+        oldValue,
+        newValue,
+      };
+      trigger.trigger(this, token);
+    }
+  }
+
   updateStateAfterHeartBeat(insideTemperature, outsideTemperature) {
     StateUtils.setOutsideTemperature(this, outsideTemperature);
     StateUtils.setInsideTemperature(this, insideTemperature);
@@ -240,6 +255,14 @@ class ACDevice extends Device {
     return results.filter(result => {
       return result.name.toLowerCase().includes(query.toLowerCase());
     });
+  }
+
+  getTriggerName(key) {
+    let value = key;
+    if (key.includes(Constants.StoredCapabilityTargetACMode) || key.includes(Constants.StoredCapabilityTargetSwingMode)) {
+      value = key.substring(0, key.length - 1);
+    }
+    return value;
   }
 
 }
