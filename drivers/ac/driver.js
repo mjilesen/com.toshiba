@@ -61,6 +61,29 @@ class ACDriver extends Driver {
 
   async onRepair(session, device) {
     setCapabilities(device);
+    device.setCapabilityOptions(Constants.CapabilityMeasureTemperatureInside, {
+      insights: true,
+    });
+    device.setCapabilityOptions(Constants.CapabilityMeasureTemperatureOutside, {
+      insights: true,
+    });
+
+    device.setCapabilityOptions(Constants.CapabilityTargetTemperatureInside, {
+      insights: true,
+    });
+    if (device.hasCapability(Constants.CapabilityEnergyConsumptionLastHour)) {
+      device.setCapabilityOptions(Constants.CapabilityEnergyConsumptionLastHour, {
+        insights: true,
+        decimals: 2,
+      });
+    }
+
+    if (device.hasCapability(Constants.CapabilityEnergyConsumptionToday)) {
+      device.setCapabilityOptions(Constants.CapabilityEnergyConsumptionToday, {
+        insights: true,
+        decimals: 2,
+      });
+    }
     // session.setHandler('login', async data => {
     //  const returnValue = await this.login(data.username, data.password);
     //  return returnValue;

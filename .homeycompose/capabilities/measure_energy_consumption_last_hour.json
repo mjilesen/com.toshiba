@@ -1,5 +1,6 @@
 {
   "type": "number",
+  "decimals":2,
   "title": { "en": "Energy consumption last hour", "nl": "Energie verbruik huidige uur" },
   "units": { "en":"kWh"},
   "getable": true,
