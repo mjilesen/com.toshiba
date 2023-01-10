@@ -10,5 +10,6 @@
   "max": 50,
   "getable": true,
   "setable": false,
+  "insights":true,
   "icon": "/assets/thermometer.svg"
 }
