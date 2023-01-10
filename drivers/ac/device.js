@@ -202,7 +202,7 @@ class ACDevice extends Device {
         });
 
         const value = await energyConsumption.getEnergyConsumptionPerDay(
-          this.getData().DeviceUniqueID,
+          this,
           dateTime,
         );
 
