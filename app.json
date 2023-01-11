@@ -884,7 +884,7 @@
       },
       "getable": false,
       "setable": false,
-      "uiComponent": "toggle",
+      "uiComponent": null,
       "uiQuickAction": false
     },
     "has_no_8c": {
@@ -894,7 +894,7 @@
       },
       "getable": false,
       "setable": false,
-      "uiComponent": "toggle",
+      "uiComponent": null,
       "uiQuickAction": false
     },
     "measure_energy_consumption_last_hour": {
