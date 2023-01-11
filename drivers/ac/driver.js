@@ -84,10 +84,20 @@ class ACDriver extends Driver {
         decimals: 2,
       });
     }
-    // session.setHandler('login', async data => {
-    //  const returnValue = await this.login(data.username, data.password);
-    //  return returnValue;
-    // });
+    if (device.hasCapability('has_8c')) {
+      device.setCapabilityOptions('has_8c', {
+        uiComponent: null,
+      });
+    }
+    if (device.hasCapability('has_no_8c')) {
+      device.setCapabilityOptions('has_no_8c', {
+        uiComponent: null,
+      });
+    }
+    session.setHandler('login', async data => {
+      const returnValue = await this.login(data.username, data.password);
+      return returnValue;
+    });
   }
 
   async login(username, password) {

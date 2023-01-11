@@ -3,6 +3,6 @@
   "title": { "en": "Has 8c" },
   "getable": false,
   "setable": false,
-  "uiComponent": "toggle",
+  "uiComponent": null,
   "uiQuickAction": false
 }

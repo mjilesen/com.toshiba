@@ -7,6 +7,19 @@ const ValidityChecks = require('../../lib/validityChecks');
 
 let acMode = '';
 let swingMode = '';
+const capabilitiesInFlow = [Constants.CapabilityTargetTemperatureInside,
+  Constants.CapabilityTargetMeritA,
+  Constants.CapabilityTargetMeritB,
+  Constants.CapabilityTargetAirPureIon,
+  Constants.CapabilityTargetPowerMode,
+  Constants.CapabilityTargetFanMode,
+  Constants.CapabilityTargetACMode1,
+  Constants.CapabilityTargetACMode2,
+  Constants.CapabilityTargetACMode3,
+  Constants.CapabilityTargetSwingMode1,
+  Constants.CapabilityTargetSwingMode2,
+  Constants.CapabilityTargetSwingMode3,
+  Constants.CapabilityTargetSwingMode4];
 
 class ACDevice extends Device {
 
@@ -226,14 +239,16 @@ class ACDevice extends Device {
   }
 
   startTrigger(key, oldValue, newValue) {
-    const triggerName = this.getTriggerName(key);
-    const trigger = this.homey.flow.getDeviceTriggerCard(triggerName);
-    if (trigger) {
-      const token = {
-        oldValue,
-        newValue,
-      };
-      trigger.trigger(this, token);
+    if (capabilitiesInFlow.find(cap => cap === key)) {
+      const triggerName = this.getTriggerName(key);
+      const trigger = this.homey.flow.getDeviceTriggerCard(triggerName);
+      if (trigger) {
+        const token = {
+          oldValue,
+          newValue,
+        };
+        trigger.trigger(this, token);
+      }
     }
   }
 
