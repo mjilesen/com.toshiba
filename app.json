@@ -50,6 +50,18 @@
       "Airconditioner"
     ]
   },
+  "api": {
+    "SendInfoLog": {
+      "method": "POST",
+      "path": "/SendInfoLog/",
+      "public": true
+    },
+    "SendEventLog": {
+      "method": "POST",
+      "path": "/SendEventLog/",
+      "public": true
+    }
+  },
   "flow": {
     "triggers": [
       {
