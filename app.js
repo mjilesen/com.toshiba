@@ -18,8 +18,6 @@ class ToshibaACApp extends Homey.App {
 
   async initLogs() {
     this.homey.settings.set('infoLog', '');
-    this.homey.settings.set('eventLogEnabled', false);
-    this.homey.settings.set('eventLog', '');
     this.homey.settings.set('stateLogEnabled', false);
     this.homey.settings.set('stateLog', '');
 
@@ -444,27 +442,14 @@ class ToshibaACApp extends Homey.App {
 
   logStates(txt) {
     if (this.homey.settings.get('stateLogEnabled')) {
-      const log = `${this.homey.settings.get('stateLog') + txt}\n`;
+      const nowTime = new Date(Date.now());
+      const log = `${`${this.homey.settings.get('stateLog') + nowTime.toJSON()} ${txt}`}\r\n`;
       if (log && (log.length > 30000)) {
         this.homey.settings.set('stateLogEnabled', false);
       } else {
         this.homey.settings.set('stateLog', log);
       }
     }
-  }
-
-  logEvents(txt) {
-    const nowTime = new Date(Date.now());
-    let log = `${this.homey.settings.get('eventLog') + nowTime.toJSON()}\r\n${txt}\r\n`;
-    if (log.length > 30000) {
-      log = log.substring(log.length - 1000);
-      const n = log.indexOf('\n');
-      if (n >= 0) {
-        // Remove up to and including the first \n so the log starts on a whole line
-        log = log.substring(n + 1);
-      }
-    }
-    this.homey.settings.set('eventLog', log);
   }
 
   async sendLog(logType) {
@@ -480,10 +465,7 @@ class ToshibaACApp extends Homey.App {
           text = this.varToString(this.homey.settings.get('infoLog'));
         } else if (logType === 'stateLog') {
           subject = 'Toshiba state log';
-          text = this.varToString(this.homey.settings.get('deviceLog'));
-        } else if (logType === 'eventLog') {
-          subject = 'Toshiba event log';
-          text = this.varToString(this.homey.settings.get('eventLog'));
+          text = this.varToString(this.homey.settings.get('stateLog'));
         }
 
         subject += `(${this.homeyHash} : ${Homey.manifest.version})`;

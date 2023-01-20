@@ -4,7 +4,7 @@ module.exports = {
   async SendInfoLog({ homey, body }) {
     return homey.app.sendLog('infoLog');
   },
-  async SendEventLog({ homey, body }) {
-    return homey.app.sendLog('eventLog');
+  async SendStateLog({ homey, body }) {
+    return homey.app.sendLog('stateLog');
   },
 };

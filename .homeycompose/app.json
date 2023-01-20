@@ -55,9 +55,9 @@
        "path": "/SendInfoLog/",
        "public": true
     },
-    "SendEventLog": {
+    "SendStateLog": {
       "method": "POST",
-      "path": "/SendEventLog/",
+      "path": "/SendStateLog/",
       "public": true
     }
   }
