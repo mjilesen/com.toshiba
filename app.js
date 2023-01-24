@@ -442,11 +442,14 @@ class ToshibaACApp extends Homey.App {
   }
 
   getDeviceInformation() {
-     let info = "";
-     const devices = this.homey.drivers.getDriver("ac").getDevices();
-     devices.forEach( device =>
-            info =`${`${info} ${device.getName()}`}\n Data: ${JSON.stringify(device.getData(),null,2)}\n Store: ${JSON.stringify(device.getStore(), null, 2)}\n\n Capabilities: ${JSON.stringify(device.getCapabilities(), null, 2 )}\n\n` 
-             );
+    let info = '';
+    const devices = this.homey.drivers.getDriver('ac').getDevices();
+    devices.forEach(device => {
+      const data = JSON.stringify(device.getData(), null, 2);
+      const store = JSON.stringify(device.getStore(), null, 2);
+      const capablities = JSON.stringify(device.getCapabilities(), null, 2);
+      info = `${`${info} ${device.getName()}`}\n Data: ${data}\n Store: ${store}\n\n Capabilities: ${capablities}\n\n`;
+    });
     this.homey.settings.set('deviceInformation', info);
   }
 

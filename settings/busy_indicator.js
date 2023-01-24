@@ -1,3 +1,4 @@
+/* eslint-disable no-throw-literal */
 /* busy_indicator | busy_indicator 0.10.0 | License - GNU LGPL 3 */
 /*
   This library is free software: you can redistribute it and/or modify
@@ -42,10 +43,6 @@ busyIndicator.prototype._set_prm = function(n, v) {
 };
 
 busyIndicator.prototype.show = function() {
-	let top;
-	let left;
-    let imgEl;
-
   this.cnt++;
   if (this.cnt > 1) {
     return;

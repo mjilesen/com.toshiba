@@ -12,7 +12,5 @@ module.exports = {
   },
   async GetDeviceInformation({ homey, body }) {
     return homey.app.getDeviceInformation();
-  }
+  },
 };
-
-
