@@ -1,7 +1,9 @@
 const { Device } = require('homey');
 const { DateTime } = require('luxon');
 const StateUtils = require('../../lib/stateUtils');
-const ACFeatures = require('../../lib/acFeatures');
+const {
+  logError, setCapabilities, disabledMeritAForMode, disabledMeritBForMode,
+} = require('../../lib/acFeatures');
 const Constants = require('../../lib/constants');
 const ValidityChecks = require('../../lib/validityChecks');
 
@@ -27,7 +29,7 @@ class ACDevice extends Device {
    * onInit is called when the device is initialized.
    */
   async onInit() {
-    await this.initCapabilities();
+    await this.initCapabilities().catch(error => logError(this, error));
   }
 
   /**
@@ -36,9 +38,9 @@ class ACDevice extends Device {
   async onAdded() {
     this.log('ACDevice has been added');
     // determine the capabilities for this type of AC
-    await ACFeatures.setCapabilities(this);
+    await setCapabilities(this).catch(error => logError(this, error));
     // set starting values for the AC
-    const state = await this.getStoreValue(Constants.StoredValueState);
+    const state = await this.getStoreValue(Constants.StoredValueState).catch(error => logError(this, error));
     StateUtils.convertStateToCapabilities(this, state);
   }
 
@@ -75,10 +77,8 @@ class ACDevice extends Device {
 
   async initCapabilities() {
     // initialize the capability listeners
-    acMode = await this.getStoreValue(Constants.StoredCapabilityTargetACMode);
-    swingMode = await this.getStoreValue(
-      Constants.StoredCapabilityTargetSwingMode,
-    );
+    acMode = this.getStoreValue(Constants.StoredCapabilityTargetACMode);
+    swingMode = this.getStoreValue(Constants.StoredCapabilityTargetSwingMode);
 
     const capabilities = [
       Constants.CapabilityOnOff,
@@ -101,7 +101,7 @@ class ACDevice extends Device {
     this.registerMultipleCapabilityListener(
       capabilities,
       async (capabilityValues, capabilityOptions) => {
-        await this.updateCapabilities(capabilityValues);
+        await this.updateCapabilities(capabilityValues).catch(error => logError(this, error));
       },
     );
   }
@@ -113,27 +113,27 @@ class ACDevice extends Device {
     }
     for (const [key, value] of Object.entries(capabilityValues)) {
       const oldvalue = this.getCapabilityValue(key);
-      await this.setCapabilityValue(key, value);
+      await this.setCapabilityValue(key, value).catch(error => logError(this, error));
       if (
         key === Constants.CapabilityTargetMeritA
         && value === Constants.MeritA_Heating_8C
       ) {
-        await this.setCapabilityValue(acMode, Constants.Heat);
+        await this.setCapabilityValue(acMode, Constants.Heat).catch(error => logError(this, error));
         // in 8C mode, meritB has to be turned off
         if (this.hasCapability(Constants.CapabilityTargetMeritB)) {
-          await this.setCapabilityValue(Constants.CapabilityTargetMeritB, Constants.MeritB_Off);
+          await this.setCapabilityValue(Constants.CapabilityTargetMeritB, Constants.MeritB_Off).catch(error => logError(this, error));
         }
       }
 
-      await this.resetMeritA(key, value);
+      await this.resetMeritA(key, value).catch(error => logError(this, error));
       if (this.hasCapability(Constants.CapabilityTargetMeritB)) {
-        await this.resetMeritB(key, value);
+        await this.resetMeritB(key, value).catch(error => logError(this, error));
       }
 
       this.startTrigger(key, oldvalue, value);
     }
-    await this.setStatusCapability();
-    await this.updateStateAfterUpdateCapability();
+    await this.setStatusCapability().catch(error => logError(this, error));
+    await this.updateStateAfterUpdateCapability().catch(error => logError(this, error));
   }
 
   async resetMeritA(key, value) {
@@ -144,19 +144,19 @@ class ACDevice extends Device {
     ) {
       const valueMeritA = await this.getCapabilityValue(
         Constants.CapabilityTargetMeritA,
-      );
+      ).catch(error => logError(this, error));
       const isValidMeritA = ValidityChecks.checkSupportedMeritForMode(
         this,
         Constants.CapabilityTargetMeritA,
         valueMeritA,
         value,
-        ACFeatures.disabledMeritAForMode,
+        disabledMeritAForMode,
       ).valid;
       if (!isValidMeritA) {
         await this.setCapabilityValue(
           Constants.CapabilityTargetMeritA,
           Constants.MeritA_Off,
-        );
+        ).catch(error => logError(this, error));
       }
     }
   }
@@ -169,19 +169,19 @@ class ACDevice extends Device {
     ) {
       const valueMeritB = await this.getCapabilityValue(
         Constants.CapabilityTargetMeritB,
-      );
+      ).catch(error => logError(this, error));
       const isValidMeritB = ValidityChecks.checkSupportedMeritForMode(
         this,
         Constants.CapabilityTargetMeritB,
         valueMeritB,
         value,
-        ACFeatures.disabledMeritBForMode,
+        disabledMeritBForMode,
       ).valid;
       if (!isValidMeritB) {
         await this.setCapabilityValue(
           Constants.CapabilityTargetMeritA,
           Constants.MeritB_Off,
-        );
+        ).catch(error => logError(this, error));
       }
     }
   }
@@ -194,13 +194,13 @@ class ACDevice extends Device {
       } else if (this.getCapabilityValue(Constants.CapabilitySelfCleaning)) {
         value = Constants.StatusCleaning;
       }
-      await this.setCapabilityValue(Constants.CapabilityStatus, value);
+      await this.setCapabilityValue(Constants.CapabilityStatus, value).catch(error => logError(this, error));
     }
   }
 
   async updateStateAfterUpdateCapability() {
-    const state = await StateUtils.convertCapabilitiesToState(this);
-    await this.setStoreValue(Constants.StoredValueState, state);
+    const state = await StateUtils.convertCapabilitiesToState(this).catch(error => logError(this, error));
+    await this.setStoreValue(Constants.StoredValueState, state).catch(error => logError(this, error));
 
     this.driver.amqpAPI.sendMessage(state, this.getData().DeviceUniqueID);
   }
@@ -209,9 +209,7 @@ class ACDevice extends Device {
     this.interval = 300;
     this.timerId = null;
 
-    const hasEnergyCapability = await this.hasCapability(
-      Constants.CapabilityEnergyConsumptionLastHour,
-    );
+    const hasEnergyCapability = this.hasCapability(Constants.CapabilityEnergyConsumptionLastHour);
 
     if (hasEnergyCapability) {
       const { energyConsumption } = this.driver;
@@ -224,7 +222,7 @@ class ACDevice extends Device {
         const value = await energyConsumption.getEnergyConsumptionPerDay(
           this,
           dateTime,
-        );
+        ).catch(error => logError(this, error));
 
         this.setCapabilityValue(
           Constants.CapabilityEnergyConsumptionToday,
@@ -239,7 +237,8 @@ class ACDevice extends Device {
   }
 
   startTrigger(key, oldValue, newValue) {
-    if (capabilitiesInFlow.find(cap => cap === key)) {
+    // when installing the device, oldValue=null => do not start trigger
+    if (oldValue !== null && capabilitiesInFlow.find(cap => cap === key)) {
       const triggerName = this.getTriggerName(key);
       const trigger = this.homey.flow.getDeviceTriggerCard(triggerName);
       if (trigger) {

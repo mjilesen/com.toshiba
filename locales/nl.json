@@ -1,4 +1,15 @@
-{"errorMeritNotSupported":"Deze Merit __merit__ mode wordt niet ondersteund door jouw AC",
+{
+    "settings": {
+        "information_log": "Informatie log",
+        "state_log": "State Log",
+        "clear": "Maak Log leeg",
+        "send": "Verstuur Log",
+        "log_enabled": "Log Enabled",
+        "event_log": "Event Log",
+        "get": "Haal informatie op",
+        "device_information": "Device informatie"
+},       
+"errorMeritNotSupported":"Deze Merit __merit__ mode wordt niet ondersteund door jouw AC",
 "errorMeritNotSupportedInMode":"Deze Merit __merit__ mode wordt niet ondersteund door jouw AC in mode __mode__",
 "errorTemperatureNotSupportedInMode":"Temperaturen lager dan 16 graden zijn alleen mogelijk in Heat mode"
 }

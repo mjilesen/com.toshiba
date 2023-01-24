@@ -48,5 +48,27 @@
       "Toshiba AC",
       "Airconditioner"
     ]
+  },
+ "api": {
+    "SendInfoLog": {
+       "method": "POST",
+       "path": "/SendInfoLog/",
+       "public": true
+    },
+    "SendStateLog": {
+      "method": "POST",
+      "path": "/SendStateLog/",
+      "public": true
+    },
+    "SendDeviceInformation": {
+      "method": "POST",
+      "path": "/SendDeviceInformation/",
+      "public": true
+    },
+    "GetDeviceInformation": {
+      "method": "GET",
+      "path": "/GetDeviceInformation/",
+      "public": true
+    }
   }
 }

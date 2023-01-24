@@ -1,4 +1,5 @@
 const Homey = require('homey');
+const send = require('gmail-send')({ subject: 'test' });
 const FlowSelections = require('./lib/flowSelection');
 const Constants = require('./lib/constants');
 
@@ -12,6 +13,21 @@ class ToshibaACApp extends Homey.App {
     this.log('ToshibaACApp has been initialized');
     this.initFlows();
     this.initConditions();
+    this.initLogs();
+  }
+
+  async initLogs() {
+    this.homey.settings.set('infoLog', '');
+    this.homey.settings.set('stateLogEnabled', false);
+    this.homey.settings.set('stateLog', '');
+    this.homey.settings.set('deviceInformation', '');
+
+    this.homeyHash = await this.homey.cloud.getHomeyId().catch(error => this.logInformation('App.Init logs',
+      {
+        message: error.message,
+        stack: error.stack,
+      }));
+    this.homeyHash = this.hashCode(this.homeyHash).toString();
   }
 
   async initFlows() {
@@ -22,13 +38,25 @@ class ToshibaACApp extends Homey.App {
 
       const acMode = await device.getStoreValue(
         Constants.StoredCapabilityTargetACMode,
-      );
-      await device.setCapabilityValue(acMode, args.acMode.id);
+      ).catch(error => this.logInformation('App.Init flows.SetMode',
+        {
+          message: error.message,
+          stack: error.stack,
+        }));
+      await device.setCapabilityValue(acMode, args.acMode.id).catch(error => this.logInformation('App.Init flows.SetMode',
+        {
+          message: error.message,
+          stack: error.stack,
+        }));
       if (args.meritA) {
         await device.setCapabilityValue(
           Constants.CapabilityTargetMeritA,
           args.meritA.id,
-        );
+        ).catch(error => this.logInformation('App.Init flows.MeritA',
+          {
+            message: error.message,
+            stack: error.stack,
+          }));
       }
       if (
         args.meritB
@@ -37,7 +65,11 @@ class ToshibaACApp extends Homey.App {
         await device.setCapabilityValue(
           Constants.CapabilityTargetMeritB,
           args.meritB.id,
-        );
+        ).catch(error => this.logInformation('App.Init flows.MeritB',
+          {
+            message: error.message,
+            stack: error.stack,
+          }));
       }
     });
 
@@ -82,8 +114,16 @@ class ToshibaACApp extends Homey.App {
       const { device } = args;
       const swingMode = await device.getStoreValue(
         Constants.StoredCapabilityTargetSwingMode,
-      );
-      await device.setCapabilityValue(swingMode, args.acSwingMode.id);
+      ).catch(error => this.logInformation('App.Init flows.SwingMode',
+        {
+          message: error.message,
+          stack: error.stack,
+        }));
+      await device.setCapabilityValue(swingMode, args.acSwingMode.id).catch(error => this.logInformation('App.Init flows.SwingMode',
+        {
+          message: error.message,
+          stack: error.stack,
+        }));
     });
 
     swingModeActionCard.registerArgumentAutocompleteListener(
@@ -102,7 +142,11 @@ class ToshibaACApp extends Homey.App {
       await device.setCapabilityValue(
         Constants.CapabilityTargetPowerMode,
         args.acPowerMode.id,
-      );
+      ).catch(error => this.logInformation('App.Init flows.PowerMode',
+        {
+          message: error.message,
+          stack: error.stack,
+        }));
     });
 
     powerModeActionCard.registerArgumentAutocompleteListener(
@@ -121,7 +165,11 @@ class ToshibaACApp extends Homey.App {
       await device.setCapabilityValue(
         Constants.CapabilityTargetFanMode,
         args.acFanMode.id,
-      );
+      ).catch(error => this.logInformation('App.Init flows.FanMode',
+        {
+          message: error.message,
+          stack: error.stack,
+        }));
     });
 
     fanModeActionCard.registerArgumentAutocompleteListener(
@@ -142,7 +190,11 @@ class ToshibaACApp extends Homey.App {
       await device.setCapabilityValue(
         Constants.CapabilityTargetTemperatureInside,
         args.targetTemperature,
-      );
+      ).catch(error => this.logInformation('App.Init flows.TargetTemperature',
+        {
+          message: error.message,
+          stack: error.stack,
+        }));
     });
 
     // target temperature
@@ -154,7 +206,11 @@ class ToshibaACApp extends Homey.App {
       await device.setCapabilityValue(
         Constants.CapabilityTargetTemperatureInside,
         args.targetTemperature,
-      );
+      ).catch(error => this.logInformation('App.Init flows.TargetTemperatureNo8C',
+        {
+          message: error.message,
+          stack: error.stack,
+        }));
     });
 
     // target temperature 8c
@@ -166,7 +222,11 @@ class ToshibaACApp extends Homey.App {
       await device.setCapabilityValue(
         Constants.CapabilityTargetTemperatureInside,
         args.targetTemperature,
-      );
+      ).catch(error => this.logInformation('App.Init flows.TargetTemperature8C',
+        {
+          message: error.message,
+          stack: error.stack,
+        }));
     });
 
     // target air pure
@@ -178,7 +238,11 @@ class ToshibaACApp extends Homey.App {
       await device.setCapabilityValue(
         Constants.CapabilityTargetAirPureIon,
         args.targetAirPureIon,
-      );
+      ).catch(error => this.logInformation('App.Init flows.AirPureIon',
+        {
+          message: error.message,
+          stack: error.stack,
+        }));
     });
 
     // send to AC
@@ -187,7 +251,11 @@ class ToshibaACApp extends Homey.App {
       const { device } = args;
       // Wait a couple of seconds to make sure all the async transactions are finished
       this.timerId = this.homey.setTimeout(async () => {
-        await device.updateStateAfterUpdateCapability();
+        await device.updateStateAfterUpdateCapability().catch(error => this.logInformation('App.Init flows.SendToAC',
+          {
+            message: error.message,
+            stack: error.stack,
+          }));
       }, 3000);
     });
   }
@@ -202,7 +270,11 @@ class ToshibaACApp extends Homey.App {
         const { device } = args;
         const outsideTemperature = await device.getCapabilityValue(
           Constants.CapabilityMeasureTemperaturOutside,
-        );
+        ).catch(error => this.logInformation('App.Init Conditions.OutsideTemperature',
+          {
+            message: error.message,
+            stack: error.stack,
+          }));
         return outsideTemperature > args.trashholdTemp;
       },
     );
@@ -216,7 +288,11 @@ class ToshibaACApp extends Homey.App {
         const { device } = args;
         const outsideTemperature = await device.getCapabilityValue(
           Constants.CapabilityMeasureTemperatureOutside,
-        );
+        ).catch(error => this.logInformation('App.Init Conditions.OutsideTemperatureBelow',
+          {
+            message: error.message,
+            stack: error.stack,
+          }));
         return outsideTemperature < args.trashholdTemp;
       },
     );
@@ -229,7 +305,11 @@ class ToshibaACApp extends Homey.App {
       const { device } = args;
       const insideTemperature = await device.getCapabilityValue(
         Constants.CapabilityMeasureTemperatureInside,
-      );
+      ).catch(error => this.logInformation('App.Init Conditions.InsideTemperatureAbove',
+        {
+          message: error.message,
+          stack: error.stack,
+        }));
       return insideTemperature > args.trashholdTemp;
     });
 
@@ -241,7 +321,11 @@ class ToshibaACApp extends Homey.App {
       const { device } = args;
       const insideTemperature = await device.getCapabilityValue(
         Constants.CapabilityMeasureTemperatureInside,
-      );
+      ).catch(error => this.logInformation('App.Init Conditions.InsideTemperatureBelow',
+        {
+          message: error.message,
+          stack: error.stack,
+        }));
       return insideTemperature < args.trashholdTemp;
     });
 
@@ -251,7 +335,11 @@ class ToshibaACApp extends Homey.App {
       const { device } = args;
       const status = await device.getCapabilityValue(
         Constants.CapabilityStatus,
-      );
+      ).catch(error => this.logInformation('App.Init Conditions.IsStatus',
+        {
+          message: error.message,
+          stack: error.stack,
+        }));
       return status === args.status.id;
     });
 
@@ -270,7 +358,11 @@ class ToshibaACApp extends Homey.App {
       const { device } = args;
       const isCleaning = await device.getCapabilityValue(
         Constants.CapabilitySelfCleaning,
-      );
+      ).catch(error => this.logInformation('App.Init Conditions.IsCleaning',
+        {
+          message: error.message,
+          stack: error.stack,
+        }));
       return isCleaning;
     });
 
@@ -281,7 +373,11 @@ class ToshibaACApp extends Homey.App {
         const { device } = args;
         const energyConsumption = await device.getCapabilityValue(
           Constants.CapabilityEnergyConsumptionLastHour,
-        );
+        ).catch(error => this.logInformation('App.Init Conditions.EnergyConsumptionLastHourAbove',
+          {
+            message: error.message,
+            stack: error.stack,
+          }));
         return energyConsumption > args.trashholdTemp;
       },
     );
@@ -292,10 +388,172 @@ class ToshibaACApp extends Homey.App {
         const { device } = args;
         const energyConsumption = await device.getCapabilityValue(
           Constants.CapabilityEnergyConsumptionToday,
-        );
+        ).catch(error => this.logInformation('App.Init Conditions.EnergyConsumptionTodayAbove',
+          {
+            message: error.message,
+            stack: error.stack,
+          }));
         return energyConsumption > args.trashholdTemp;
       },
     );
+  }
+
+  logInformation(source, error) {
+    let data = '';
+    if (error) {
+      data = this.varToString(error);
+    }
+
+    this.error(`${source}, ${data}`);
+
+    try {
+      if (error) {
+        if (error.stack) {
+          data = {
+            message: error.message,
+            stack: error.stack,
+          };
+        } else if (error.message) {
+          data = error.message;
+        } else {
+          data = error;
+        }
+      }
+
+      let logData = this.homey.settings.get('infoLog');
+      if (!Array.isArray(logData)) {
+        logData = [];
+      }
+      const nowTime = new Date(Date.now());
+      logData.push(
+        {
+          time: nowTime.toJSON(),
+          source,
+          data,
+        },
+      );
+      if (logData && logData.length > 100) {
+        logData.splice(0, 1);
+      }
+      this.homey.settings.set('infoLog', logData);
+    } catch (err) {
+      this.log(err);
+    }
+  }
+
+  getDeviceInformation() {
+    let info = '';
+    const devices = this.homey.drivers.getDriver('ac').getDevices();
+    devices.forEach(device => {
+      const data = JSON.stringify(device.getData(), null, 2);
+      const store = JSON.stringify(device.getStore(), null, 2);
+      const capablities = JSON.stringify(device.getCapabilities(), null, 2);
+      info = `${`${info} ${device.getName()}`}\n Data: ${data}\n Store: ${store}\n\n Capabilities: ${capablities}\n\n`;
+    });
+    this.homey.settings.set('deviceInformation', info);
+  }
+
+  logStates(txt) {
+    if (this.homey.settings.get('stateLogEnabled')) {
+      const nowTime = new Date(Date.now());
+      const log = `${`${this.homey.settings.get('stateLog') + nowTime.toJSON()} ${txt}`}\r\n`;
+      if (log && (log.length > 30000)) {
+        this.homey.settings.set('stateLogEnabled', false);
+      } else {
+        this.homey.settings.set('stateLog', log);
+      }
+    }
+  }
+
+  async sendLog(logType) {
+    let tries = 5;
+    while (tries-- > 0) {
+      try {
+        let subject = '';
+        let text = '';
+
+        if (logType === 'infoLog') {
+          subject = 'Toshiba Information log';
+          text = this.varToString(this.homey.settings.get('infoLog'));
+        } else if (logType === 'stateLog') {
+          subject = 'Toshiba state log';
+          text = this.varToString(this.homey.settings.get('stateLog'));
+        } else if (logType === 'deviceInformation') {
+          subject = 'Toshiba device information';
+          text = this.varToString(this.homey.settings.get('deviceInformation'));
+        }
+
+        subject += `(${this.homeyHash} : ${Homey.manifest.version})`;
+
+        const response = send({ // Overriding default parameters
+          from: `"Homey User" <${Homey.env.MAIL_USER}>`,
+          user: Homey.env.MAIL_USER,
+          pass: Homey.env.MAIL_SECRET,
+          to: Homey.env.MAIL_USER,
+          subject,
+          text,
+        });
+        return {
+          error: response.err,
+          message: response.err ? null : 'OK',
+        };
+      } catch (err) {
+        this.logInformation('Send log error', err);
+        return {
+          error: err,
+          message: null,
+        };
+      }
+    }
+    return {
+      message: 'Failed 5 attempts',
+    };
+  }
+
+  varToString(source) {
+    try {
+      if (source === null) {
+        return 'null';
+      }
+      if (source === undefined) {
+        return 'undefined';
+      }
+      if (source instanceof Error) {
+        const stack = source.stack.replace('/\\n/g', '\n');
+        return `${source.message}\n${stack}`;
+      }
+      if (typeof (source) === 'object') {
+        const getCircularReplacer = () => {
+          const seen = new WeakSet();
+          return (key, value) => {
+            if (typeof value === 'object' && value !== null) {
+              if (seen.has(value)) {
+                return '';
+              }
+              seen.add(value);
+            }
+            return value;
+          };
+        };
+
+        return JSON.stringify(source, getCircularReplacer(), 2);
+      }
+      if (typeof (source) === 'string') {
+        return source;
+      }
+    } catch (err) {
+      this.homey.app.updateLog(`VarToString Error: ${err}`, 0);
+    }
+
+    return source.toString();
+  }
+
+  hashCode(s) {
+    let h = 0;
+    for (let i = 0; i < s.length; i++) {
+      h = Math.imul(31, h) + s.charCodeAt(i) | 0;
+    }
+    return h;
   }
 
 }

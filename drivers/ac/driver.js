@@ -20,17 +20,17 @@ class ACDriver extends Driver {
     );
     if (!deviceID) {
       deviceID = `Homey-${Uuid.v4()}`;
-      await this.homey.settings.set(Constants.SettingDriverDeviceID, deviceID);
+      this.homey.settings.set(Constants.SettingDriverDeviceID, deviceID);
     }
     this.deviceId = deviceID;
 
-    this.httpAPI = await new HttpApi(this.homey);
+    this.httpAPI = new HttpApi(this.homey);
 
     if (await this.homey.settings.get(Constants.SettingUserName)) {
       await this.initializeAmqp();
     }
 
-    this.energyConsumption = await new EnergyConsumption(this);
+    this.energyConsumption = new EnergyConsumption(this);
 
     this.initEnergyTimer();
   }
