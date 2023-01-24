@@ -70,5 +70,8 @@
   },
   "2.1.2": {
     "en": "Hot fix for bug in turn ac on and off. Please repair your device."
+  },
+  "2.1.3": {
+    "en": "minor bug fix + logging added"
   }
 }
