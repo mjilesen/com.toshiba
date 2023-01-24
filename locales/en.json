@@ -6,7 +6,9 @@
         "clear": "Clear Log",
         "send": "Send Log",
         "log_enabled": "Log Enabled",
-        "event_log": "Event Log"
+        "event_log": "Event Log",
+        "get": "Get information",
+        "device_information": "Device information"
     },
 "errorMeritNotSupported":"This Merit __merit__ mode is not supported by your AC",
 "errorMeritNotSupportedInMode":"This Merit __merit__ mode is not supported by your AC in mode __mode__",

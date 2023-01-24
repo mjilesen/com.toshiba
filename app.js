@@ -20,6 +20,7 @@ class ToshibaACApp extends Homey.App {
     this.homey.settings.set('infoLog', '');
     this.homey.settings.set('stateLogEnabled', false);
     this.homey.settings.set('stateLog', '');
+    this.homey.settings.set('deviceInformation', '');
 
     this.homeyHash = await this.homey.cloud.getHomeyId().catch(error => this.logInformation('App.Init logs',
       {
@@ -440,6 +441,15 @@ class ToshibaACApp extends Homey.App {
     }
   }
 
+  getDeviceInformation() {
+     let info = "";
+     const devices = this.homey.drivers.getDriver("ac").getDevices();
+     devices.forEach( device =>
+            info =`${`${info} ${device.getName()}`}\n Data: ${JSON.stringify(device.getData(),null,2)}\n Store: ${JSON.stringify(device.getStore(), null, 2)}\n\n Capabilities: ${JSON.stringify(device.getCapabilities(), null, 2 )}\n\n` 
+             );
+    this.homey.settings.set('deviceInformation', info);
+  }
+
   logStates(txt) {
     if (this.homey.settings.get('stateLogEnabled')) {
       const nowTime = new Date(Date.now());
@@ -454,7 +464,6 @@ class ToshibaACApp extends Homey.App {
 
   async sendLog(logType) {
     let tries = 5;
-    this.log('Send Log');
     while (tries-- > 0) {
       try {
         let subject = '';
@@ -466,6 +475,9 @@ class ToshibaACApp extends Homey.App {
         } else if (logType === 'stateLog') {
           subject = 'Toshiba state log';
           text = this.varToString(this.homey.settings.get('stateLog'));
+        } else if (logType === 'deviceInformation') {
+          subject = 'Toshiba device information';
+          text = this.varToString(this.homey.settings.get('deviceInformation'));
         }
 
         subject += `(${this.homeyHash} : ${Homey.manifest.version})`;

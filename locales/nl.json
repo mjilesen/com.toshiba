@@ -5,7 +5,9 @@
         "clear": "Maak Log leeg",
         "send": "Verstuur Log",
         "log_enabled": "Log Enabled",
-        "event_log": "Event Log"
+        "event_log": "Event Log",
+        "get": "Haal informatie op",
+        "device_information": "Device informatie"
 },       
 "errorMeritNotSupported":"Deze Merit __merit__ mode wordt niet ondersteund door jouw AC",
 "errorMeritNotSupportedInMode":"Deze Merit __merit__ mode wordt niet ondersteund door jouw AC in mode __mode__",

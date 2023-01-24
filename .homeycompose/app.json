@@ -59,6 +59,16 @@
       "method": "POST",
       "path": "/SendStateLog/",
       "public": true
+    },
+    "SendDeviceInformation": {
+      "method": "POST",
+      "path": "/SendDeviceInformation/",
+      "public": true
+    },
+    "GetDeviceInformation": {
+      "method": "GET",
+      "path": "/GetDeviceInformation/",
+      "public": true
     }
   }
 }

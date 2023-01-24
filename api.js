@@ -7,4 +7,12 @@ module.exports = {
   async SendStateLog({ homey, body }) {
     return homey.app.sendLog('stateLog');
   },
+  async SendDeviceInformation({ homey, body }) {
+    return homey.app.sendLog('deviceInformation');
+  },
+  async GetDeviceInformation({ homey, body }) {
+    return homey.app.getDeviceInformation();
+  }
 };
+
+
