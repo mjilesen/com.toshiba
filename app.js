@@ -38,11 +38,7 @@ class ToshibaACApp extends Homey.App {
 
       const acMode = await device.getStoreValue(
         Constants.StoredCapabilityTargetACMode,
-      ).catch(error => this.logInformation('App.Init flows.SetMode',
-        {
-          message: error.message,
-          stack: error.stack,
-        }));
+      );
       await device.setCapabilityValue(acMode, args.acMode.id).catch(error => this.logInformation('App.Init flows.SetMode',
         {
           message: error.message,
@@ -114,11 +110,7 @@ class ToshibaACApp extends Homey.App {
       const { device } = args;
       const swingMode = await device.getStoreValue(
         Constants.StoredCapabilityTargetSwingMode,
-      ).catch(error => this.logInformation('App.Init flows.SwingMode',
-        {
-          message: error.message,
-          stack: error.stack,
-        }));
+      );
       await device.setCapabilityValue(swingMode, args.acSwingMode.id).catch(error => this.logInformation('App.Init flows.SwingMode',
         {
           message: error.message,
