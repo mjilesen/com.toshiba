@@ -261,12 +261,8 @@ class ToshibaACApp extends Homey.App {
       async (args, state) => {
         const { device } = args;
         const outsideTemperature = await device.getCapabilityValue(
-          Constants.CapabilityMeasureTemperaturOutside,
-        ).catch(error => this.logInformation('App.Init Conditions.OutsideTemperature',
-          {
-            message: error.message,
-            stack: error.stack,
-          }));
+          Constants.CapabilityMeasureTemperatureOutside,
+        );
         return outsideTemperature > args.trashholdTemp;
       },
     );
@@ -280,11 +276,7 @@ class ToshibaACApp extends Homey.App {
         const { device } = args;
         const outsideTemperature = await device.getCapabilityValue(
           Constants.CapabilityMeasureTemperatureOutside,
-        ).catch(error => this.logInformation('App.Init Conditions.OutsideTemperatureBelow',
-          {
-            message: error.message,
-            stack: error.stack,
-          }));
+        );
         return outsideTemperature < args.trashholdTemp;
       },
     );
@@ -297,11 +289,7 @@ class ToshibaACApp extends Homey.App {
       const { device } = args;
       const insideTemperature = await device.getCapabilityValue(
         Constants.CapabilityMeasureTemperatureInside,
-      ).catch(error => this.logInformation('App.Init Conditions.InsideTemperatureAbove',
-        {
-          message: error.message,
-          stack: error.stack,
-        }));
+      );
       return insideTemperature > args.trashholdTemp;
     });
 
@@ -313,11 +301,7 @@ class ToshibaACApp extends Homey.App {
       const { device } = args;
       const insideTemperature = await device.getCapabilityValue(
         Constants.CapabilityMeasureTemperatureInside,
-      ).catch(error => this.logInformation('App.Init Conditions.InsideTemperatureBelow',
-        {
-          message: error.message,
-          stack: error.stack,
-        }));
+      );
       return insideTemperature < args.trashholdTemp;
     });
 
@@ -327,11 +311,7 @@ class ToshibaACApp extends Homey.App {
       const { device } = args;
       const status = await device.getCapabilityValue(
         Constants.CapabilityStatus,
-      ).catch(error => this.logInformation('App.Init Conditions.IsStatus',
-        {
-          message: error.message,
-          stack: error.stack,
-        }));
+      );
       return status === args.status.id;
     });
 
@@ -350,11 +330,7 @@ class ToshibaACApp extends Homey.App {
       const { device } = args;
       const isCleaning = await device.getCapabilityValue(
         Constants.CapabilitySelfCleaning,
-      ).catch(error => this.logInformation('App.Init Conditions.IsCleaning',
-        {
-          message: error.message,
-          stack: error.stack,
-        }));
+      );
       return isCleaning;
     });
 
@@ -365,11 +341,7 @@ class ToshibaACApp extends Homey.App {
         const { device } = args;
         const energyConsumption = await device.getCapabilityValue(
           Constants.CapabilityEnergyConsumptionLastHour,
-        ).catch(error => this.logInformation('App.Init Conditions.EnergyConsumptionLastHourAbove',
-          {
-            message: error.message,
-            stack: error.stack,
-          }));
+        );
         return energyConsumption > args.trashholdTemp;
       },
     );
@@ -380,11 +352,7 @@ class ToshibaACApp extends Homey.App {
         const { device } = args;
         const energyConsumption = await device.getCapabilityValue(
           Constants.CapabilityEnergyConsumptionToday,
-        ).catch(error => this.logInformation('App.Init Conditions.EnergyConsumptionTodayAbove',
-          {
-            message: error.message,
-            stack: error.stack,
-          }));
+        );
         return energyConsumption > args.trashholdTemp;
       },
     );
