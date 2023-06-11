@@ -4,7 +4,6 @@ const FlowSelections = require('./lib/flowSelection');
 const Constants = require('./lib/constants');
 
 class ToshibaACApp extends Homey.App {
-
   /**
    * onInit is called when the app is initialized.
    */
@@ -22,11 +21,12 @@ class ToshibaACApp extends Homey.App {
     this.homey.settings.set('stateLog', '');
     this.homey.settings.set('deviceInformation', '');
 
-    this.homeyHash = await this.homey.cloud.getHomeyId().catch(error => this.logInformation('App.Init logs',
-      {
+    this.homeyHash = await this.homey.cloud.getHomeyId().catch(error =>
+      this.logInformation('App.Init logs', {
         message: error.message,
         stack: error.stack,
-      }));
+      }),
+    );
     this.homeyHash = this.hashCode(this.homeyHash).toString();
   }
 
@@ -39,33 +39,34 @@ class ToshibaACApp extends Homey.App {
       const acMode = await device.getStoreValue(
         Constants.StoredCapabilityTargetACMode,
       );
-      await device.setCapabilityValue(acMode, args.acMode.id).catch(error => this.logInformation('App.Init flows.SetMode',
-        {
+      await device.setCapabilityValue(acMode, args.acMode.id).catch(error =>
+        this.logInformation('App.Init flows.SetMode', {
           message: error.message,
           stack: error.stack,
-        }));
+        }),
+      );
       if (args.meritA) {
-        await device.setCapabilityValue(
-          Constants.CapabilityTargetMeritA,
-          args.meritA.id,
-        ).catch(error => this.logInformation('App.Init flows.MeritA',
-          {
-            message: error.message,
-            stack: error.stack,
-          }));
+        await device
+          .setCapabilityValue(Constants.CapabilityTargetMeritA, args.meritA.id)
+          .catch(error =>
+            this.logInformation('App.Init flows.MeritA', {
+              message: error.message,
+              stack: error.stack,
+            }),
+          );
       }
       if (
-        args.meritB
-        && device.hasCapability(Constants.CapabilityTargetMeritB)
+        args.meritB &&
+        device.hasCapability(Constants.CapabilityTargetMeritB)
       ) {
-        await device.setCapabilityValue(
-          Constants.CapabilityTargetMeritB,
-          args.meritB.id,
-        ).catch(error => this.logInformation('App.Init flows.MeritB',
-          {
-            message: error.message,
-            stack: error.stack,
-          }));
+        await device
+          .setCapabilityValue(Constants.CapabilityTargetMeritB, args.meritB.id)
+          .catch(error =>
+            this.logInformation('App.Init flows.MeritB', {
+              message: error.message,
+              stack: error.stack,
+            }),
+          );
       }
     });
 
@@ -104,6 +105,31 @@ class ToshibaACApp extends Homey.App {
       },
     );
 
+    // ACMode -> issue with Homey2023 when multiple arguments.
+    const acModeActionCard = this.homey.flow.getActionCard('SetACMode');
+    acModeActionCard.registerRunListener(async (args, state) => {
+      const { device } = args;
+
+      const acMode = await device.getStoreValue(
+        Constants.StoredCapabilityTargetACMode,
+      );
+
+      await device.setCapabilityValue(acMode, args.acMode.id).catch(error =>
+        this.logInformation('App.Init flows.SetACMode', {
+          message: error.message,
+          stack: error.stack,
+        }),
+      );
+    });
+    acModeActionCard.registerArgumentAutocompleteListener(
+      'acMode',
+      async (query, args) => {
+        const { device } = args;
+        const results = FlowSelections.getModeResult(device, true);
+        return device.getResult(results, query);
+      },
+    );
+
     // swing mode
     const swingModeActionCard = this.homey.flow.getActionCard('SetSwingMode');
     swingModeActionCard.registerRunListener(async (args, state) => {
@@ -111,11 +137,14 @@ class ToshibaACApp extends Homey.App {
       const swingMode = await device.getStoreValue(
         Constants.StoredCapabilityTargetSwingMode,
       );
-      await device.setCapabilityValue(swingMode, args.acSwingMode.id).catch(error => this.logInformation('App.Init flows.SwingMode',
-        {
-          message: error.message,
-          stack: error.stack,
-        }));
+      await device
+        .setCapabilityValue(swingMode, args.acSwingMode.id)
+        .catch(error =>
+          this.logInformation('App.Init flows.SwingMode', {
+            message: error.message,
+            stack: error.stack,
+          }),
+        );
     });
 
     swingModeActionCard.registerArgumentAutocompleteListener(
@@ -131,14 +160,17 @@ class ToshibaACApp extends Homey.App {
     const powerModeActionCard = this.homey.flow.getActionCard('SetPowerMode');
     powerModeActionCard.registerRunListener(async (args, state) => {
       const { device } = args;
-      await device.setCapabilityValue(
-        Constants.CapabilityTargetPowerMode,
-        args.acPowerMode.id,
-      ).catch(error => this.logInformation('App.Init flows.PowerMode',
-        {
-          message: error.message,
-          stack: error.stack,
-        }));
+      await device
+        .setCapabilityValue(
+          Constants.CapabilityTargetPowerMode,
+          args.acPowerMode.id,
+        )
+        .catch(error =>
+          this.logInformation('App.Init flows.PowerMode', {
+            message: error.message,
+            stack: error.stack,
+          }),
+        );
     });
 
     powerModeActionCard.registerArgumentAutocompleteListener(
@@ -154,14 +186,17 @@ class ToshibaACApp extends Homey.App {
     const fanModeActionCard = this.homey.flow.getActionCard('SetFanMode');
     fanModeActionCard.registerRunListener(async (args, state) => {
       const { device } = args;
-      await device.setCapabilityValue(
-        Constants.CapabilityTargetFanMode,
-        args.acFanMode.id,
-      ).catch(error => this.logInformation('App.Init flows.FanMode',
-        {
-          message: error.message,
-          stack: error.stack,
-        }));
+      await device
+        .setCapabilityValue(
+          Constants.CapabilityTargetFanMode,
+          args.acFanMode.id,
+        )
+        .catch(error =>
+          this.logInformation('App.Init flows.FanMode', {
+            message: error.message,
+            stack: error.stack,
+          }),
+        );
     });
 
     fanModeActionCard.registerArgumentAutocompleteListener(
@@ -179,14 +214,17 @@ class ToshibaACApp extends Homey.App {
     );
     targetTemperatureActionCard.registerRunListener(async (args, state) => {
       const { device } = args;
-      await device.setCapabilityValue(
-        Constants.CapabilityTargetTemperatureInside,
-        args.targetTemperature,
-      ).catch(error => this.logInformation('App.Init flows.TargetTemperature',
-        {
-          message: error.message,
-          stack: error.stack,
-        }));
+      await device
+        .setCapabilityValue(
+          Constants.CapabilityTargetTemperatureInside,
+          args.targetTemperature,
+        )
+        .catch(error =>
+          this.logInformation('App.Init flows.TargetTemperature', {
+            message: error.message,
+            stack: error.stack,
+          }),
+        );
     });
 
     // target temperature
@@ -195,14 +233,17 @@ class ToshibaACApp extends Homey.App {
     );
     targetTemperatureNo8CActionCard.registerRunListener(async (args, state) => {
       const { device } = args;
-      await device.setCapabilityValue(
-        Constants.CapabilityTargetTemperatureInside,
-        args.targetTemperature,
-      ).catch(error => this.logInformation('App.Init flows.TargetTemperatureNo8C',
-        {
-          message: error.message,
-          stack: error.stack,
-        }));
+      await device
+        .setCapabilityValue(
+          Constants.CapabilityTargetTemperatureInside,
+          args.targetTemperature,
+        )
+        .catch(error =>
+          this.logInformation('App.Init flows.TargetTemperatureNo8C', {
+            message: error.message,
+            stack: error.stack,
+          }),
+        );
     });
 
     // target temperature 8c
@@ -211,14 +252,17 @@ class ToshibaACApp extends Homey.App {
     );
     targetTemperatureActionCard8c.registerRunListener(async (args, state) => {
       const { device } = args;
-      await device.setCapabilityValue(
-        Constants.CapabilityTargetTemperatureInside,
-        args.targetTemperature,
-      ).catch(error => this.logInformation('App.Init flows.TargetTemperature8C',
-        {
-          message: error.message,
-          stack: error.stack,
-        }));
+      await device
+        .setCapabilityValue(
+          Constants.CapabilityTargetTemperatureInside,
+          args.targetTemperature,
+        )
+        .catch(error =>
+          this.logInformation('App.Init flows.TargetTemperature8C', {
+            message: error.message,
+            stack: error.stack,
+          }),
+        );
     });
 
     // target air pure
@@ -227,14 +271,17 @@ class ToshibaACApp extends Homey.App {
     );
     targetAirPureActionCard.registerRunListener(async (args, state) => {
       const { device } = args;
-      await device.setCapabilityValue(
-        Constants.CapabilityTargetAirPureIon,
-        args.targetAirPureIon,
-      ).catch(error => this.logInformation('App.Init flows.AirPureIon',
-        {
-          message: error.message,
-          stack: error.stack,
-        }));
+      await device
+        .setCapabilityValue(
+          Constants.CapabilityTargetAirPureIon,
+          args.targetAirPureIon,
+        )
+        .catch(error =>
+          this.logInformation('App.Init flows.AirPureIon', {
+            message: error.message,
+            stack: error.stack,
+          }),
+        );
     });
 
     // send to AC
@@ -243,11 +290,12 @@ class ToshibaACApp extends Homey.App {
       const { device } = args;
       // Wait a couple of seconds to make sure all the async transactions are finished
       this.timerId = this.homey.setTimeout(async () => {
-        await device.updateStateAfterUpdateCapability().catch(error => this.logInformation('App.Init flows.SendToAC',
-          {
+        await device.updateStateAfterUpdateCapability().catch(error =>
+          this.logInformation('App.Init flows.SendToAC', {
             message: error.message,
             stack: error.stack,
-          }));
+          }),
+        );
       }, 3000);
     });
   }
@@ -335,7 +383,8 @@ class ToshibaACApp extends Homey.App {
     });
 
     // energy consumption last hour above
-    const energyConsumptionLastHourAboveCondition = this.homey.flow.getConditionCard('EnergyConsumptionLastHourAbove');
+    const energyConsumptionLastHourAboveCondition =
+      this.homey.flow.getConditionCard('EnergyConsumptionLastHourAbove');
     energyConsumptionLastHourAboveCondition.registerRunListener(
       async (args, state) => {
         const { device } = args;
@@ -346,7 +395,8 @@ class ToshibaACApp extends Homey.App {
       },
     );
     // energy consumption today above
-    const energyConsumptionTodayAboveCondition = this.homey.flow.getConditionCard('EnergyConsumptionTodayAbove');
+    const energyConsumptionTodayAboveCondition =
+      this.homey.flow.getConditionCard('EnergyConsumptionTodayAbove');
     energyConsumptionTodayAboveCondition.registerRunListener(
       async (args, state) => {
         const { device } = args;
@@ -385,13 +435,11 @@ class ToshibaACApp extends Homey.App {
         logData = [];
       }
       const nowTime = new Date(Date.now());
-      logData.push(
-        {
-          time: nowTime.toJSON(),
-          source,
-          data,
-        },
-      );
+      logData.push({
+        time: nowTime.toJSON(),
+        source,
+        data,
+      });
       if (logData && logData.length > 100) {
         logData.splice(0, 1);
       }
@@ -416,8 +464,10 @@ class ToshibaACApp extends Homey.App {
   logStates(txt) {
     if (this.homey.settings.get('stateLogEnabled')) {
       const nowTime = new Date(Date.now());
-      const log = `${`${this.homey.settings.get('stateLog') + nowTime.toJSON()} ${txt}`}\r\n`;
-      if (log && (log.length > 30000)) {
+      const log = `${`${
+        this.homey.settings.get('stateLog') + nowTime.toJSON()
+      } ${txt}`}\r\n`;
+      if (log && log.length > 30000) {
         this.homey.settings.set('stateLogEnabled', false);
       } else {
         this.homey.settings.set('stateLog', log);
@@ -445,7 +495,8 @@ class ToshibaACApp extends Homey.App {
 
         subject += `(${this.homeyHash} : ${Homey.manifest.version})`;
 
-        const response = send({ // Overriding default parameters
+        const response = send({
+          // Overriding default parameters
           from: `"Homey User" <${Homey.env.MAIL_USER}>`,
           user: Homey.env.MAIL_USER,
           pass: Homey.env.MAIL_SECRET,
@@ -482,7 +533,7 @@ class ToshibaACApp extends Homey.App {
         const stack = source.stack.replace('/\\n/g', '\n');
         return `${source.message}\n${stack}`;
       }
-      if (typeof (source) === 'object') {
+      if (typeof source === 'object') {
         const getCircularReplacer = () => {
           const seen = new WeakSet();
           return (key, value) => {
@@ -498,7 +549,7 @@ class ToshibaACApp extends Homey.App {
 
         return JSON.stringify(source, getCircularReplacer(), 2);
       }
-      if (typeof (source) === 'string') {
+      if (typeof source === 'string') {
         return source;
       }
     } catch (err) {
@@ -511,10 +562,9 @@ class ToshibaACApp extends Homey.App {
   hashCode(s) {
     let h = 0;
     for (let i = 0; i < s.length; i++) {
-      h = Math.imul(31, h) + s.charCodeAt(i) | 0;
+      h = (Math.imul(31, h) + s.charCodeAt(i)) | 0;
     }
     return h;
   }
-
 }
 module.exports = ToshibaACApp;

@@ -593,6 +593,32 @@
         ]
       },
       {
+        "id": "SetACMode",
+        "title": {
+          "en": "Set AC mode",
+          "nl": "Zet AC mode"
+        },
+        "titleFormatted": {
+          "en": "Set AC mode to [[acMode]]",
+          "nl": "Zet AC mode naar [[acMode]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ac&capabilities=target_ac_mode1|target_ac_mode2|target_ac_mode3"
+          },
+          {
+            "name": "acMode",
+            "type": "autocomplete",
+            "title": {
+              "en": "Mode",
+              "nl": "Mode"
+            }
+          }
+        ]
+      },
+      {
         "id": "SetSwingMode",
         "title": {
           "en": "Set swing mode",

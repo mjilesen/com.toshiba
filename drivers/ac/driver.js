@@ -9,7 +9,6 @@ const EnergyConsumption = require('../../lib/energyConsumption');
 const { setCapabilities } = require('../../lib/acFeatures');
 
 class ACDriver extends Driver {
-
   /**
    * onInit is called when the driver is initialized.
    */
@@ -60,44 +59,7 @@ class ACDriver extends Driver {
   }
 
   async onRepair(session, device) {
-    setCapabilities(device);
-    device.setCapabilityOptions(Constants.CapabilityMeasureTemperatureInside, {
-      insights: true,
-    });
-    device.setCapabilityOptions(Constants.CapabilityMeasureTemperatureOutside, {
-      insights: true,
-    });
-
-    device.setCapabilityOptions(Constants.CapabilityTargetTemperatureInside, {
-      insights: true,
-    });
-    if (device.hasCapability(Constants.CapabilityEnergyConsumptionLastHour)) {
-      device.setCapabilityOptions(Constants.CapabilityEnergyConsumptionLastHour, {
-        insights: true,
-        decimals: 2,
-      });
-    }
-
-    if (device.hasCapability(Constants.CapabilityEnergyConsumptionToday)) {
-      device.setCapabilityOptions(Constants.CapabilityEnergyConsumptionToday, {
-        insights: true,
-        decimals: 2,
-      });
-    }
-    if (device.hasCapability('has_8c')) {
-      device.setCapabilityOptions('has_8c', {
-        uiComponent: null,
-      });
-    }
-    if (device.hasCapability('has_no_8c')) {
-      device.setCapabilityOptions('has_no_8c', {
-        uiComponent: null,
-      });
-    }
-    session.setHandler('login', async data => {
-      const returnValue = await this.login(data.username, data.password);
-      return returnValue;
-    });
+    // nothing
   }
 
   async login(username, password) {
@@ -118,6 +80,5 @@ class ACDriver extends Driver {
   async sendMessage(message) {
     await this.amqpAPI.sendMessage(message);
   }
-
 }
 module.exports = ACDriver;
