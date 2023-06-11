@@ -29,6 +29,7 @@ const capabilitiesInFlow = [
 ];
 
 class ACDevice extends Device {
+
   /**
    * onInit is called when the device is initialized.
    */
@@ -107,9 +108,7 @@ class ACDevice extends Device {
     this.registerMultipleCapabilityListener(
       capabilities,
       async (capabilityValues, capabilityOptions) => {
-        await this.updateCapabilities(capabilityValues).catch(error =>
-          logError(this, error),
-        );
+        await this.updateCapabilities(capabilityValues).catch(error => logError(this, error));
       },
     );
   }
@@ -121,16 +120,12 @@ class ACDevice extends Device {
     }
     for (const [key, value] of Object.entries(capabilityValues)) {
       const oldvalue = this.getCapabilityValue(key);
-      await this.setCapabilityValue(key, value).catch(error =>
-        logError(this, error),
-      );
+      await this.setCapabilityValue(key, value).catch(error => logError(this, error));
       if (
-        key === Constants.CapabilityTargetMeritA &&
-        value === Constants.MeritA_Heating_8C
+        key === Constants.CapabilityTargetMeritA
+        && value === Constants.MeritA_Heating_8C
       ) {
-        await this.setCapabilityValue(acMode, Constants.Heat).catch(error =>
-          logError(this, error),
-        );
+        await this.setCapabilityValue(acMode, Constants.Heat).catch(error => logError(this, error));
         // in 8C mode, meritB has to be turned off
         if (this.hasCapability(Constants.CapabilityTargetMeritB)) {
           await this.setCapabilityValue(
@@ -142,24 +137,20 @@ class ACDevice extends Device {
 
       await this.resetMeritA(key, value).catch(error => logError(this, error));
       if (this.hasCapability(Constants.CapabilityTargetMeritB)) {
-        await this.resetMeritB(key, value).catch(error =>
-          logError(this, error),
-        );
+        await this.resetMeritB(key, value).catch(error => logError(this, error));
       }
 
       this.startTrigger(key, oldvalue, value);
     }
     await this.setStatusCapability().catch(error => logError(this, error));
-    await this.updateStateAfterUpdateCapability().catch(error =>
-      logError(this, error),
-    );
+    await this.updateStateAfterUpdateCapability().catch(error => logError(this, error));
   }
 
   async resetMeritA(key, value) {
     if (
-      key === Constants.CapabilityTargetACMode1 ||
-      key === Constants.CapabilityTargetACMode2 ||
-      key === Constants.CapabilityTargetACMode3
+      key === Constants.CapabilityTargetACMode1
+      || key === Constants.CapabilityTargetACMode2
+      || key === Constants.CapabilityTargetACMode3
     ) {
       const valueMeritA = await this.getCapabilityValue(
         Constants.CapabilityTargetMeritA,
@@ -182,9 +173,9 @@ class ACDevice extends Device {
 
   async resetMeritB(key, value) {
     if (
-      key === Constants.CapabilityTargetACMode1 ||
-      key === Constants.CapabilityTargetACMode2 ||
-      key === Constants.CapabilityTargetACMode3
+      key === Constants.CapabilityTargetACMode1
+      || key === Constants.CapabilityTargetACMode2
+      || key === Constants.CapabilityTargetACMode3
     ) {
       const valueMeritB = await this.getCapabilityValue(
         Constants.CapabilityTargetMeritB,
@@ -223,9 +214,7 @@ class ACDevice extends Device {
     const state = await StateUtils.convertCapabilitiesToState(this).catch(
       error => logError(this, error),
     );
-    await this.setStoreValue(Constants.StoredValueState, state).catch(error =>
-      logError(this, error),
-    );
+    await this.setStoreValue(Constants.StoredValueState, state).catch(error => logError(this, error));
 
     this.driver.amqpAPI.sendMessage(state, this.getData().DeviceUniqueID);
   }
@@ -300,12 +289,13 @@ class ACDevice extends Device {
   getTriggerName(key) {
     let value = key;
     if (
-      key.includes(Constants.StoredCapabilityTargetACMode) ||
-      key.includes(Constants.StoredCapabilityTargetSwingMode)
+      key.includes(Constants.StoredCapabilityTargetACMode)
+      || key.includes(Constants.StoredCapabilityTargetSwingMode)
     ) {
       value = key.substring(0, key.length - 1);
     }
     return value;
   }
+
 }
 module.exports = ACDevice;

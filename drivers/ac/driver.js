@@ -6,9 +6,9 @@ const HttpApi = require('../../lib/httpApi');
 const AmqpApi = require('../../lib/amqpApi');
 const Constants = require('../../lib/constants');
 const EnergyConsumption = require('../../lib/energyConsumption');
-const { setCapabilities } = require('../../lib/acFeatures');
 
 class ACDriver extends Driver {
+
   /**
    * onInit is called when the driver is initialized.
    */
@@ -42,7 +42,7 @@ class ACDriver extends Driver {
   async initializeAmqp() {
     const token = await this.httpAPI.getSASToken(this.deviceId);
     if (!this.amqpAPI) {
-      this.amqpAPI = await new AmqpApi(token, this);
+      this.amqpAPI = new AmqpApi(token, this);
     } else {
       this.amqpAPI.setToken(token);
     }
@@ -80,5 +80,6 @@ class ACDriver extends Driver {
   async sendMessage(message) {
     await this.amqpAPI.sendMessage(message);
   }
+
 }
 module.exports = ACDriver;
