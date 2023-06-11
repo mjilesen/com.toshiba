@@ -6,7 +6,6 @@ const HttpApi = require('../../lib/httpApi');
 const AmqpApi = require('../../lib/amqpApi');
 const Constants = require('../../lib/constants');
 const EnergyConsumption = require('../../lib/energyConsumption');
-const { setCapabilities } = require('../../lib/acFeatures');
 
 class ACDriver extends Driver {
 
@@ -43,7 +42,7 @@ class ACDriver extends Driver {
   async initializeAmqp() {
     const token = await this.httpAPI.getSASToken(this.deviceId);
     if (!this.amqpAPI) {
-      this.amqpAPI = await new AmqpApi(token, this);
+      this.amqpAPI = new AmqpApi(token, this);
     } else {
       this.amqpAPI.setToken(token);
     }
@@ -60,44 +59,7 @@ class ACDriver extends Driver {
   }
 
   async onRepair(session, device) {
-    setCapabilities(device);
-    device.setCapabilityOptions(Constants.CapabilityMeasureTemperatureInside, {
-      insights: true,
-    });
-    device.setCapabilityOptions(Constants.CapabilityMeasureTemperatureOutside, {
-      insights: true,
-    });
-
-    device.setCapabilityOptions(Constants.CapabilityTargetTemperatureInside, {
-      insights: true,
-    });
-    if (device.hasCapability(Constants.CapabilityEnergyConsumptionLastHour)) {
-      device.setCapabilityOptions(Constants.CapabilityEnergyConsumptionLastHour, {
-        insights: true,
-        decimals: 2,
-      });
-    }
-
-    if (device.hasCapability(Constants.CapabilityEnergyConsumptionToday)) {
-      device.setCapabilityOptions(Constants.CapabilityEnergyConsumptionToday, {
-        insights: true,
-        decimals: 2,
-      });
-    }
-    if (device.hasCapability('has_8c')) {
-      device.setCapabilityOptions('has_8c', {
-        uiComponent: null,
-      });
-    }
-    if (device.hasCapability('has_no_8c')) {
-      device.setCapabilityOptions('has_no_8c', {
-        uiComponent: null,
-      });
-    }
-    session.setHandler('login', async data => {
-      const returnValue = await this.login(data.username, data.password);
-      return returnValue;
-    });
+    // nothing
   }
 
   async login(username, password) {

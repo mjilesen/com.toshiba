@@ -1,160 +1,166 @@
 {
-  "triggers":[
-  {
-    "id":"target_temperature",
-    "title": {
-      "en": "The target temperature changes",
-      "nl": "Doel temperatuur verandert"
-    },
-    "tokens": [
+  "triggers": [
     {
-      "name": "oldValue",
-      "type": "number",
-      "title": { "en": "previous target temperature in °C", "nl":"vorige doel temperatuur in °C" }
-    },
-    {
-      "name": "newValue",
-      "type": "number",
-      "title": { "en": "new target temperature in °C", "nl": "nieuwe doel temperatuur in °C" }
-    }
-  ]
-  },
-  {
-    "id":"target_ac_merit_a",
-    "title": {
-      "en": "Merit A changes",
-      "nl": "Merit A verandert"
-    },
-    "tokens": [
-    {
-      "name": "oldValue",
-      "type": "string",
-      "title": { "en": "previous merit A", "nl":"vorige merit A" }
+      "id": "target_temperature",
+      "title": {
+        "en": "The target temperature changes",
+        "nl": "Doel temperatuur verandert"
+      },
+      "tokens": [
+        {
+          "name": "oldValue",
+          "type": "number",
+          "title": {
+            "en": "previous target temperature in °C",
+            "nl": "vorige doel temperatuur in °C"
+          }
+        },
+        {
+          "name": "newValue",
+          "type": "number",
+          "title": {
+            "en": "new target temperature in °C",
+            "nl": "nieuwe doel temperatuur in °C"
+          }
+        }
+      ]
     },
     {
-      "name": "newValue",
-      "type": "string",
-      "title": { "en": "new merit A", "nl":"nieuwe merit A" }
-    }
-  ]
-  },
-  {
-    "id":"target_ac_merit_b",
-    "title": {
-      "en": "Merit B changes",
-      "nl": "Merit B verandert"
+      "id": "target_ac_merit_a",
+      "title": {
+        "en": "Merit A changes",
+        "nl": "Merit A verandert"
+      },
+      "tokens": [
+        {
+          "name": "oldValue",
+          "type": "string",
+          "title": { "en": "previous merit A", "nl": "vorige merit A" }
+        },
+        {
+          "name": "newValue",
+          "type": "string",
+          "title": { "en": "new merit A", "nl": "nieuwe merit A" }
+        }
+      ]
     },
-    "tokens": [
     {
-      "name": "oldValue",
-      "type": "string",
-      "title": { "en": "previous merit B", "nl":"vorige merit B" }
+      "id": "target_ac_merit_b",
+      "title": {
+        "en": "Merit B changes",
+        "nl": "Merit B verandert"
+      },
+      "tokens": [
+        {
+          "name": "oldValue",
+          "type": "string",
+          "title": { "en": "previous merit B", "nl": "vorige merit B" }
+        },
+        {
+          "name": "newValue",
+          "type": "string",
+          "title": { "en": "new merit B", "nl": "nieuwe merit B" }
+        }
+      ],
+      "$filter": "capabilities=target_ac_merit_b"
     },
     {
-      "name": "newValue",
-      "type": "string",
-      "title": { "en": "new merit B", "nl":"nieuwe merit B" }
+      "id": "target_air_pure_ion",
+      "title": {
+        "en": "Pure changes",
+        "nl": "Pure verandert"
+      },
+      "tokens": [
+        {
+          "name": "oldValue",
+          "type": "boolean",
+          "title": { "en": "previous Pure", "nl": "vorige Pure" }
+        },
+        {
+          "name": "newValue",
+          "type": "boolean",
+          "title": { "en": "new Pure", "nl": "nieuwe Pure" }
+        }
+      ],
+      "$filter": "capabilities=target_air_pure_ion"
+    },
+    {
+      "id": "target_power_mode",
+      "title": {
+        "en": "Power mode changes",
+        "nl": "Power mode verandert"
+      },
+      "tokens": [
+        {
+          "name": "oldValue",
+          "type": "string",
+          "title": { "en": "previous power mode", "nl": "vorige power mode" }
+        },
+        {
+          "name": "newValue",
+          "type": "string",
+          "title": { "en": "new power mode", "nl": "nieuwe power mode" }
+        }
+      ]
+    },
+    {
+      "id": "target_fan_mode",
+      "title": {
+        "en": "The fan mode changes",
+        "nl": "Ventilator mode verandert"
+      },
+      "tokens": [
+        {
+          "name": "oldValue",
+          "type": "string",
+          "title": { "en": "previous fan mode", "nl": "vorige fan mode" }
+        },
+        {
+          "name": "newValue",
+          "type": "string",
+          "title": { "en": "new fan mode", "nl": "nieuwe fan mode" }
+        }
+      ]
+    },
+    {
+      "id": "target_ac_mode",
+      "title": {
+        "en": "The ac mode changes",
+        "nl": "AC mode verandert"
+      },
+      "tokens": [
+        {
+          "name": "oldValue",
+          "type": "string",
+          "title": { "en": "previous ac mode", "nl": "vorige ac mode" }
+        },
+        {
+          "name": "newValue",
+          "type": "string",
+          "title": { "en": "new ac mode", "nl": "nieuwe ac mode" }
+        }
+      ]
+    },
+    {
+      "id": "target_swing_mode",
+      "title": {
+        "en": "The swing mode changes",
+        "nl": "Swing mode verandert"
+      },
+      "tokens": [
+        {
+          "name": "oldValue",
+          "type": "string",
+          "title": { "en": "previous swing mode", "nl": "vorige swing mode" }
+        },
+        {
+          "name": "newValue",
+          "type": "string",
+          "title": { "en": "new swing mode", "nl": "nieuwe swing mode" }
+        }
+      ]
     }
   ],
-    "$filter": "capabilities=target_ac_merit_b"
-  },
-  {
-    "id":"target_air_pure_ion",
-    "title": {
-      "en": "Pure changes",
-      "nl": "Pure verandert"
-    },
-    "tokens": [
-    {
-      "name": "oldValue",
-      "type": "boolean",
-      "title": { "en": "previous Pure", "nl":"vorige Pure" }
-    },
-    {
-      "name": "newValue",
-      "type": "boolean",
-      "title": { "en": "new Pure", "nl":"nieuwe Pure" }
-    }
-  ],
-    "$filter": "capabilities=target_air_pure_ion"
-  },
-    {
-    "id":"target_power_mode",
-    "title": {
-      "en": "Power mode changes",
-      "nl": "Power mode verandert"
-    },
-    "tokens": [
-    {
-      "name": "oldValue",
-      "type": "string",
-      "title": { "en": "previous power mode", "nl": "vorige power mode" }
-    },
-    {
-      "name": "newValue",
-      "type": "string",
-      "title": { "en": "new power mode", "nl": "nieuwe power mode" }
-    }
-  ]
-  },
-  {
-    "id":"target_fan_mode",
-    "title": {
-      "en": "The fan mode changes",
-      "nl": "Ventilator mode verandert"
-    },
-    "tokens": [
-    {
-      "name": "oldValue",
-      "type": "string",
-      "title": { "en": "previous fan mode", "nl": "vorige fan mode" }
-    },
-    {
-      "name": "newValue",
-      "type": "string",
-      "title": { "en": "new fan mode", "nl": "nieuwe fan mode" }
-    }
-  ]   
-  },
-  {
-    "id":"target_ac_mode",
-    "title": {
-      "en": "The ac mode changes",
-      "nl": "AC mode verandert"
-    },
-    "tokens": [
-    {
-      "name": "oldValue",
-      "type": "string",
-      "title": { "en": "previous ac mode", "nl": "vorige ac mode" }
-    },
-    {
-      "name": "newValue",
-      "type": "string",
-      "title": { "en": "new ac mode", "nl": "nieuwe ac mode" }
-    }
-  ]   
-  },
-  {
-    "id":"target_swing_mode",
-    "title": {
-      "en": "The swing mode changes",
-      "nl": "Swing mode verandert"
-    },
-    "tokens": [
-    {
-      "name": "oldValue",
-      "type": "string",
-      "title": { "en": "previous swing mode", "nl": "vorige swing mode" }
-    },
-    {
-      "name": "newValue",
-      "type": "string",
-      "title": { "en": "new swing mode", "nl": "nieuwe swing mode" }
-    }
-  ]   
-  }
-],
   "actions": [
     {
       "id": "SetMode",
@@ -181,6 +187,22 @@
           "name": "meritB",
           "required": false,
           "title": { "en": "Merit B", "nl": "Merit B" }
+        }
+      ]
+    },
+    {
+      "id": "SetACMode",
+      "title": { "en": "Set AC mode", "nl": "Zet AC mode" },
+      "titleFormatted": {
+        "en": "Set AC mode to [[acMode]]",
+        "nl": "Zet AC mode naar [[acMode]]"
+      },
+      "$filter": "capabilities=target_ac_mode1|target_ac_mode2|target_ac_mode3",
+      "args": [
+        {
+          "name": "acMode",
+          "type": "autocomplete",
+          "title": { "en": "Mode", "nl": "Mode" }
         }
       ]
     },
