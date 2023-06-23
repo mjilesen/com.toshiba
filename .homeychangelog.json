@@ -85,5 +85,8 @@
   },
   "2.2.0": {
     "en": "In Homey 2023 in flows, set the mode is not visible (because it has multiple arguments). I have added a single argument action that can be used instead (not setting meritA and B at the same time)."
+  },
+  "2.2.1": {
+    "en": "Removed filtering in flows and submitted a ticket to Homey. This is a bug in Homey Pro 2023. Mode and Swing when cards are visible in Homey Pro 2023 again."
   }
 }
