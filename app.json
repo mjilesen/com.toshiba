@@ -562,7 +562,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=ac&capabilities=target_ac_mode1|target_ac_mode2|target_ac_mode3"
+            "filter": "driver_id=ac"
           },
           {
             "name": "acMode",
@@ -593,32 +593,6 @@
         ]
       },
       {
-        "id": "SetACMode",
-        "title": {
-          "en": "Set AC mode",
-          "nl": "Zet AC mode"
-        },
-        "titleFormatted": {
-          "en": "Set AC mode to [[acMode]]",
-          "nl": "Zet AC mode naar [[acMode]]"
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=ac&capabilities=target_ac_mode1|target_ac_mode2|target_ac_mode3"
-          },
-          {
-            "name": "acMode",
-            "type": "autocomplete",
-            "title": {
-              "en": "Mode",
-              "nl": "Mode"
-            }
-          }
-        ]
-      },
-      {
         "id": "SetSwingMode",
         "title": {
           "en": "Set swing mode",
@@ -632,7 +606,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=ac&capabilities=target_swing_mode1|target_swing_mode2|target_swing_mode3|target_swing_mode4"
+            "filter": "driver_id=ac"
           },
           {
             "name": "acSwingMode",

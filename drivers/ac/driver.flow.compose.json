@@ -169,7 +169,6 @@
         "en": "Set mode to [[acMode]], merit A to [[meritA]] and merit B to [[meritB]]",
         "nl": "Zet mode naar [[acMode]], merit A naar [[meritA]] en merit B naar [[meritB]]"
       },
-      "$filter": "capabilities=target_ac_mode1|target_ac_mode2|target_ac_mode3",
       "args": [
         {
           "name": "acMode",
@@ -191,29 +190,12 @@
       ]
     },
     {
-      "id": "SetACMode",
-      "title": { "en": "Set AC mode", "nl": "Zet AC mode" },
-      "titleFormatted": {
-        "en": "Set AC mode to [[acMode]]",
-        "nl": "Zet AC mode naar [[acMode]]"
-      },
-      "$filter": "capabilities=target_ac_mode1|target_ac_mode2|target_ac_mode3",
-      "args": [
-        {
-          "name": "acMode",
-          "type": "autocomplete",
-          "title": { "en": "Mode", "nl": "Mode" }
-        }
-      ]
-    },
-    {
       "id": "SetSwingMode",
       "title": { "en": "Set swing mode", "nl": "Zet swing mode" },
       "titleFormatted": {
         "en": "Set swing mode to [[acSwingMode]]",
         "nl": "Zet swing mode naar [[acSwingMode]]"
       },
-      "$filter": "capabilities=target_swing_mode1|target_swing_mode2|target_swing_mode3|target_swing_mode4",
       "args": [
         {
           "name": "acSwingMode",

@@ -98,29 +98,6 @@ class ToshibaACApp extends Homey.App {
       },
     );
 
-    // ACMode -> issue with Homey2023 when multiple arguments.
-    const acModeActionCard = this.homey.flow.getActionCard('SetACMode');
-    acModeActionCard.registerRunListener(async (args, state) => {
-      const { device } = args;
-
-      const acMode = await device.getStoreValue(
-        Constants.StoredCapabilityTargetACMode,
-      );
-
-      await device.setCapabilityValue(acMode, args.acMode.id).catch(error => this.logInformation('App.Init flows.SetACMode', {
-        message: error.message,
-        stack: error.stack,
-      }));
-    });
-    acModeActionCard.registerArgumentAutocompleteListener(
-      'acMode',
-      async (query, args) => {
-        const { device } = args;
-        const results = FlowSelections.getModeResult(device, true);
-        return device.getResult(results, query);
-      },
-    );
-
     // swing mode
     const swingModeActionCard = this.homey.flow.getActionCard('SetSwingMode');
     swingModeActionCard.registerRunListener(async (args, state) => {
