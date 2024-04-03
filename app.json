@@ -455,8 +455,8 @@
           "nl": "Status is"
         },
         "titleFormatted": {
-          "en": "If status is [[status]]",
-          "nl": "Als status is [[status]]"
+          "en": "If status !{{is|isn't}} [[status]]",
+          "nl": "Als status !{{is|is niet}} [[status]]"
         },
         "args": [
           {
