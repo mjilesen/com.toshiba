@@ -85,5 +85,8 @@
   },
   "2.2.0": {
     "en": "In Homey 2023 in flows, set the mode is not visible (because it has multiple arguments). I have added a single argument action that can be used instead (not setting meritA and B at the same time)."
+  },
+  "2.3.0": {
+    "en": "Minor text update"
   }
 }
