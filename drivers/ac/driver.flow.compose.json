@@ -334,7 +334,10 @@
       "args": [
         {
           "name": "trashholdTemp",
-          "title":"Trashhold temperature",
+          "title": {
+            "en":"Trashhold",
+            "nl":"Grenswaarde"
+          },
           "type": "number",
           "min": -30,
           "max": 50,
@@ -356,7 +359,10 @@
       "args": [
         {
           "name": "trashholdTemp",
-          "title":"Trashhold temperature",
+          "title": {
+            "en":"Trashhold",
+            "nl":"Grenswaarde"
+          },
           "type": "number",
           "min": -30,
           "max": 50,
@@ -378,7 +384,10 @@
       "args": [
         {
           "name": "trashholdTemp",
-          "title":"Trashhold temperature",
+          "title": {
+            "en":"Trashhold",
+            "nl":"Grenswaarde"
+          },
           "type": "number",
           "min": -30,
           "max": 50,
@@ -400,7 +409,10 @@
       "args": [
         {
           "name": "trashholdTemp",
-          "title":"Trashhold temperature",
+          "title": {
+            "en":"Trashhold",
+            "nl":"Grenswaarde"
+          },  
           "type": "number",
           "min": -30,
           "max": 50,
@@ -446,6 +458,10 @@
       "args": [
         {
           "name": "trashholdEnergyConsumption",
+          "title": {
+            "en":"Trashhold",
+            "nl":"Grenswaarde"
+          },  
           "type": "number",
           "min": 0,
           "max": 50,
@@ -468,6 +484,10 @@
       "args": [
         {
           "name": "trashholdEnergyConsumption",
+          "title": {
+            "en":"Trashhold",
+            "nl":"Grenswaarde"
+          },  
           "type": "number",
           "min": 0,
           "max": 100,
