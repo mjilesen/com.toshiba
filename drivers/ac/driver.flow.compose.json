@@ -307,6 +307,10 @@
       "args": [
         {
           "name": "targetAirPureIon",
+          "title": {
+            "en":"Target",
+            "nl":"Doel"
+          },
           "type": "checkbox"
         }
       ]
@@ -334,6 +338,10 @@
       "args": [
         {
           "name": "trashholdTemp",
+          "title": {
+            "en":"Trashhold",
+            "nl":"Grenswaarde"
+          },
           "type": "number",
           "min": -30,
           "max": 50,
@@ -355,6 +363,10 @@
       "args": [
         {
           "name": "trashholdTemp",
+          "title": {
+            "en":"Trashhold",
+            "nl":"Grenswaarde"
+          },
           "type": "number",
           "min": -30,
           "max": 50,
@@ -376,6 +388,10 @@
       "args": [
         {
           "name": "trashholdTemp",
+          "title": {
+            "en":"Trashhold",
+            "nl":"Grenswaarde"
+          },
           "type": "number",
           "min": -30,
           "max": 50,
@@ -397,6 +413,10 @@
       "args": [
         {
           "name": "trashholdTemp",
+          "title": {
+            "en":"Trashhold",
+            "nl":"Grenswaarde"
+          },  
           "type": "number",
           "min": -30,
           "max": 50,
@@ -415,6 +435,7 @@
       "args": [
         {
           "name": "status",
+          "title":"status",
           "type": "autocomplete"
         }
       ]
@@ -441,6 +462,10 @@
       "args": [
         {
           "name": "trashholdEnergyConsumption",
+          "title": {
+            "en":"Trashhold",
+            "nl":"Grenswaarde"
+          },  
           "type": "number",
           "min": 0,
           "max": 50,
@@ -463,6 +488,10 @@
       "args": [
         {
           "name": "trashholdEnergyConsumption",
+          "title": {
+            "en":"Trashhold",
+            "nl":"Grenswaarde"
+          },  
           "type": "number",
           "min": 0,
           "max": 100,
