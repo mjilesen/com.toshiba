@@ -3,7 +3,7 @@
         "en": "Airconditioners",
         "nl":"Airconditioners"
     },
-    "class": "thermostat",
+    "class": "airconditioning",
     "capabilities": [
         "onoff",
         "measure_temperature",

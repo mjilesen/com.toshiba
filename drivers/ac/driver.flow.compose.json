@@ -334,6 +334,7 @@
       "args": [
         {
           "name": "trashholdTemp",
+          "title":"Trashhold temperature",
           "type": "number",
           "min": -30,
           "max": 50,
@@ -355,6 +356,7 @@
       "args": [
         {
           "name": "trashholdTemp",
+          "title":"Trashhold temperature",
           "type": "number",
           "min": -30,
           "max": 50,
@@ -376,6 +378,7 @@
       "args": [
         {
           "name": "trashholdTemp",
+          "title":"Trashhold temperature",
           "type": "number",
           "min": -30,
           "max": 50,
@@ -397,6 +400,7 @@
       "args": [
         {
           "name": "trashholdTemp",
+          "title":"Trashhold temperature",
           "type": "number",
           "min": -30,
           "max": 50,
@@ -415,6 +419,7 @@
       "args": [
         {
           "name": "status",
+          "title":"status",
           "type": "autocomplete"
         }
       ]
