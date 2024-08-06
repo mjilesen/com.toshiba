@@ -339,8 +339,8 @@
           "nl": "Buiten temperatuur is meer"
         },
         "titleFormatted": {
-          "en": "Outside temperature is above [[trashholdTemp]]",
-          "nl": "Buiten temperatuur is meer dan [[trashholdTemp]]"
+          "en": "Outside temperature is above [[thresholdTemp]]",
+          "nl": "Buiten temperatuur is meer dan [[thresholdTemp]]"
         },
         "args": [
           {
@@ -349,9 +349,9 @@
             "filter": "driver_id=ac"
           },
           {
-            "name": "trashholdTemp",
+            "name": "thresholdTemp",
             "title": {
-              "en": "Trashhold",
+              "en": "threshold",
               "nl": "Grenswaarde"
             },
             "type": "number",
@@ -372,8 +372,8 @@
           "nl": "Buiten temperatuur is onder"
         },
         "titleFormatted": {
-          "en": "Outside temperature is below [[trashholdTemp]]",
-          "nl": "Buiten temperatuur is minder dan [[trashholdTemp]]"
+          "en": "Outside temperature is below [[thresholdTemp]]",
+          "nl": "Buiten temperatuur is minder dan [[thresholdTemp]]"
         },
         "args": [
           {
@@ -382,9 +382,9 @@
             "filter": "driver_id=ac"
           },
           {
-            "name": "trashholdTemp",
+            "name": "thresholdTemp",
             "title": {
-              "en": "Trashhold",
+              "en": "threshold",
               "nl": "Grenswaarde"
             },
             "type": "number",
@@ -405,8 +405,8 @@
           "nl": "Binnen temperatuur is meer"
         },
         "titleFormatted": {
-          "en": "Inside temperature is above [[trashholdTemp]]",
-          "nl": "Binnen temperatuur is meer dan [[trashholdTemp]]"
+          "en": "Inside temperature is above [[thresholdTemp]]",
+          "nl": "Binnen temperatuur is meer dan [[thresholdTemp]]"
         },
         "args": [
           {
@@ -415,9 +415,9 @@
             "filter": "driver_id=ac"
           },
           {
-            "name": "trashholdTemp",
+            "name": "thresholdTemp",
             "title": {
-              "en": "Trashhold",
+              "en": "threshold",
               "nl": "Grenswaarde"
             },
             "type": "number",
@@ -438,8 +438,8 @@
           "nl": "Binnen temperatuur is onder"
         },
         "titleFormatted": {
-          "en": "Inside temperature is below [[trashholdTemp]]",
-          "nl": "Binnen temperatuur is minder dan [[trashholdTemp]]"
+          "en": "Inside temperature is below [[thresholdTemp]]",
+          "nl": "Binnen temperatuur is minder dan [[thresholdTemp]]"
         },
         "args": [
           {
@@ -448,9 +448,9 @@
             "filter": "driver_id=ac"
           },
           {
-            "name": "trashholdTemp",
+            "name": "thresholdTemp",
             "title": {
-              "en": "Trashhold",
+              "en": "threshold",
               "nl": "Grenswaarde"
             },
             "type": "number",
@@ -512,8 +512,8 @@
           "nl": "Het energie verbruik het afgelopen uur is boven"
         },
         "titleFormatted": {
-          "en": "The energy consumption over the last hour is above [[trashholdEnergyConsumption]]",
-          "nl": "Het energie verbruik het afgelopen uur is boven [[trashholdEnergyConsumption]]"
+          "en": "The energy consumption over the last hour is above [[thresholdEnergyConsumption]]",
+          "nl": "Het energie verbruik het afgelopen uur is boven [[thresholdEnergyConsumption]]"
         },
         "args": [
           {
@@ -522,9 +522,9 @@
             "filter": "driver_id=ac&capabilities=measure_energy_consumption_last_hour"
           },
           {
-            "name": "trashholdEnergyConsumption",
+            "name": "thresholdEnergyConsumption",
             "title": {
-              "en": "Trashhold",
+              "en": "threshold",
               "nl": "Grenswaarde"
             },
             "type": "number",
@@ -545,8 +545,8 @@
           "nl": "Het totale energie verbruik vandaag is boven"
         },
         "titleFormatted": {
-          "en": "The total energy consumption today is above [[trashholdEnergyConsumption]]",
-          "nl": "Het totale energie verbruik vandaag is boven [[trashholdEnergyConsumption]]"
+          "en": "The total energy consumption today is above [[thresholdEnergyConsumption]]",
+          "nl": "Het totale energie verbruik vandaag is boven [[thresholdEnergyConsumption]]"
         },
         "args": [
           {
@@ -555,9 +555,9 @@
             "filter": "driver_id=ac&capabilities=measure_energy_consumption_today"
           },
           {
-            "name": "trashholdEnergyConsumption",
+            "name": "thresholdEnergyConsumption",
             "title": {
-              "en": "Trashhold",
+              "en": "threshold",
               "nl": "Grenswaarde"
             },
             "type": "number",
