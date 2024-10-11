@@ -170,26 +170,6 @@ class ToshibaACApp extends Homey.App {
       },
     );
 
-    //this.homey.flow.getActionCard('target_temperature_set').registerRunListener((args, state) => {
-    //  return args.device.setCapabilityValue( Constants.CapabilityTargetTemperatureInside, args.target_temperature);
-    //});
-    // target temperature deprecated
-    /*const targetTemperatureActionCard = this.homey.flow.getActionCard(
-      'SetTargetTemperature',
-    );
-    targetTemperatureActionCard.registerRunListener(async (args, state) => {
-      const { device } = args;
-      await device
-        .setCapabilityValue(
-          Constants.CapabilityTargetTemperatureInside,
-          args.targetTemperature,
-        )
-        .catch(error => this.logInformation('App.Init flows.TargetTemperature', {
-          message: error.message,
-          stack: error.stack,
-        }));
-    });
-*/
     // target temperature
     const targetTemperatureNo8CActionCard = this.homey.flow.getActionCard(
       'SetTargetTemperatureNo8C',
