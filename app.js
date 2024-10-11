@@ -246,7 +246,7 @@ class ToshibaACApp extends Homey.App {
         const outsideTemperature = await device.getCapabilityValue(
           Constants.CapabilityMeasureTemperatureOutside,
         );
-        return outsideTemperature > args.trashholdTemp;
+        return outsideTemperature > args.thresholdTemp;
       },
     );
 
@@ -260,7 +260,7 @@ class ToshibaACApp extends Homey.App {
         const outsideTemperature = await device.getCapabilityValue(
           Constants.CapabilityMeasureTemperatureOutside,
         );
-        return outsideTemperature < args.trashholdTemp;
+        return outsideTemperature < args.thresholdTemp;
       },
     );
 
@@ -273,7 +273,7 @@ class ToshibaACApp extends Homey.App {
       const insideTemperature = await device.getCapabilityValue(
         Constants.CapabilityMeasureTemperatureInside,
       );
-      return insideTemperature > args.trashholdTemp;
+      return insideTemperature > args.thresholdTemp;
     });
 
     // inside temperature below
@@ -285,7 +285,7 @@ class ToshibaACApp extends Homey.App {
       const insideTemperature = await device.getCapabilityValue(
         Constants.CapabilityMeasureTemperatureInside,
       );
-      return insideTemperature < args.trashholdTemp;
+      return insideTemperature < args.thresholdTemp;
     });
 
     // status equal
@@ -325,7 +325,7 @@ class ToshibaACApp extends Homey.App {
         const energyConsumption = await device.getCapabilityValue(
           Constants.CapabilityEnergyConsumptionLastHour,
         );
-        return energyConsumption > args.trashholdTemp;
+        return energyConsumption > args.thresholdTemp;
       },
     );
     // energy consumption today above
@@ -336,7 +336,7 @@ class ToshibaACApp extends Homey.App {
         const energyConsumption = await device.getCapabilityValue(
           Constants.CapabilityEnergyConsumptionToday,
         );
-        return energyConsumption > args.trashholdTemp;
+        return energyConsumption > args.thresholdTemp;
       },
     );
   }
