@@ -339,7 +339,7 @@
         {
           "name": "trashholdTemp",
           "title": {
-            "en":"Trashhold",
+            "en":"Treshhold",
             "nl":"Grenswaarde"
           },
           "type": "number",
@@ -364,7 +364,7 @@
         {
           "name": "trashholdTemp",
           "title": {
-            "en":"Trashhold",
+            "en":"Treshhold",
             "nl":"Grenswaarde"
           },
           "type": "number",
@@ -389,7 +389,7 @@
         {
           "name": "trashholdTemp",
           "title": {
-            "en":"Trashhold",
+            "en":"Treshhold",
             "nl":"Grenswaarde"
           },
           "type": "number",
@@ -414,7 +414,7 @@
         {
           "name": "trashholdTemp",
           "title": {
-            "en":"Trashhold",
+            "en":"Treshhold",
             "nl":"Grenswaarde"
           },  
           "type": "number",
@@ -463,7 +463,7 @@
         {
           "name": "trashholdEnergyConsumption",
           "title": {
-            "en":"Trashhold",
+            "en":"Treshhold",
             "nl":"Grenswaarde"
           },  
           "type": "number",
@@ -489,7 +489,7 @@
         {
           "name": "trashholdEnergyConsumption",
           "title": {
-            "en":"Trashhold",
+            "en":"Treshhold",
             "nl":"Grenswaarde"
           },  
           "type": "number",
