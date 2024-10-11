@@ -215,7 +215,6 @@ class ACDevice extends Device {
       error => logError(this, error),
     );
     await this.setStoreValue(Constants.StoredValueState, state).catch(error => logError(this, error));
-
     this.driver.amqpAPI.sendMessage(state, this.getData().DeviceUniqueID);
   }
 
