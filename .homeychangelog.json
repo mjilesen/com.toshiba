@@ -94,5 +94,8 @@
   },
   "2.3.2": {
     "en": "Updated category"
+  },
+  "2.4.0": {
+    "en": "Small changes for Homey version 12.2.0"
   }
 }
