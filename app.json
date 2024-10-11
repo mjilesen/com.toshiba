@@ -1002,22 +1002,6 @@
       "uiComponent": "sensor",
       "icon": "/assets/gear.svg"
     },
-    "measure_temperature": {
-      "type": "number",
-      "title": {
-        "en": "Temperature",
-        "nl": "Temperatuur"
-      },
-      "units": {
-        "en": "°C",
-        "nl": "°C"
-      },
-      "uiComponent": "thermostat",
-      "insights": true,
-      "getable": true,
-      "setable": false,
-      "icon": "/assets/icon.svg"
-    },
     "measure_temperature_outside": {
       "type": "number",
       "title": {
@@ -1536,25 +1520,6 @@
           }
         }
       ]
-    },
-    "target_temperature": {
-      "type": "number",
-      "title": {
-        "en": "Temperature",
-        "nl": "Temperatuur"
-      },
-      "units": {
-        "en": "°C",
-        "nl": "°C"
-      },
-      "uiComponent": "thermostat",
-      "insights": true,
-      "min": 17,
-      "max": 30,
-      "step": 1,
-      "getable": true,
-      "setable": true,
-      "icon": "/assets/icon.svg"
     }
   }
 }
