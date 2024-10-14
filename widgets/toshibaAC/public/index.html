@@ -16,7 +16,7 @@
   
       }
       .ac-container-type-Off {
-        background: linear-gradient( var(--homey-color-mono-800), var(--homey-color-mono-300) );
+        background: linear-gradient( var(--homey-color-mono-700), var(--homey-color-mono-300) );
       }
 
       .ac-container-type-Heat {
@@ -73,8 +73,8 @@
                 
        Homey.api("GET", `/?deviceUniqueId=${deviceId}`).then((response) => {
         
-        let containerColor = "ac-Off"
-        let onOffButton = "homey-custom-icon-ac-off"
+        let containerColor = "ac-container-type-Off"
+        let onOffButton = "ac-off"
         if ( response.onoff ){ containerColor = "ac-container-type-" + response.acMode; onOffButton = "ac-on"}
         
         tbody.innerHTML += `
@@ -82,7 +82,7 @@
                 <div class="ac-name">${settingValue.name}</div>
                 <div class="ac-container-item">
                   <div class="homey-custom-icon-ac-onoff ${onOffButton}"></div>
-                  <div class="ac-temperature">${response.targetTemperature}/${response.measureTemperature}</div>
+                  <div class="ac-temperature">${response.targetTemperature}/${response.measureTemperature} °C</div>
                 </div>  
                 <div class="ac-temperature">Fan</div>  
             </div>`
