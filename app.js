@@ -14,6 +14,7 @@ class ToshibaACApp extends Homey.App {
     this.initFlows();
     this.initConditions();
     this.initLogs();
+    this.initWidgets();
   }
 
   async initLogs() {
@@ -340,6 +341,20 @@ class ToshibaACApp extends Homey.App {
       },
     );
   }
+
+  async initWidgets(){
+    const widget = this.homey.dashboards.getWidget('toshibaAC')
+
+    widget.registerSettingAutocompleteListener('device', async (query, settings) => {
+      const devices = this.homey.drivers.getDriver('ac').getDevices();
+      const results = [];
+      devices.forEach(device => {
+        const data = device.getData();
+        results.push({ DeviceId: data.DeviceId, name: device.getName(), DeviceUniqueId: data.DeviceUniqueID });
+      })
+      return results
+    })
+  } ;
 
   logInformation(source, error) {
     let data = '';

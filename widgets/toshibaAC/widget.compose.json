@@ -1,0 +1,35 @@
+{
+  "name": {
+    "en": "Toshiba ac control",
+    "nl": "Toshiba ac controle"
+  },
+  "height": 188,
+  "settings": [
+    {
+      "id": "device",
+      "type": "autocomplete",
+      "title": {
+        "en": "AC",
+        "nl": "AC"
+      }
+    }
+  ],
+  "api": {
+    "getACValues": {
+      "method": "GET",
+      "path": "/"
+    },
+    "addSomething": {
+      "method": "POST",
+      "path": "/"
+    },
+    "updateSomething": {
+      "method": "PUT",
+      "path": "/:id"
+    },
+    "deleteSomething": {
+      "method": "DELETE",
+      "path": "/:id"
+    }
+  }
+}

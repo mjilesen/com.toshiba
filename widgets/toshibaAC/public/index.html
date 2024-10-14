@@ -1,0 +1,98 @@
+<html>
+  <head>
+    <style>
+       .ac-container {
+        display: flex;
+        height: 100%;
+        width: 100% ;
+        box-sizing: border-box;
+        flex-direction: column; /* Ensures elements inside stack vertically */
+      }
+
+      .ac-container-item {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row; /* Ensures elements inside stack horizontally */
+  
+      }
+      .ac-container-type-Off {
+        background: linear-gradient( var(--homey-color-mono-800), var(--homey-color-mono-300) );
+      }
+
+      .ac-container-type-Heat {
+        background: linear-gradient( var(--homey-color-orange-500), var(--homey-color-mono-300) );
+      }
+
+      .ac-name {
+        margin: var(--homey-su-4);
+        font-size: var(--homey-font-size-xlarge);
+        font-weight: var(--homey-font-weight-bold);
+      }
+
+      .ac-temperature {
+        margin: var(--homey-su-4);
+        font-size: var(--homey-font-size-large);
+        font-weight: var(--homey-font-weight-medium);
+      }
+
+      .homey-custom-icon-ac-onoff {
+        --homey-icon-size: var(--homey-icon-size-medium); 
+        -webkit-mask-image: url('onoff-button.svg');
+        mask-image: url('onoff-button.svg');
+        height: 55px;
+        width: 55px;
+      }
+
+      .ac-on{
+        --homey-icon-color: var(--homey-icon-color-green);
+      }
+
+      .ac-off{
+        --homey-icon-color: var(--homey-icon-color-red);
+      }
+
+    </style>
+  </head>
+
+  <body id="body" class="homey-widget my-custom-body">
+    <div id="ACState" class="ac-container">
+    </div>
+    
+    <script type="text/javascript">
+      function onHomeyReady(Homey) {
+        init(Homey);
+      }
+
+      function init(Homey){
+        const settingValue = Homey.getSettings()['device'];
+        const deviceId = settingValue.DeviceUniqueId;
+                
+        const tbody = document.querySelector('#Body');
+        tbody.innerHTML = '';
+        
+                
+       Homey.api("GET", `/?deviceUniqueId=${deviceId}`).then((response) => {
+        
+        let containerColor = "ac-Off"
+        let onOffButton = "homey-custom-icon-ac-off"
+        if ( response.onoff ){ containerColor = "ac-container-type-" + response.acMode; onOffButton = "ac-on"}
+        
+        tbody.innerHTML += `
+            <div id="ACState" class="ac-container ${containerColor}">
+                <div class="ac-name">${settingValue.name}</div>
+                <div class="ac-container-item">
+                  <div class="homey-custom-icon-ac-onoff ${onOffButton}"></div>
+                  <div class="ac-temperature">${response.targetTemperature}/${response.measureTemperature}</div>
+                </div>  
+                <div class="ac-temperature">Fan</div>  
+            </div>`
+
+        Homey.ready();
+      
+    }).catch((error) => {
+            console.error(error);
+        });
+      }
+    </script>
+  </body>
+</html>
