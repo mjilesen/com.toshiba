@@ -100,5 +100,8 @@
   },
   "2.5.0": {
     "en": "Upgraded packages"
+  },
+  "2.5.1": {
+    "en": "Added community link"
   }
 }

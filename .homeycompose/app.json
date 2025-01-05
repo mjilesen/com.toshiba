@@ -1,6 +1,6 @@
 {
   "id": "com.toshiba",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "compatibility": ">=12.0.0",
   "sdk": 3,
   "platforms": [
@@ -34,8 +34,7 @@
       }
     }
   },
-  "community":
-  {
+  "community": {
     "id": "com.toshiba",
     "homeyCommunityTopicId": 126642
   },
