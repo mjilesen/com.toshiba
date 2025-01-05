@@ -35,6 +35,10 @@
       }
     }
   },
+  "community": {
+    "id": "com.toshiba",
+    "homeyCommunityTopicId": 126642
+  },
   "bugs": {
     "url": "https://github.com/mjilesen/com.toshiba/issues"
   },
