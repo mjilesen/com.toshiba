@@ -1,6 +1,6 @@
 {
   "id": "com.toshiba",
-  "version": "2.5.1",
+  "version": "2.5.2",
   "compatibility": ">=12.0.0",
   "sdk": 3,
   "platforms": [
