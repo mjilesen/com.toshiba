@@ -106,5 +106,8 @@
   },
   "2.5.2": {
     "en": "Update community id"
+  },
+  "2.5.3": {
+    "en": "Fixed error when new user try to sign in to Toshiba"
   }
 }
