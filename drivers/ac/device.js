@@ -92,7 +92,7 @@ class ACDevice extends Device {
       Constants.CapabilityTargetTemperatureInside,
       Constants.CapabilityTargetFanMode,
       Constants.CapabilityTargetPowerMode,
-      Constants.CapabilityTargetMeritA,
+      Constants.CapabilityTargetMeritA
     ];
     // do not add if capabilities not added (yet)
     if (acMode) {
@@ -226,26 +226,32 @@ class ACDevice extends Device {
       Constants.CapabilityEnergyConsumptionLastHour,
     );
 
-    if (hasEnergyCapability) {
+    if (hasEnergyCapability||true) {
       const { energyConsumption } = this.driver;
       this.timerId = this.homey.setInterval(async () => {
         const timezone = this.homey.clock.getTimezone();
         const dateTime = DateTime.local().setZone(timezone, {
           keepLocalTime: true,
         });
-
+        
+        this.log( "Datetime", dateTime );
         const value = await energyConsumption
           .getEnergyConsumptionPerDay(this, dateTime)
           .catch(error => logError(this, error));
-
-        this.setCapabilityValue(
-          Constants.CapabilityEnergyConsumptionToday,
-          value.totalDay,
-        );
-        this.setCapabilityValue(
-          Constants.CapabilityEnergyConsumptionLastHour,
-          value.lastHour,
-        );
+          
+          //this.setCapabilityValue("measure_power", value.lastHour );
+          const prevValue = await this.getCapabilityValue( "meter_power")
+          this.log( "prevalue", prevValue, value.lastHour );
+          this.setCapabilityValue("meter_power", prevValue + value.lastHour );
+          this.log('Set meter_power');
+      //  this.setCapabilityValue(
+      //    Constants.CapabilityEnergyConsumptionToday,
+      //    value.totalDay,
+      //  );
+      //  this.setCapabilityValue(
+      //    Constants.CapabilityEnergyConsumptionLastHour,
+      //    value.lastHour,
+      //  );
       }, this.interval * 1000);
     }
   }
