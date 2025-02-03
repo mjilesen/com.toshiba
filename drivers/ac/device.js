@@ -35,6 +35,13 @@ class ACDevice extends Device {
    */
   async onInit() {
     await this.initCapabilities().catch(error => logError(this, error));
+    const hasEnergyCapability = this.hasCapability(
+      Constants.CapabilityEnergyConsumptionToday,
+    );
+    if( hasEnergyCapability){
+      this.addCapability( Constants.CapabilityMeterPower);
+      this.removeCapability( Constants.CapabilityEnergyConsumptionToday );
+    }
   }
 
   /**
@@ -223,10 +230,10 @@ class ACDevice extends Device {
     this.timerId = null;
 
     const hasEnergyCapability = this.hasCapability(
-      Constants.CapabilityEnergyConsumptionLastHour,
+      Constants.CapabilityMeterPower,
     );
 
-    if (hasEnergyCapability||true) {
+    if (hasEnergyCapability) {
       const { energyConsumption } = this.driver;
       this.timerId = this.homey.setInterval(async () => {
         const timezone = this.homey.clock.getTimezone();
@@ -234,24 +241,16 @@ class ACDevice extends Device {
           keepLocalTime: true,
         });
         
-        this.log( "Datetime", dateTime );
         const value = await energyConsumption
-          .getEnergyConsumptionPerDay(this, dateTime)
+          .getNextEnergyConsumption(this, dateTime)
           .catch(error => logError(this, error));
           
-          //this.setCapabilityValue("measure_power", value.lastHour );
-          const prevValue = await this.getCapabilityValue( "meter_power")
-          this.log( "prevalue", prevValue, value.lastHour );
-          this.setCapabilityValue("meter_power", prevValue + value.lastHour );
-          this.log('Set meter_power');
-      //  this.setCapabilityValue(
-      //    Constants.CapabilityEnergyConsumptionToday,
-      //    value.totalDay,
-      //  );
-      //  this.setCapabilityValue(
-      //    Constants.CapabilityEnergyConsumptionLastHour,
-      //    value.lastHour,
-      //  );
+          if ( value ){
+            const prevValue = await this.getCapabilityValue( Constants.CapabilityMeterPower );
+            const newValue = prevValue + value.addedEnergy;
+            this.setCapabilityValue( Constants.CapabilityMeterPower, newValue );
+            this.setCapabilityValue( Constants.CapabilityEnergyConsumptionLastHour, value.lastHour )
+            }
       }, this.interval * 1000);
     }
   }
