@@ -35,6 +35,13 @@ class ACDevice extends Device {
    */
   async onInit() {
     await this.initCapabilities().catch(error => logError(this, error));
+    const hasEnergyCapability = this.hasCapability(
+      Constants.CapabilityEnergyConsumptionToday,
+    );
+    if( hasEnergyCapability){
+      this.addCapability( Constants.CapabilityMeterPower);
+      this.removeCapability( Constants.CapabilityEnergyConsumptionToday );
+    }
   }
 
   /**
@@ -92,7 +99,7 @@ class ACDevice extends Device {
       Constants.CapabilityTargetTemperatureInside,
       Constants.CapabilityTargetFanMode,
       Constants.CapabilityTargetPowerMode,
-      Constants.CapabilityTargetMeritA,
+      Constants.CapabilityTargetMeritA
     ];
     // do not add if capabilities not added (yet)
     if (acMode) {
@@ -223,7 +230,7 @@ class ACDevice extends Device {
     this.timerId = null;
 
     const hasEnergyCapability = this.hasCapability(
-      Constants.CapabilityEnergyConsumptionLastHour,
+      Constants.CapabilityMeterPower,
     );
 
     if (hasEnergyCapability) {
@@ -233,19 +240,17 @@ class ACDevice extends Device {
         const dateTime = DateTime.local().setZone(timezone, {
           keepLocalTime: true,
         });
-
+        
         const value = await energyConsumption
-          .getEnergyConsumptionPerDay(this, dateTime)
+          .getNextEnergyConsumption(this, dateTime)
           .catch(error => logError(this, error));
-
-        this.setCapabilityValue(
-          Constants.CapabilityEnergyConsumptionToday,
-          value.totalDay,
-        );
-        this.setCapabilityValue(
-          Constants.CapabilityEnergyConsumptionLastHour,
-          value.lastHour,
-        );
+          
+          if ( value ){
+            const prevValue = await this.getCapabilityValue( Constants.CapabilityMeterPower );
+            const newValue = prevValue + value.addedEnergy;
+            this.setCapabilityValue( Constants.CapabilityMeterPower, newValue );
+            this.setCapabilityValue( Constants.CapabilityEnergyConsumptionLastHour, value.lastHour )
+            }
       }, this.interval * 1000);
     }
   }

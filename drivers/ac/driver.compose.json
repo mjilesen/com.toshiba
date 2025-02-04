@@ -15,6 +15,14 @@
         "target_ac_merit_a",
         "measure_status"
     ],
+    "capabilitiesOptions": {
+    "measure_power": {
+      "approximated": true
+        },
+    "meter_power": {
+       "approximated": true
+        }
+    },
     "platforms": [
         "local"
     ],

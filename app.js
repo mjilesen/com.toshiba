@@ -13,20 +13,6 @@ class ToshibaACApp extends Homey.App {
     this.log('ToshibaACApp has been initialized');
     this.initFlows();
     this.initConditions();
-    this.initLogs();
-  }
-
-  async initLogs() {
-    this.homey.settings.set('infoLog', '');
-    this.homey.settings.set('stateLogEnabled', false);
-    this.homey.settings.set('stateLog', '');
-    this.homey.settings.set('deviceInformation', '');
-
-    this.homeyHash = await this.homey.cloud.getHomeyId().catch(error => this.logInformation('App.Init logs', {
-      message: error.message,
-      stack: error.stack,
-    }));
-    this.homeyHash = this.hashCode(this.homeyHash).toString();
   }
 
   async initFlows() {
@@ -425,12 +411,12 @@ class ToshibaACApp extends Homey.App {
           subject = 'Toshiba device information';
           text = this.varToString(this.homey.settings.get('deviceInformation'));
         }
-
-        subject += `(${this.homeyHash} : ${Homey.manifest.version})`;
+       
+        subject += `(Homey version: ${this.homey.version} : App version ${this.homey.manifest.version} Platform version: ${this.homey.platformVersion})`;
 
         const response = send({
           // Overriding default parameters
-          from: `"Homey User" <${Homey.env.MAIL_USER}>`,
+          from: "Homey User",
           user: Homey.env.MAIL_USER,
           pass: Homey.env.MAIL_SECRET,
           to: Homey.env.MAIL_USER,
