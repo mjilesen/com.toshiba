@@ -109,5 +109,8 @@
   },
   "2.5.3": {
     "en": "Fixed error when new user try to sign in to Toshiba"
+  },
+  "3.0.0": {
+    "en": "Added energy usage in Homey format"
   }
 }
