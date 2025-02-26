@@ -112,5 +112,14 @@
   },
   "3.0.0": {
     "en": "Added energy usage in Homey format"
+  },
+  "3.0.1": {
+    "en": "Added info logging"
+  },
+  "3.0.2": {
+    "en": "Updated loginformation"
+  },
+  "3.0.3": {
+    "en": "Fixed small issue"
   }
 }
