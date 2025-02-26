@@ -121,5 +121,8 @@
   },
   "3.0.3": {
     "en": "Fixed small issue"
+  },
+  "4.0.0": {
+    "en": "Added EnergyConsumption"
   }
 }
