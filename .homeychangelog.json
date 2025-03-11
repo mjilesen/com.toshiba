@@ -121,5 +121,11 @@
   },
   "3.0.3": {
     "en": "Fixed small issue"
+  },
+  "3.0.4": {
+    "en": "Limited the size of the log"
+  },
+  "4.0.1": {
+    "en": "Limited the log size"
   }
 }
