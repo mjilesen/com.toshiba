@@ -359,7 +359,7 @@ class ToshibaACApp extends Homey.App {
         source,
         data,
       });
-      if (logData && logData.length > 100) {
+      if (logData && logData.length > 1000 ) {
         logData.splice(0, 1);
       }
       this.homey.settings.set('infoLog', logData);
