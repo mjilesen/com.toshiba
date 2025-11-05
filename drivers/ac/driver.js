@@ -59,7 +59,9 @@ class ACDriver extends Driver {
   }
 
   async onRepair(session, device) {
-    // nothing
+     session.setHandler('login', async data => {
+      return this.login(data.username, data.password);
+    });
   }
 
   async login(username, password) {
