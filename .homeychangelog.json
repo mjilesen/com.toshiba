@@ -127,5 +127,8 @@
   },
   "4.0.1": {
     "en": "Limited the log size"
+  },
+  "4.1.0": {
+    "en": "Added repair functionality"
   }
 }
